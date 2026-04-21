@@ -9,11 +9,10 @@ const facts = [
 
 <section
   id="top"
-  class="relative flex min-h-[min(92vh,960px)] items-end overflow-hidden pb-[clamp(3rem,6vw,5rem)] pt-[clamp(4rem,10vw,8rem)] lg:grid lg:min-h-0 lg:grid-cols-1 lg:grid-rows-[31.640625vw_auto] lg:items-start lg:pb-[clamp(3rem,6vw,5rem)] lg:pt-0"
+  class="relative -mt-[var(--nav-h)] grid grid-cols-1 grid-rows-[42.1875vw_auto] items-start overflow-hidden pb-[clamp(3rem,6vw,5rem)] pt-[calc(var(--nav-h)+clamp(1.5rem,5vw,3rem))] lg:grid-rows-[31.640625vw_auto] lg:pt-[var(--nav-h)]"
 >
   <div
-    class="absolute inset-x-0 top-0 z-0 overflow-hidden"
-    style="aspect-ratio: 1600 / 675;"
+    class="absolute inset-x-0 top-0 z-0 aspect-[16/9] overflow-hidden lg:aspect-[1600/675]"
     aria-hidden="true"
   >
     <img
@@ -22,18 +21,18 @@ const facts = [
       width="1600"
       height="900"
       fetchpriority="high"
-      class="block h-auto w-full -translate-y-[25%]"
+      class="block h-auto w-full lg:-translate-y-[25%]"
     />
     <div
-      class="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-b from-transparent via-[rgba(5,0,7,0.7)] to-[var(--color-bg)]"
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent via-[rgba(5,0,7,0.7)] to-[var(--color-bg)] lg:h-[70%]"
     >
     </div>
   </div>
 
-  <!-- Reserves 75% of the banner image height on wide screens so the title appears just below its lower quarter -->
-  <div class="pointer-events-none hidden min-h-0 shrink-0 lg:block" aria-hidden="true"></div>
+  <!-- Reserves 75% of the banner image height so the title appears just below its lower quarter -->
+  <div class="pointer-events-none min-h-0 shrink-0" aria-hidden="true"></div>
 
-  <div class="container-x relative z-10 max-w-[900px] lg:row-start-2 lg:self-start">
+  <div class="container-x relative z-10 row-start-2 max-w-[900px] self-start">
     <span class="eyebrow">ALPS Summer School · 26 Jul – 01 Aug 2026</span>
 
     <h1

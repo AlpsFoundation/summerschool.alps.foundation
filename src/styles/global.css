@@ -54,9 +54,14 @@
     scroll-behavior: smooth;
   }
 
+  /* Fallback; Nav.astro updates this at runtime with the measured header height. */
+  :root {
+    --nav-h: 4rem;
+  }
+
   /* Anchor targets clear the sticky header */
   main section[id] {
-    scroll-margin-top: clamp(4.25rem, 12vw, 5.5rem);
+    scroll-margin-top: calc(var(--nav-h) + 0.5rem);
   }
 
   html,
@@ -72,7 +77,9 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     min-height: 100%;
-    overflow-x: hidden;
+    /* `clip` prevents horizontal overflow without creating a scroll container,
+       so `position: sticky` on the nav keeps working. */
+    overflow-x: clip;
   }
 
   a {

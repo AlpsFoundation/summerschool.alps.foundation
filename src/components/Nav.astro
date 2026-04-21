@@ -9,7 +9,7 @@ const links = [
 ---
 
 <header
-  class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(5,0,7,0.42)] backdrop-blur-xl backdrop-saturate-[1.35] supports-[backdrop-filter]:bg-[rgba(5,0,7,0.38)]"
+  class="sticky top-0 z-50 isolate border-b border-[var(--color-border)] bg-[rgba(5,0,7,0.72)] backdrop-blur-xl backdrop-saturate-[1.4] supports-[backdrop-filter]:bg-[rgba(5,0,7,0.38)]"
 >
   <div class="container-x flex items-center justify-between gap-5 py-[0.9rem]">
     <a
@@ -67,13 +67,20 @@ const links = [
 </header>
 
 <script>
+  function syncNavHeightVar() {
+    const header = document.querySelector('header');
+    if (!header) return 0;
+    const h = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--nav-h', `${h}px`);
+    return h;
+  }
+
   function updateScrollSpy() {
     const links = Array.from(document.querySelectorAll('[data-scrollspy-target]'));
     const ids = links
       .map((el) => /** @type {HTMLElement} */ (el).dataset.scrollspyTarget)
       .filter(Boolean);
-    const header = document.querySelector('header');
-    const navH = header?.getBoundingClientRect().height ?? 72;
+    const navH = syncNavHeightVar() || 72;
     const activationY = window.scrollY + navH + 14;
 
     /** @type {string | null} */
