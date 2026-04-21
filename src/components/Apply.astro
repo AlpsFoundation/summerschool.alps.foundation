@@ -1,0 +1,82 @@
+---
+const steps = [
+  {
+    num: '01',
+    title: 'Submit your application',
+    body: 'Complete the form with your CV and a letter of motivation during the application window: 30 March – 30 April.',
+  },
+  {
+    num: '02',
+    title: 'Selection',
+    body: 'Our team reviews applications. Participants are selected based on CV and motivation, across all academic backgrounds and experience levels.',
+  },
+  {
+    num: '03',
+    title: 'Join us in Switzerland',
+    body: 'Confirm your spot and prepare for a week in the Swiss mountains — 26 July to 01 August 2026.',
+  },
+];
+---
+
+<section id="apply" class="py-[clamp(4rem,8vw,7rem)]">
+  <div class="container-x">
+    <div
+      class="relative grid grid-cols-1 gap-[clamp(2rem,4vw,3rem)] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border-strong)] p-[clamp(2rem,4vw,3.5rem)] shadow-[var(--shadow-glow-lg)] lg:grid-cols-2 lg:items-center"
+      style="background:
+        radial-gradient(800px 500px at 0% 0%, rgba(154,0,109,0.35), transparent 65%),
+        radial-gradient(700px 400px at 100% 100%, rgba(90,0,130,0.3), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));"
+    >
+      <div>
+        <span class="eyebrow">Apply</span>
+        <h2 class="mt-5">Apply for the ALPS Summer School 2026.</h2>
+        <p>
+          We invite applications from students, researchers and professionals
+          from all academic backgrounds. Capacity is limited to 25–30
+          participants for a focused and immersive learning experience.
+        </p>
+        <p>
+          To apply, you must be at least 18 years old. Participants are
+          selected based on their CV and a letter of motivation.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+          >
+            Start your application
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="mailto:summerschool@alps.foundation" class="btn btn--ghost">
+            Contact us
+          </a>
+        </div>
+      </div>
+
+      <ol class="m-0 flex list-none flex-col gap-4 p-0">
+        {
+          steps.map((s) => (
+            <li
+              class="flex gap-[1.1rem] rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[rgba(5,0,7,0.55)] p-5 backdrop-blur"
+            >
+              <span class="grad-text min-w-[2ch] flex-shrink-0 text-[1.1rem] font-semibold tracking-[0.04em]">
+                {s.num}
+              </span>
+              <div>
+                <h3 class="mb-1 text-[1rem] font-medium text-white">
+                  {s.title}
+                </h3>
+                <p class="m-0 text-[0.9rem] text-[var(--color-fg-muted)]">
+                  {s.body}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

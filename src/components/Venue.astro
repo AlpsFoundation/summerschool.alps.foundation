@@ -1,0 +1,139 @@
+---
+const gallery = [
+  { src: '/assets/location-buildings.jpg', alt: 'The buildings of Le Camp' },
+  { src: '/assets/location-rooms.jpg', alt: 'Learning space with lake view' },
+  { src: '/assets/location-bedrooms.jpg', alt: 'Shared bedroom at Le Camp' },
+  { src: '/assets/location-nature.jpg', alt: 'Surrounding forest' },
+  { src: '/assets/location-outdoor.jpg', alt: 'Outdoor activity area' },
+];
+
+const highlights = [
+  { label: 'Panoramic', value: 'Lake Neuchâtel views' },
+  { label: 'Accommodation', value: '4–8 person dorm rooms' },
+  { label: 'Food', value: 'Vegetarian full-board' },
+  { label: 'Nature', value: 'Forest, vineyards, beach' },
+];
+---
+
+<section id="venue" class="pb-[clamp(4rem,8vw,7rem)]">
+  <div
+    class="relative mb-[clamp(3rem,6vw,5rem)] overflow-hidden border-b border-[var(--color-border)] pt-[clamp(5rem,10vw,8rem)] pb-[clamp(4rem,8vw,6rem)]"
+  >
+    <img
+      src="/assets/location-sunset.jpg"
+      alt="Sunset view over Lake Neuchâtel from Le Camp"
+      loading="lazy"
+      class="absolute inset-0 z-0 h-full w-full object-cover"
+    />
+    <div
+      class="absolute inset-0 z-[1]"
+      style="background:
+        linear-gradient(180deg, rgba(5,0,7,0.4) 0%, rgba(5,0,7,0.7) 55%, rgba(5,0,7,0.95) 100%),
+        radial-gradient(800px 500px at 20% 50%, rgba(154,0,109,0.3), transparent 70%);"
+    >
+    </div>
+
+    <div class="container-x relative z-10 max-w-[720px]">
+      <span class="eyebrow">Venue</span>
+      <h2 class="mt-5">Fondation Le Camp — Vaumarcus, Switzerland</h2>
+      <p class="text-[clamp(1rem,1.4vw,1.1rem)] text-white/85">
+        Perched on a hillside above Lake Neuchâtel, Le Camp hosts us for six
+        nights. Forest and vineyards at the door; a beach a 20-minute walk
+        away; a fireplace for the evenings.
+      </p>
+    </div>
+  </div>
+
+  <div class="container-x">
+    <div class="grid grid-cols-1 items-start gap-[clamp(2rem,4vw,3rem)] lg:grid-cols-[1fr_1.15fr]">
+      <div>
+        <p>
+          Le Camp provides a learning space with a lake view for all of our
+          activities. Surrounded by forest, the complex offers various outdoor
+          sports and activity areas — and a fireplace to gather around in the
+          evenings.
+        </p>
+        <p>
+          Delicious vegetarian full-board is served throughout the stay. To
+          get a better sense of the venue, see
+          <a
+            href="https://www.lecamp.ch"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Le Camp&rsquo;s website
+          </a>
+          and promotional video.
+        </p>
+
+        <dl class="gradient-border mt-8 grid grid-cols-2 gap-px">
+          {
+            highlights.map((h) => (
+              <div class="flex flex-col gap-1 bg-[#08030c] px-[1.15rem] py-4">
+                <dt
+                  class="text-[0.7rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+                >
+                  {h.label}
+                </dt>
+                <dd class="m-0 font-medium text-white">{h.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+        {
+          gallery.map((g) => (
+            <li
+              class="group relative aspect-square overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-elev)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)]"
+            >
+              <img
+                src={g.src}
+                alt={g.alt}
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div
+      class="mt-[clamp(2rem,4vw,3rem)] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] px-5 py-3">
+        <div class="flex flex-col">
+          <span
+            class="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+          >
+            Location
+          </span>
+          <span class="text-white">
+            Fondation Le Camp, Vaumarcus, Switzerland
+          </span>
+        </div>
+        <a
+          href="https://www.google.com/maps/place/Fondation+Le+Camp/@46.870872,6.74835,16z"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[0.85rem] text-[var(--color-fg-muted)] hover:text-[var(--color-accent)]"
+        >
+          Open in Google Maps →
+        </a>
+      </div>
+      <div class="aspect-[16/9] w-full md:aspect-[21/9]">
+        <iframe
+          src="https://maps-api-ssl.google.com/maps?hl=en-US&ll=46.870872,6.74835&output=embed&q=46.870834,6.748455&z=16"
+          title="Map of Fondation Le Camp in Vaumarcus, Switzerland"
+          aria-label="Map"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="h-full w-full border-0 grayscale-[0.15]"
+        >
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>

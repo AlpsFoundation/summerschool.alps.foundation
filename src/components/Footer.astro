@@ -1,0 +1,143 @@
+---
+const socials = [
+  { name: 'Facebook', href: 'https://www.facebook.com/ALPS.Conference/' },
+  { name: 'Instagram', href: 'https://instagram.com/alps.foundation' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@alpsfoundation' },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/alps-awareness-lectures-on-psychedelic-science/',
+  },
+  { name: 'X', href: 'https://x.com/ALPSconference' },
+];
+---
+
+<footer
+  class="relative mt-[clamp(4rem,8vw,7rem)] border-t border-[var(--color-border)]"
+>
+  <div class="relative overflow-hidden">
+    <img
+      src="/assets/location-footer.jpg"
+      alt="Sunset view at Le Camp overlooking Lake Neuchâtel"
+      loading="lazy"
+      width="1200"
+      height="379"
+      class="block h-auto w-full select-none"
+    />
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-[35%] bg-gradient-to-b from-transparent to-[var(--color-bg)]"
+    >
+    </div>
+  </div>
+
+  <div class="container-x relative z-10 pt-[clamp(2.5rem,5vw,4rem)] pb-8">
+    <div class="mb-12 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+      <div class="flex items-center gap-4">
+        <div
+          class="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white/[0.04] p-1"
+        >
+          <img src="/assets/logo.png" alt="" width="44" height="44" />
+        </div>
+        <div>
+          <p class="m-0 text-[1.05rem] font-semibold text-white">
+            ALPS Foundation
+          </p>
+          <p class="m-0 text-[0.88rem] text-[var(--color-fg-subtle)]">
+            Awareness Lectures on Psychedelics in Switzerland
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+        >
+          Apply for 2026
+        </a>
+        <a href="mailto:summerschool@alps.foundation" class="btn btn--ghost">
+          Contact the team
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-1 gap-8 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-gradient-to-b from-white/[0.04] to-white/[0.015] p-8 backdrop-blur md:grid-cols-3"
+    >
+      <div>
+        <h4
+          class="mb-[0.6rem] text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+        >
+          Address
+        </h4>
+        <p class="m-0 leading-[1.6] text-white">
+          Rue du Beulet 11<br />
+          1203 Geneva, Switzerland
+        </p>
+      </div>
+
+      <div>
+        <h4
+          class="mb-[0.6rem] text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+        >
+          Contact
+        </h4>
+        <p class="m-0 leading-[1.6] text-white">
+          <a href="mailto:summerschool@alps.foundation">
+            summerschool@alps.foundation
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h4
+          class="mb-[0.6rem] text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+        >
+          Social
+        </h4>
+        <ul class="m-0 flex list-none flex-col gap-[0.45rem] p-0">
+          {
+            socials.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group inline-flex items-center gap-[0.55rem] text-white hover:text-[var(--color-accent)]"
+                >
+                  {s.name}
+                  <span
+                    aria-hidden="true"
+                    class="text-[var(--color-fg-subtle)] transition-transform duration-200 group-hover:translate-x-[3px]"
+                  >
+                    →
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-10 flex flex-col justify-between gap-4 border-t border-[var(--color-border)] pt-6 text-[0.85rem] text-[var(--color-fg-subtle)] md:flex-row"
+    >
+      <p class="m-0">
+        © 2026 ALPS Foundation. Listed on{' '}
+        <a
+          href="https://summerschoolsineurope.eu"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          summerschoolsineurope.eu
+        </a>.
+      </p>
+      <p class="m-0">
+        Exploring the peaks of psychedelic science &amp; therapy.
+      </p>
+    </div>
+  </div>
+</footer>

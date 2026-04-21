@@ -1,0 +1,33 @@
+---
+const videoSrc =
+  'https://www.youtube.com/embed/prc52SpfrE0?rel=0&modestbranding=1';
+---
+
+<section id="aftermovie" class="py-[clamp(3rem,6vw,5rem)]">
+  <div class="container-x">
+    <div class="mb-[clamp(1.5rem,3vw,2.5rem)] flex max-w-[820px] flex-col gap-3">
+      <span class="eyebrow self-start">Aftermovie 2025</span>
+      <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
+        A glimpse into last year&rsquo;s week at Le Camp.
+      </h2>
+    </div>
+
+    <div
+      class="relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)] shadow-[0_30px_80px_-40px_rgba(154,0,109,0.55)]"
+    >
+      <div class="aspect-video w-full">
+        <iframe
+          src={videoSrc}
+          title="ALPS Summer School 2025 Aftermovie"
+          aria-label="YouTube Video, ALPS Summer School 2025 Aftermovie"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          class="h-full w-full border-0"
+        >
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>

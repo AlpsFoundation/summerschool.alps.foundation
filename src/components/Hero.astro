@@ -1,0 +1,85 @@
+---
+const facts = [
+  { label: 'Dates', value: '26 Jul – 01 Aug 2026' },
+  { label: 'Location', value: 'Vaumarcus, Switzerland' },
+  { label: 'Cohort', value: '25 – 30 participants' },
+  { label: 'Language', value: 'English' },
+];
+---
+
+<section
+  id="top"
+  class="relative flex min-h-[min(92vh,960px)] items-end overflow-hidden pb-[clamp(3rem,6vw,5rem)] pt-[clamp(4rem,10vw,8rem)] lg:grid lg:min-h-0 lg:grid-cols-1 lg:grid-rows-[31.640625vw_auto] lg:items-start lg:pb-[clamp(3rem,6vw,5rem)] lg:pt-0"
+>
+  <div
+    class="absolute inset-x-0 top-0 z-0 overflow-hidden"
+    style="aspect-ratio: 1600 / 675;"
+    aria-hidden="true"
+  >
+    <img
+      src="/assets/hero-banner.png"
+      alt=""
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      class="block h-auto w-full -translate-y-[25%]"
+    />
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-b from-transparent via-[rgba(5,0,7,0.7)] to-[var(--color-bg)]"
+    >
+    </div>
+  </div>
+
+  <!-- Reserves 75% of the banner image height on wide screens so the title appears just below its lower quarter -->
+  <div class="pointer-events-none hidden min-h-0 shrink-0 lg:block" aria-hidden="true"></div>
+
+  <div class="container-x relative z-10 max-w-[900px] lg:row-start-2 lg:self-start">
+    <span class="eyebrow">ALPS Summer School · 26 Jul – 01 Aug 2026</span>
+
+    <h1
+      class="mt-6 font-medium tracking-[-0.03em]"
+    >
+      Exploring the Peaks of{' '}
+      <span class="grad-text">Psychedelic Science</span>{' '}
+      &amp; Therapy
+    </h1>
+
+    <p
+      class="mb-9 max-w-[640px] text-[clamp(1.05rem,1.6vw,1.25rem)] text-white/85"
+    >
+      An immersive week of lectures, hands-on workshops and community with
+      leading psychedelic researchers — set in the Swiss mountains above Lake
+      Neuchâtel.
+    </p>
+
+    <div class="mb-12 flex flex-wrap gap-3">
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn"
+      >
+        Apply for 2026
+        <span aria-hidden="true">→</span>
+      </a>
+      <a href="#program" class="btn btn--ghost">See the program</a>
+    </div>
+
+    <dl class="gradient-border grid max-w-[720px] grid-cols-2 gap-px sm:grid-cols-4">
+      {
+        facts.map((f) => (
+          <div class="flex flex-col gap-1 bg-[#08030c] px-[1.2rem] py-[1.1rem]">
+            <dt
+              class="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+            >
+              {f.label}
+            </dt>
+            <dd class="m-0 text-[0.98rem] font-medium text-white">
+              {f.value}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

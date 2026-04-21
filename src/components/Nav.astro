@@ -1,0 +1,110 @@
+---
+const links = [
+  { id: 'about', label: 'About' },
+  { id: 'program', label: 'Program' },
+  { id: 'venue', label: 'Venue' },
+  { id: 'people', label: 'People' },
+  { id: 'info', label: 'Info' },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[rgba(5,0,7,0.42)] backdrop-blur-xl backdrop-saturate-[1.35] supports-[backdrop-filter]:bg-[rgba(5,0,7,0.38)]"
+>
+  <div class="container-x flex items-center justify-between gap-5 py-[0.9rem]">
+    <a
+      href="#top"
+      class="inline-flex items-center gap-[0.65rem] text-white hover:text-white hover:opacity-90"
+      aria-label="ALPS Summer School — home"
+    >
+      <img
+        src="/assets/logo.png"
+        alt=""
+        width="30"
+        height="30"
+        class="h-[30px] w-[30px] rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-white/[0.04] p-[3px]"
+      />
+      <span class="flex flex-col leading-[1.1]">
+        <span class="text-[0.95rem] font-semibold tracking-[0.08em]">ALPS</span>
+        <span
+          class="text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-fg-subtle)]"
+        >
+          Summer School 2026
+        </span>
+      </span>
+    </a>
+
+    <nav
+      class="hidden items-center gap-[1.6rem] text-[0.92rem] text-[var(--color-fg-muted)] md:inline-flex"
+      aria-label="Primary"
+    >
+      {
+        links.map((l) => (
+          <a
+            href={`#${l.id}`}
+            data-scrollspy-target={l.id}
+            class="nav-link group relative text-[var(--color-fg-muted)] transition-colors duration-200 hover:text-white aria-[current=location]:text-white"
+          >
+            {l.label}
+            <span
+              aria-hidden="true"
+              class="grad-primary absolute inset-x-0 -bottom-[6px] h-[2px] origin-left scale-x-0 rounded-[2px] transition-transform duration-200 group-hover:scale-x-100 group-aria-[current=location]:scale-x-100"
+            />
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn text-[0.88rem] !px-4 !py-[0.55rem]"
+    >
+      Apply
+    </a>
+  </div>
+</header>
+
+<script>
+  function updateScrollSpy() {
+    const links = Array.from(document.querySelectorAll('[data-scrollspy-target]'));
+    const ids = links
+      .map((el) => /** @type {HTMLElement} */ (el).dataset.scrollspyTarget)
+      .filter(Boolean);
+    const header = document.querySelector('header');
+    const navH = header?.getBoundingClientRect().height ?? 72;
+    const activationY = window.scrollY + navH + 14;
+
+    /** @type {string | null} */
+    let activeId = null;
+    for (const id of ids) {
+      const section = document.getElementById(id);
+      if (!section) continue;
+      const top = section.getBoundingClientRect().top + window.scrollY;
+      if (top <= activationY) activeId = id;
+    }
+
+    for (const link of links) {
+      const id = /** @type {HTMLElement} */ (link).dataset.scrollspyTarget;
+      const on = id === activeId;
+      if (on) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
+  let ticking = false;
+  function onScrollOrResize() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateScrollSpy();
+      ticking = false;
+    });
+  }
+
+  updateScrollSpy();
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+  window.addEventListener('hashchange', updateScrollSpy);
+</script>

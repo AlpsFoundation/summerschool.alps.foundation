@@ -1,0 +1,64 @@
+---
+const days = [
+  { num: 1, date: 'Sunday 26 July', theme: 'Arrivals, welcome & introduction', tag: 'Day 1' },
+  { num: 2, date: 'Monday 27 July', theme: 'Foundations', tag: 'Day 2' },
+  { num: 3, date: 'Tuesday 28 July', theme: 'Psychedelics in the brain', tag: 'Day 3' },
+  { num: 4, date: 'Wednesday 29 July', theme: 'Clinical frontiers', tag: 'Day 4' },
+  { num: 5, date: 'Thursday 30 July', theme: 'Cutting edge — novel applications & research', tag: 'Day 5' },
+  { num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration', tag: 'Day 6' },
+];
+---
+
+<section id="program" class="py-[clamp(4rem,8vw,7rem)]">
+  <div class="container-x">
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Program</span>
+      <h2>Six days, six themes — one cohesive journey.</h2>
+      <p>
+        Each of the five full days features three theoretical talks, a
+        practical workshop and a social event. Daily themes, full lecture
+        lists and learning objectives are coming soon.
+      </p>
+    </div>
+
+    <ol class="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        days.map((d) => (
+          <li class="card group relative flex min-h-[220px] flex-col gap-4 overflow-hidden">
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+              style="background: radial-gradient(400px 200px at 110% -20%, rgba(154,0,109,0.18), transparent 60%);"
+            />
+            <div
+              class="grad-text text-[2.75rem] font-medium leading-none tracking-[-0.04em]"
+              aria-hidden="true"
+            >
+              <span>{String(d.num).padStart(2, '0')}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-[0.6rem]">
+              <span
+                class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]"
+              >
+                {d.tag}
+              </span>
+              <span class="text-[0.82rem] tracking-[0.02em] text-[var(--color-fg-subtle)]">
+                {d.date}
+              </span>
+            </div>
+            <h3 class="m-0 text-[1.1rem] font-medium leading-[1.3] text-white">
+              {d.theme}
+            </h3>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div
+      class="mt-8 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-gradient-to-r from-[rgba(154,0,109,0.1)] to-[rgba(255,255,255,0.02)] px-6 py-5 text-[0.95rem] text-[var(--color-fg-muted)]"
+    >
+      Full program details — lectures, workshops and learning objectives —
+      publishing soon. Sign up via the application form to be notified.
+    </div>
+  </div>
+</section>

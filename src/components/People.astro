@@ -1,0 +1,130 @@
+---
+const alumni = [
+  'Aline Frick',
+  'Anita Bober',
+  'Bertram Groinig',
+  'Camila Suarez',
+  'Camille Mariéthoz',
+  'Clara Hadzopoulos',
+  'David Frank',
+  'Emily Ward',
+  'Hector Taylor',
+  'Ilann Rouillé',
+  'Iris Wirthner',
+  'Ivana Sterr',
+  'Jennifer Dell',
+  'Jim Krups',
+  'Jonathan',
+  'Juan Romero',
+  'Julian Zenzmair',
+  'Leon Ramirez Alexander Kimling',
+  'Marc Grüninger',
+  'Margherita Pancotti',
+  'Meta Laubinger',
+  'Sally Chang',
+  'Sean Goldy',
+  'Stefanie Mayer',
+  'Verena Naef',
+];
+
+const team = [
+  { name: 'Gabriella Szasz', role: 'Project coordination', image: '/assets/people-gabriella.jpg' },
+  { name: 'Lennert van de Kreeke', role: 'Participants, website', image: '/assets/people-lennert.jpg' },
+  { name: 'Parsa Yousefi', role: 'Logistics', image: '/assets/people-parsa.jpg' },
+  { name: 'Raphael Saunier', role: 'Web development', image: '/assets/people-raph.jpg' },
+];
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
+---
+
+<section id="people" class="py-[clamp(4rem,8vw,7rem)]">
+  <div class="container-x">
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">People</span>
+      <h2>Meet the people at the ALPS Summer School.</h2>
+      <p>
+        A small, international cohort and the team that makes the week
+        happen.
+      </p>
+    </div>
+
+    <div>
+      <div
+        class="mb-6 flex items-baseline justify-between gap-4 border-b border-[var(--color-border)] pb-4"
+      >
+        <h3 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
+          Team 2026
+        </h3>
+        <span
+          class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]"
+        >
+          {team.length} members
+        </span>
+      </div>
+      <ul
+        class="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4"
+      >
+        {
+          team.map((p) => (
+            <li class="card flex items-center gap-[0.9rem] !p-5">
+              <img
+                src={p.image}
+                alt={p.name}
+                class="h-11 w-11 flex-shrink-0 rounded-[var(--radius-md)] object-cover shadow-[0_8px_20px_-8px_rgba(154,0,109,0.6)]"
+                aria-hidden="true"
+              />
+              <div class="flex min-w-0 flex-col gap-[0.15rem]">
+                <span class="font-medium text-white">{p.name}</span>
+                <span class="text-[0.82rem] text-[var(--color-fg-subtle)]">
+                  {p.role}
+                </span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="mt-[clamp(3rem,5vw,4.5rem)]">
+      <div
+        class="mb-6 flex items-baseline justify-between gap-4 border-b border-[var(--color-border)] pb-4"
+      >
+        <h3 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
+          Alumni 2025
+        </h3>
+        <span
+          class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]"
+        >
+          {alumni.length} participants
+        </span>
+      </div>
+      <ul
+        class="m-0 grid list-none gap-2 p-0"
+        style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"
+      >
+        {
+          alumni.map((name) => (
+            <li
+              class="group flex items-center gap-[0.9rem] rounded-full border border-[var(--color-border)] bg-white/[0.025] px-4 py-3 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:bg-[rgba(154,0,109,0.1)]"
+            >
+              <span
+                aria-hidden="true"
+                class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
+              />
+              <span class="text-[0.9rem] font-normal text-white/90">
+                {name}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

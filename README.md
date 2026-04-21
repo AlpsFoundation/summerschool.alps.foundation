@@ -1,34 +1,39 @@
-# Astro Starter Kit: Basics
+# summerschool.alps.foundation
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+Website for the ALPS Summer School — built with [Astro](https://astro.build/).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Open Graph image
 
-## 🚀 Project Structure
+Default social preview (`og:image`, Twitter `summary_large_image`). Defined in [`src/layouts/Layout.astro`](src/layouts/Layout.astro) with `image = '/assets/opengraph.jpg'`.
 
-Inside of your Astro project, you'll see the following folders and files:
+| | |
+| :--- | :--- |
+| **Repo file** | [`public/assets/opengraph.jpg`](public/assets/opengraph.jpg) |
+| **Deployed URL** | https://summerschool.alps.foundation/assets/opengraph.jpg |
+
+![Open Graph preview](public/assets/opengraph.jpg)
+
+## Project structure
 
 ```text
 /
+├── content/           # section copy (plain text)
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│   ├── assets/        # images, favicon, opengraph.jpg
+│   └── fonts/
+├── src/
+│   ├── components/    # page sections (Hero, Program, …)
+│   ├── layouts/
+│   │   └── Layout.astro
+│   ├── pages/
+│   │   └── index.astro
+│   └── styles/
+├── astro.config.mjs
+├── wrangler.jsonc
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
+## Commands
 
 All commands are run from the root of the project, from a terminal:
 
@@ -41,6 +46,4 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+See [Astro documentation](https://docs.astro.build).

@@ -1,0 +1,69 @@
+---
+const cards = [
+  {
+    title: 'Expert-led lectures',
+    body: 'Renowned psychedelic researchers deliver daily talks and guide group discussions on current science.',
+    image: '/assets/lecture.jpg',
+    alt: 'A lecture at the ALPS Summer School',
+  },
+  {
+    title: 'Hands-on workshops',
+    body: 'Experienced facilitators lead interactive workshops blending theory with practical skills and reflection.',
+    image: '/assets/location-mood.jpg',
+    alt: 'Evening mood and setting at the summer school venue',
+  },
+  {
+    title: 'Community & nature',
+    body: 'Evenings and breaks unfold in forest, by the fire and overlooking Lake Neuchâtel — in a small cohort of 25–30.',
+    image: '/assets/group-circle.jpg',
+    alt: 'ALPS participants gathered in a circle outdoors',
+  },
+];
+---
+
+<section
+  id="about"
+  class="py-[clamp(4rem,8vw,7rem)]"
+>
+  <div class="container-x">
+    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">What is the Summer School?</span>
+      <h2>
+        An immersive week of{' '}
+        <span class="grad-text">psychedelic science</span>, therapy
+        and personal growth.
+      </h2>
+      <p>
+        The ALPS Summer School is an immersive educational program focused
+        on psychedelic science — offering a holistic opportunity for both
+        professional and personal development.
+      </p>
+      <p>
+        Renowned researchers deliver lectures and lead discussions;
+        experienced facilitators guide interactive workshops; engaging
+        social events complement the experience — all in close proximity to
+        nature. A well-balanced schedule offers a comprehensive overview of
+        current research and space to explore intersections between fields.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {
+        cards.map((c) => (
+          <article class="card flex flex-col overflow-hidden !p-0">
+            <img
+              src={c.image}
+              alt={c.alt}
+              loading="lazy"
+              class="aspect-[4/3] w-full shrink-0 object-cover"
+            />
+            <div class="flex flex-col gap-3 p-[clamp(1.25rem,2.5vw,2rem)]">
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
