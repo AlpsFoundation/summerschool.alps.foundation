@@ -1,17 +1,9 @@
+![ALPS Summer School](public/assets/opengraph.jpg)
+
 # summerschool.alps.foundation
 
 Website for the ALPS Summer School — built with [Astro](https://astro.build/).
 
-## Open Graph image
-
-Default social preview (`og:image`, Twitter `summary_large_image`). Defined in [`src/layouts/Layout.astro`](src/layouts/Layout.astro) with `image = '/assets/opengraph.jpg'`.
-
-| | |
-| :--- | :--- |
-| **Repo file** | [`public/assets/opengraph.jpg`](public/assets/opengraph.jpg) |
-| **Deployed URL** | https://summerschool.alps.foundation/assets/opengraph.jpg |
-
-![Open Graph preview](public/assets/opengraph.jpg)
 
 ## Project structure
 
