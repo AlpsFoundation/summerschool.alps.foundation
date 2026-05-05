@@ -2,10 +2,72 @@
 const days = [
   { num: 1, date: 'Sunday 26 July', theme: 'Arrivals, welcome & introduction', tag: 'Day 1' },
   { num: 2, date: 'Monday 27 July', theme: 'Foundations', tag: 'Day 2' },
-  { num: 3, date: 'Tuesday 28 July', theme: 'Psychedelics in the brain', tag: 'Day 3' },
-  { num: 4, date: 'Wednesday 29 July', theme: 'Clinical frontiers', tag: 'Day 4' },
-  { num: 5, date: 'Thursday 30 July', theme: 'Cutting edge — novel applications & research', tag: 'Day 5' },
+  { num: 3, date: 'Tuesday 28 July', theme: 'Clinical frontiers', tag: 'Day 3' },
+  { num: 4, date: 'Wednesday 29 July', theme: 'Psychedelics in the brain', tag: 'Day 4' },
+  { num: 5, date: 'Thursday 30 July', theme: 'Cutting edge applications and research', tag: 'Day 5' },
   { num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration', tag: 'Day 6' },
+];
+
+const speakers = [
+  {
+    name: 'Helena Aicher',
+    image: '/assets/speakers-helena-aicher.jpg',
+    bio: [
+      `Helena is a research associate at the Universities of Zurich and Basel, where she is involved in clinical trials investigating psychedelics. Alongside her research role, she works as a psychotherapist with psychedelic-assisted therapy within Switzerland's framework for limited medical use, primarily in group settings.`,
+      `Bridging scientific research and frontline practice, she contributes to the development and safe implementation of psychedelic-assisted therapies. Helena is also active as a trainer in therapist training programs and serves as an advisor to several institutions.`,
+    ],
+  },
+  {
+    name: 'Daniel Meling',
+    image: '/assets/speakers-daniel-meling.jpg',
+    bio: [
+      `Daniel Meling has a PhD in Human Sciences, an MSc in Cognitive Science, and a BA in Educational Science and Education Management. In his previous work, he has focused on applying enactive cognitive science to meditation, non-dual awareness, and psychedelic experiences.`,
+      `In his empirical research, he conducted more than a hundred phenomenological interviews around psychedelic experiences, including the study of interaction effects between DMT-harmine and meditative practices in experienced meditators during an RCT conducted at a meditation group retreat.`,
+    ],
+  },
+  {
+    name: 'Martha Havenith',
+    image: '/assets/speakers-martha-havenith.jpg',
+    bio: [
+      `Martha is a Max Planck research group leader at the Ernst-Strungmann Institute for Neuroscience in Frankfurt, Germany, where she uses virtual reality to study how neurons juggle coexisting cognitive processes during natural behaviour. Her previous career milestones include an M.Sc. in Neuroscience at Oxford University, a Ph.D. at the Max Planck Institute for Brain Research, and postdoctoral research fellowships at University College London and the Donders Institute for Brain, Cognition and Behaviour in Nijmegen, Netherlands.`,
+      `Martha is also a certified breathwork facilitator with a decade of experience. Apart from breathwork sessions in individual and group settings, she leads facilitator trainings and workshops for healthcare professionals. In recent years, Martha has been leading pioneering research on the neuronal and clinical effects of breathwork, including a first-of-its-kind study on breathwork and trauma processing. Together with Abdel Nemri, she has also co-authored The Breathwork Handbook: an exploration of the history, neuroscience, psychology, and most importantly the principled practice of breathwork. With this work, Martha's passion is to bridge science and lived experience in exploring the power of breathing.`,
+    ],
+  },
+  {
+    name: 'Klemens Egger',
+    image: '/assets/speakers-klemens-egger.jpg',
+    bio: [
+      `Klemens Egger is a neuroscientist and postdoctoral researcher at the University Hospital of Psychiatry Zurich. He holds a background in chemistry and biomedical neuroscience and completed his PhD on the pharmacology and neurobiology of N,N-dimethyltryptamine (DMT) and harmine.`,
+      `His research combines pharmacology with multimodal neuroimaging, including fMRI and PET, to investigate how psychedelic compounds affect brain function and behavior. His current work focuses on the neural mechanisms underlying socio-affective processes such as empathy and compassion, as well as on neurometabolic modeling approaches to better characterize psychedelic-induced changes in brain dynamics.`,
+    ],
+  },
+  {
+    name: 'Jason Day',
+    image: '/assets/speakers-jason-day.jpg',
+    bio: [
+      `Dr. Jason K. Day is a postdoctoral researcher at the University of Fribourg who specialises in the phenomenology of psychedelic experiences, phenomenological scholarship, and philosophy of attention. They received their PhD in philosophy, summa cum laude, from the University of Fribourg for their phenomenological qualitative study of psychedelic experiences and are currently conducting research on challenging memories in relation to psychedelic-assisted therapy at the Molecular Psychiatry Lab.`,
+      `Their most recent publication concerns socio-political issues surrounding the recreational use of psychedelics, with a forthcoming paper on ego-dissolution and book on the phenomenology of psychedelic experiences to follow.`,
+      `Their other research interests include anarchist thought and Buddhist philosophy. They are a committee member of the Psychedelic Research Organisation of Fribourg (PROOF) and the Swiss Psychedelic Student Network (SPSN).`,
+    ],
+  },
+  {
+    name: 'Daniel Villiger',
+    image: '/assets/speakers-daniel-villiger.jpg',
+    bio: [
+      `Daniel Villiger, PhD, is a philosopher with an interdisciplinary background and main interests in decision theory, cognitive science, and bioethics. He holds a PhD in Philosophy from the University of Zurich, a PhD in Behavioral Economics from the University of St. Gallen, and an MSc in Psychology from the University of Zurich.`,
+      `From 2024 to 2025, he conducted the project Psychedelic Ethics at the Uehiro Oxford Institute at the University of Oxford. He is currently a postdoctoral researcher at the University of Zurich. His work has been published in the American Journal of Bioethics, Synthese, Journal of Ethics, Philosophical Psychology, Journal of Medical Ethics, and other journals.`,
+    ],
+  },
+  {
+    name: 'Morten Lietz',
+    image: '/assets/speakers-morten-lietz.jpg',
+    bio: [
+      `Morten Lietz is pursuing a Ph.D. in Medical Science, studying LSD's effects on neuroplasticity across the lifespan in a large clinical trial. His work combines neurophysiological, cognitive, subjective, and safety-related measures to examine psychedelic effects in healthy aging.`,
+      `He previously helped establish a research program at the University of Groningen in the Netherlands under Prof. Enriquez-Geppert, exploring neuroplasticity-enhancing agents and neuromodulation to improve cognition. He also co-organized the first two Summer Schools on Psychedelic Research in Groningen with Dr. Joost Breeksema and the OPEN Foundation.`,
+      `In Switzerland, he served as Educational Program Coordinator for the ALPS Foundation, organizing conferences and summer schools, and now supports the ALPS PsyCare initiative focused on harm reduction and psychological support.`,
+      `His research interests include psychedelics' effects on memory, genetics and epigenetics, cognition, and safety.`,
+    ],
+  },
 ];
 ---
 
@@ -15,9 +77,12 @@ const days = [
       <span class="eyebrow self-start">Program</span>
       <h2>Six days, six themes — one cohesive journey.</h2>
       <p>
-        Each of the five full days features three theoretical talks, a
-        practical workshop and a social event. Daily themes, full lecture
-        lists and learning objectives are coming soon.
+        Each of the five full days of the ALPS Summer School 2026 focuses on
+        a different aspect of psychedelic research, featuring three
+        theoretical talks, a practical workshop and a social event every day.
+        A comprehensive overview of all lectures and workshops is coming soon.
+        Confirmed speakers and their bios are shown below and continually
+        updated. Stay tuned for more.
       </p>
     </div>
 
@@ -59,6 +124,48 @@ const days = [
     >
       Full program details — lectures, workshops and learning objectives —
       publishing soon. Sign up via the application form to be notified.
+    </div>
+
+    <div id="speakers" class="mt-[clamp(3.5rem,7vw,6rem)]">
+      <div
+        class="mb-6 flex flex-col gap-3 border-b border-[var(--color-border)] pb-4 sm:flex-row sm:items-end sm:justify-between"
+      >
+        <div class="flex max-w-[760px] flex-col gap-3">
+          <span class="eyebrow self-start">Speakers</span>
+          <h3 class="m-0 text-[clamp(1.6rem,3vw,2.2rem)]">
+            Confirmed speakers and facilitators
+          </h3>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        {
+          speakers.map((speaker) => (
+            <article class="card w-full overflow-hidden !p-0">
+              <div class="grid gap-0 md:grid-cols-[minmax(220px,28%)_1fr]">
+                <img
+                  src={speaker.image}
+                  alt={speaker.name}
+                  class="aspect-[4/3] h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div class="flex flex-col gap-4 p-5 sm:p-6">
+                  <h4 class="m-0 text-[1.25rem] font-medium text-white">
+                    {speaker.name}
+                  </h4>
+                  <div class="flex flex-col gap-3">
+                    {speaker.bio.map((paragraph) => (
+                      <p class="m-0 text-[0.92rem] leading-[1.65] text-[var(--color-fg-muted)]">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
