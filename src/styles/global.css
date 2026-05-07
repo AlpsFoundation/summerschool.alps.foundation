@@ -318,6 +318,26 @@
     );
   }
 
+  .cancellation-popover summary {
+    list-style: none;
+  }
+  .cancellation-popover summary::-webkit-details-marker {
+    display: none;
+  }
+  .cancellation-popover > div {
+    animation: popover-fade 150ms ease;
+  }
+  @keyframes popover-fade {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .gradient-border::before {
     content: "";
     position: absolute;

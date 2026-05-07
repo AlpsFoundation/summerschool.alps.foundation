@@ -28,6 +28,17 @@ const included = [
 ];
 
 const notIncluded = ['Personal insurance', 'Transportation to Vaumarcus'];
+
+const pricing = [
+  { category: "Bachelor's or Master's students", price: 'CHF 890' },
+  { category: 'PhD students', price: 'CHF 1250' },
+  { category: 'Professionals', price: 'CHF 1990' },
+];
+
+const cancellationTerms = [
+  { deadline: 'Until 14 June 2026', charge: '50% of the participation fee' },
+  { deadline: 'From 15 June 2026', charge: '100% of the participation fee' },
+];
 ---
 
 <section id="info" class="py-[clamp(4rem,8vw,7rem)]">
@@ -122,6 +133,44 @@ const notIncluded = ['Personal insurance', 'Transportation to Vaumarcus'];
           }
         </ul>
       </div>
+    </div>
+
+    <div class="card mt-[clamp(2rem,4vw,3rem)]">
+      <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <h3 class="m-0 text-[1.1rem] font-medium">Participation fees</h3>
+        <details class="cancellation-popover relative">
+          <summary class="cursor-pointer text-[0.78rem] text-[var(--color-fg-subtle)] underline decoration-dotted underline-offset-2 transition-colors hover:text-[var(--color-accent)]">
+            Cancellation terms
+          </summary>
+          <div class="absolute right-0 top-full z-10 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[#0c0610] p-4 shadow-lg">
+            <p class="mb-3 text-[0.85rem] font-medium text-white">Cancellation policy</p>
+            <ul class="m-0 grid list-none gap-2 p-0 text-[0.82rem] text-[var(--color-fg-muted)]">
+              {cancellationTerms.map((term) => (
+                <li class="flex justify-between gap-3">
+                  <span>{term.deadline}:</span>
+                  <span class="text-right text-white/90">{term.charge}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mb-0 mt-3 text-[0.78rem] leading-snug text-[var(--color-fg-subtle)]">
+              If we can arrange a replacement from our waiting list, we provide a full refund.
+            </p>
+          </div>
+        </details>
+      </div>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {
+          pricing.map((tier) => (
+            <div class="flex flex-col gap-1 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[rgba(5,0,7,0.5)] px-4 py-3">
+              <span class="text-[0.82rem] text-[var(--color-fg-muted)]">{tier.category}</span>
+              <span class="text-[1.15rem] font-semibold text-white">{tier.price}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mb-0 mt-4 text-[0.82rem] leading-snug text-[var(--color-fg-subtle)]">
+        Please select your applicable category in the application form — your selection will be verified during the evaluation process based on your submitted documents.
+      </p>
     </div>
 
     <div
