@@ -295,6 +295,16 @@
     border-color: var(--color-border-strong);
   }
 
+  .speaker-bio mark {
+    background: transparent;
+    color: #e2a3c8;
+  }
+
+  .speaker-bio strong {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
   .gradient-border {
     position: relative;
     border-radius: var(--radius-lg);
