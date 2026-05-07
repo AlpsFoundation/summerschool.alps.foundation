@@ -8,9 +8,21 @@ const days = [
   { num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration', tag: 'Day 6' },
 ];
 
-const speakers = [
+type Speaker = {
+  name: string;
+  title?: string;
+  affiliations?: string[];
+  scholar?: string;
+  image: string;
+  bio: string[];
+};
+
+const speakers: Speaker[] = [
   {
     name: 'Helena Aicher',
+    title: 'PhD',
+    affiliations: ['University of Zurich', 'University of Basel'],
+    scholar: 'https://scholar.google.com/citations?user=ElX6dX8AAAAJ',
     image: '/assets/speakers-helena-aicher.jpg',
     bio: [
       `Helena is a research associate at the Universities of Zurich and Basel, where she is involved in clinical trials investigating psychedelics. Alongside her research role, she works as a psychotherapist with psychedelic-assisted therapy within Switzerland's framework for limited medical use, primarily in group settings.`,
@@ -19,6 +31,9 @@ const speakers = [
   },
   {
     name: 'Christopher Böhlke',
+    title: 'Prof. Dr.',
+    affiliations: ['University Hospital Basel'],
+    scholar: 'https://scholar.google.com/citations?user=lwNCdt8AAAAJ',
     image: '/assets/speakers-christopher-boehlke.jpg',
     bio: [
       `Christopher is an internist, nephrologist, psychotherapist, and palliative care physician, dedicated to both practicing and researching at the Palliative Care Center and University Hospital Basel. His passion for Psychedelic-Assisted Therapy (PAT) stems from the wish to helping individuals with incurable diseases find acceptance and alleviate their suffering.`,
@@ -27,6 +42,9 @@ const speakers = [
   },
   {
     name: 'Jason Day',
+    title: 'PhD',
+    affiliations: ['University of Fribourg'],
+    scholar: 'https://scholar.google.com/citations?user=olWYWbIAAAAJ',
     image: '/assets/speakers-jason-day.jpg',
     bio: [
       `Dr. Jason K. Day is a postdoctoral researcher at the University of Fribourg who specialises in the phenomenology of psychedelic experiences, phenomenological scholarship, and philosophy of attention. They received their PhD in philosophy, summa cum laude, from the University of Fribourg for their phenomenological qualitative study of psychedelic experiences and are currently conducting research on challenging memories in relation to psychedelic-assisted therapy at the Molecular Psychiatry Lab.`,
@@ -36,6 +54,9 @@ const speakers = [
   },
   {
     name: 'Klemens Egger',
+    title: 'PhD',
+    affiliations: ['University Hospital of Psychiatry Zurich'],
+    scholar: 'https://scholar.google.com/citations?user=do8wor0AAAAJ',
     image: '/assets/speakers-klemens-egger.jpg',
     bio: [
       `Klemens Egger is a neuroscientist and postdoctoral researcher at the University Hospital of Psychiatry Zurich. He holds a background in chemistry and biomedical neuroscience and completed his PhD on the pharmacology and neurobiology of N,N-dimethyltryptamine (DMT) and harmine.`,
@@ -44,6 +65,9 @@ const speakers = [
   },
   {
     name: 'Martha Havenith',
+    title: 'PhD',
+    affiliations: ['Ernst Strüngmann Institute', 'Max Planck Society'],
+    scholar: 'https://scholar.google.com/citations?user=EY_4zioAAAAJ',
     image: '/assets/speakers-martha-havenith.jpg',
     bio: [
       `Martha is a Max Planck research group leader at the Ernst-Strungmann Institute for Neuroscience in Frankfurt, Germany, where she uses virtual reality to study how neurons juggle coexisting cognitive processes during natural behaviour. Her previous career milestones include an M.Sc. in Neuroscience at Oxford University, a Ph.D. at the Max Planck Institute for Brain Research, and postdoctoral research fellowships at University College London and the Donders Institute for Brain, Cognition and Behaviour in Nijmegen, Netherlands.`,
@@ -52,6 +76,9 @@ const speakers = [
   },
   {
     name: 'Morten Lietz',
+    title: 'PhD candidate',
+    affiliations: ['University of Fribourg'],
+    scholar: 'https://scholar.google.com/citations?user=O-lRCnMAAAAJ',
     image: '/assets/speakers-morten-lietz.jpg',
     bio: [
       `Morten Lietz is pursuing a Ph.D. in Medical Science, studying LSD's effects on neuroplasticity across the lifespan in a large clinical trial. His work combines neurophysiological, cognitive, subjective, and safety-related measures to examine psychedelic effects in healthy aging.`,
@@ -62,6 +89,9 @@ const speakers = [
   },
   {
     name: 'Daniel Meling',
+    title: 'PhD',
+    affiliations: ['University of Zurich', 'University of Freiburg'],
+    scholar: 'https://scholar.google.com/citations?user=qC2w-eMAAAAJ',
     image: '/assets/speakers-daniel-meling.jpg',
     bio: [
       `Daniel Meling has a PhD in Human Sciences, an MSc in Cognitive Science, and a BA in Educational Science and Education Management. In his previous work, he has focused on applying enactive cognitive science to meditation, non-dual awareness, and psychedelic experiences.`,
@@ -70,6 +100,9 @@ const speakers = [
   },
   {
     name: 'Daniel Villiger',
+    title: 'PhD',
+    affiliations: ['University of Zurich'],
+    scholar: 'https://scholar.google.com/citations?user=1ic60aMAAAAJ',
     image: '/assets/speakers-daniel-villiger.jpg',
     bio: [
       `Daniel Villiger, PhD, is a philosopher with an interdisciplinary background and main interests in decision theory, cognitive science, and bioethics. He holds a PhD in Philosophy from the University of Zurich, a PhD in Behavioral Economics from the University of St. Gallen, and an MSc in Psychology from the University of Zurich.`,
@@ -158,9 +191,47 @@ const speakers = [
                   loading="lazy"
                 />
                 <div class="flex flex-col gap-4 p-5 sm:p-6">
-                  <h4 class="m-0 text-[1.25rem] font-medium text-white">
-                    {speaker.name}
-                  </h4>
+                  <div class="flex flex-col gap-2.5 md:flex-row md:items-center md:justify-between md:gap-4">
+                    <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                      <h4 class="m-0 text-[1.25rem] font-medium text-white">
+                        {speaker.name}
+                      </h4>
+                      {speaker.title && (
+                        <span class="text-[0.95rem] text-[var(--color-fg-subtle)]">
+                          {speaker.title}
+                        </span>
+                      )}
+                      {speaker.scholar && (
+                        <a
+                          href={speaker.scholar}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${speaker.name} on Google Scholar`}
+                          title="Google Scholar"
+                          class="inline-flex translate-y-[2px] items-center text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-accent)]"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="h-[1rem] w-[1rem]"
+                            aria-hidden="true"
+                          >
+                            <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                    {speaker.affiliations && speaker.affiliations.length > 0 && (
+                      <div class="flex flex-wrap gap-2 md:flex-shrink-0 md:justify-end">
+                        {speaker.affiliations.map((aff) => (
+                          <span class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]">
+                            {aff}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <div class="flex flex-col gap-3">
                     {speaker.bio.map((paragraph) => (
                       <p class="m-0 text-[0.92rem] leading-[1.65] text-[var(--color-fg-muted)]">
