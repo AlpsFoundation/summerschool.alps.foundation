@@ -13,7 +13,7 @@ const links = [
 >
   <div class="container-x flex items-center justify-between gap-5 py-[0.9rem]">
     <a
-      href="#top"
+      href="/"
       class="inline-flex items-center gap-[0.65rem] text-white hover:text-white hover:opacity-90"
       aria-label="ALPS Summer School — home"
     >
@@ -41,7 +41,7 @@ const links = [
       {
         links.map((l) => (
           <a
-            href={`#${l.id}`}
+            href={`/#${l.id}`}
             data-scrollspy-target={l.id}
             class="nav-link group relative text-[var(--color-fg-muted)] transition-colors duration-200 hover:text-white aria-[current=location]:text-white"
           >

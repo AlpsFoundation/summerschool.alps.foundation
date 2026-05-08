@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Page not found — ALPS Summer School 2026"
+  description="The page you are looking for is not available. Explore the ALPS Summer School 2026 site."
+>
+  <Nav />
+  <main>
+    <section class="container-x grid min-h-[70vh] place-items-center py-[clamp(4rem,10vw,8rem)]">
+      <div class="mx-auto max-w-[760px] text-center">
+        <p class="eyebrow justify-center">404</p>
+        <h1 class="mt-6">This trail fades into mist.</h1>
+        <p class="mx-auto mb-9 max-w-[560px] text-[clamp(1.05rem,1.6vw,1.22rem)] text-white/80">
+          The page may have moved as the Summer School became a single-page
+          experience. The key places are still here.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/" class="btn">Back to the start</a>
+          <a href="/#program" class="btn btn--ghost">See the program</a>
+          <a href="/#info" class="btn btn--ghost">General info</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -3,6 +3,8 @@
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "summerschool-alps-foundation",
 	"main": "@astrojs/cloudflare/entrypoints/server",
+	"workers_dev": true,
+	"preview_urls": true,
 	"routes": [
 		{
 			"pattern": "summerschool.alps.foundation",

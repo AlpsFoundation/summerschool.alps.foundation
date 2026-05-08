@@ -60,7 +60,7 @@
   }
 
   /* Anchor targets clear the sticky header */
-  main section[id] {
+  main [id] {
     scroll-margin-top: calc(var(--nav-h) + 0.5rem);
   }
 

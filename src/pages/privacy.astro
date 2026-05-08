@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const sections = [
+  {
+    title: '1. Data We Collect',
+    body: [
+      'We collect the following personal data via Google Forms:',
+      'Contact & Identification: Email address, first name, last name, phone number, date of birth, gender, nationality, academic degree, current occupation.',
+      'Address: Street name and house number, ZIP code, city, country.',
+      'Application Materials: CV, letter of motivation.',
+      'Logistical Preferences: Dorm preference, estimated arrival time, means of transport, whether you will bring a research poster.',
+      'Sensitive Data: Dietary restrictions/food allergies, special requirements (e.g., accessibility).',
+      'Other: How you learned about the Summer School, additional comments.',
+    ],
+  },
+  {
+    title: '2. Purpose of Processing',
+    body: [
+      'Your data is used to:',
+      'Process your application and administer participation in the Summer School.',
+      'Communicate event details (schedule, logistics).',
+      'Accommodate dietary, medical, or accessibility needs.',
+      'Plan for research poster presentations (if applicable).',
+      'Fulfill legal or administrative obligations (e.g., record-keeping).',
+    ],
+  },
+  {
+    title: '3. Legal Basis',
+    body: [
+      'Contractual Necessity: To fulfill your participation in the Summer School.',
+      'Explicit Consent: For sensitive data (e.g., dietary restrictions, health requirements).',
+      'Legal Obligations: Retention of data for 5 years under Swiss law.',
+    ],
+  },
+  {
+    title: '4. Data Retention',
+    body: [
+      'We retain your data for 5 years from the date of collection to comply with legal, administrative, or archival requirements. After this period, data will be securely deleted.',
+    ],
+  },
+  {
+    title: '5. Data Sharing & Transfers',
+    body: [
+      'Third Parties:',
+      'Data is stored via Google Forms/Google Workspace (service provider). Google may process data outside Switzerland (e.g., in the U.S.). Transfers are safeguarded by Google’s adherence to Standard Contractual Clauses (SCCs) and compliance with Swiss/EU data protection standards.',
+      'No Other Sharing: We do not share your data with external partners or caterers.',
+    ],
+  },
+  {
+    title: '6. Security Measures',
+    body: [
+      'We implement technical and organizational safeguards, including:',
+      'Restricted access to data (authorized personnel only).',
+      'Encryption of digital files and communications.',
+      'Secure storage on password-protected Google Workspace accounts.',
+    ],
+  },
+  {
+    title: '7. Your Rights',
+    body: [
+      'Under Swiss FADP, you have the right to:',
+      'Access, correct, or delete your personal data.',
+      'Withdraw consent (where applicable).',
+      'Object to processing or request data portability.',
+      'To exercise these rights, contact: summerschool@alps.foundation.',
+    ],
+  },
+  {
+    title: '8. Updates to This Statement',
+    body: ['Changes will be communicated via email or posted on our website.'],
+  },
+  {
+    title: '9. Contact',
+    body: [
+      'For privacy inquiries or requests:',
+      'ALPS Foundation',
+      'Rue du Beulet 11, 1203 Geneva, Switzerland',
+      'Email: summerschool@alps.foundation',
+      'Phone: +41 77 210 50 33',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Privacy Statement — ALPS Summer School"
+  description="Privacy statement for ALPS Summer School applications and participant data."
+>
+  <Nav />
+  <main>
+    <article class="container-x py-[clamp(4rem,8vw,7rem)]">
+      <header class="mb-[clamp(2.5rem,5vw,4rem)] max-w-[820px]">
+        <span class="eyebrow">Privacy Statement</span>
+        <h1 class="mt-6">Privacy Statement</h1>
+        <p class="text-[clamp(1.05rem,1.6vw,1.2rem)] text-white/80">
+          Last Updated: 23 March 2025
+        </p>
+        <p class="mb-0 max-w-[760px]">
+          The ALPS Foundation ("we," "us," or "our"), headquartered at Rue du
+          Beulet 11, 1203 Geneva, Switzerland, organizes the ALPS Summer School
+          2025. We are committed to protecting your personal data in compliance
+          with the Swiss Federal Act on Data Protection (FADP) and, where
+          applicable, the EU General Data Protection Regulation (GDPR).
+        </p>
+      </header>
+
+      <div class="grid gap-4">
+        {
+          sections.map((section) => (
+            <section class="card">
+              <h2 class="mb-5 text-[clamp(1.3rem,2vw,1.65rem)]">
+                {section.title}
+              </h2>
+              <div class="grid gap-3">
+                {section.body.map((paragraph) => (
+                  <p class="m-0">{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
