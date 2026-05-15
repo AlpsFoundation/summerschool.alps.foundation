@@ -30,3 +30,6 @@ content/
 
 .vscode
 .claude
+
+# pnpm build approval tracking
+.pnpm-approved-builds
