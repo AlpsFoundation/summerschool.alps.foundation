@@ -11,6 +11,7 @@ const days = [
 type Session = {
   time: string;
   speaker?: string;
+  panelists?: string[];
   topic?: string;
   title?: string;
   // 'lecture' | 'workshop' | 'panel' | 'social' | 'closing' | 'meta' | 'tba'
@@ -88,7 +89,7 @@ const schedule: ScheduleDay[] = [
       { time: '10:30 – 11:20', speaker: 'Jason Day', topic: 'Psychedelics in culture and society: an anthropological lens.', kind: 'lecture' },
       { time: '11:30 – 12:20', speaker: 'Helena Aicher', topic: 'Integration in practice: the therapeutic frame in real-world care.', kind: 'lecture' },
       { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
-      { time: '15:00 – 16:00', title: 'Dario Dornbierer & Serge Weydert', topic: 'Building in the psychedelic space: a founders’ panel.', kind: 'panel' },
+      { time: '15:00 – 16:00', panelists: ['Dario Dornbierer', 'Serge Weydert'], topic: 'Building in the psychedelic space: a founders’ panel.', kind: 'panel' },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
       { time: '20:00 – 20:30', title: 'Closing ritual', kind: 'closing' },
       { time: '20:30 – late', title: 'Party', kind: 'social' },
@@ -357,6 +358,9 @@ const kindLabel: Record<string, string> = {
               {day.sessions.map((s) => {
                 const sid = s.speaker ? speakerId[s.speaker] : undefined;
                 const isLink = Boolean(sid);
+                const panelists = (s.panelists ?? [])
+                  .map((nm) => ({ name: nm, id: speakerId[nm] }))
+                  .filter((p) => p.id);
                 const meta = s.kind === 'meta';
                 const tba = s.kind === 'tba';
                 const label = s.kind ? kindLabel[s.kind] : undefined;
@@ -403,7 +407,21 @@ const kindLabel: Record<string, string> = {
                           {label}
                         </span>
                       )}
-                      {who}
+                      {panelists.length ? (
+                        panelists.map((p, i) => (
+                          <Fragment>
+                            {i > 0 ? ' & ' : ''}
+                            <a
+                              href={`#${p.id}`}
+                              class="text-white no-underline transition-colors hover:text-[var(--color-accent)] hover:underline"
+                            >
+                              {p.name}
+                            </a>
+                          </Fragment>
+                        ))
+                      ) : (
+                        who
+                      )}
                     </span>
                     {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
                   </div>
