@@ -8,7 +8,103 @@ const days = [
   { num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration', tag: 'Day 6' },
 ];
 
+type Session = {
+  time: string;
+  speaker?: string;
+  topic?: string;
+  title?: string;
+  // 'lecture' | 'workshop' | 'panel' | 'social' | 'closing' | 'meta' | 'tba'
+  kind?: string;
+};
+
+type ScheduleDay = { num: number; date: string; theme: string; sessions: Session[] };
+
+const schedule: ScheduleDay[] = [
+  {
+    num: 1, date: 'Sunday 26 July', theme: 'Arrivals, welcome & introduction',
+    sessions: [
+      { time: '15:00 – 18:00', title: 'Arrival', topic: 'Check-in and settling at Le Camp.', kind: 'meta' },
+      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '20:00 – 22:00', title: 'Bonfire night', topic: 'Opening gathering on site.', kind: 'social' },
+    ],
+  },
+  {
+    num: 2, date: 'Monday 27 July', theme: 'Foundations',
+    sessions: [
+      { time: '07:30 – 07:50', title: 'Morning meditation', topic: 'Outside.', kind: 'meta' },
+      { time: '08:00 – 09:00', title: 'Breakfast', kind: 'meta' },
+      { time: '09:30 – 10:20', speaker: 'Parsa Yousefi', topic: 'Beyond the hype: reading psychedelic research critically.', kind: 'lecture' },
+      { time: '10:30 – 11:20', speaker: 'Daniel Meling', topic: 'Mind, method, and meaning: philosophical foundations of psychedelic science.', kind: 'lecture' },
+      { time: '11:30 – 12:20', speaker: 'Friederike Holze', topic: 'Pharmacology of psychedelics: LSD, psilocybin, and MDMA.', kind: 'lecture' },
+      { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
+      { time: '15:00 – 18:00', title: 'Meditation workshop', kind: 'workshop' },
+      { time: '18:30 – 19:30', title: 'Dinner', topic: 'Vegetarian BBQ.', kind: 'meta' },
+      { time: '20:00 – 22:00', title: 'Air-dry clay, session I', kind: 'social' },
+    ],
+  },
+  {
+    num: 3, date: 'Tuesday 28 July', theme: 'Clinical frontiers',
+    sessions: [
+      { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
+      { time: '09:30 – 10:20', speaker: 'Gerhard Gründer', topic: 'Treating depression and anxiety: clinical evidence and practice.', kind: 'lecture' },
+      { time: '10:30 – 11:20', speaker: 'Christopher Böhlke', topic: 'When time is limited: psychedelic-assisted therapy in palliative care.', kind: 'lecture' },
+      { time: '11:30 – 12:20', kind: 'tba' },
+      { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
+      { time: '15:00 – 18:00', title: 'Contact dance & nature', topic: 'Movement and connect-with-nature workshop.', kind: 'workshop' },
+      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '20:00 – 22:00', title: 'Free evening', kind: 'meta' },
+    ],
+  },
+  {
+    num: 4, date: 'Wednesday 29 July', theme: 'Psychedelics in the brain',
+    sessions: [
+      { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
+      { time: '09:30 – 10:20', speaker: 'Klemens Egger', topic: 'The conscious brain on psychedelics: connectivity and awareness.', kind: 'lecture' },
+      { time: '10:30 – 11:20', speaker: 'Morten Lietz', topic: 'Neuroplasticity in the aging brain: measuring the effects of LSD.', kind: 'lecture' },
+      { time: '11:30 – 12:20', kind: 'tba' },
+      { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
+      { time: '15:00 – 18:00', title: 'Afternoon workshop', topic: 'To be announced.', kind: 'workshop' },
+      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '20:00 – 22:00', title: 'Air-dry clay, session II', kind: 'social' },
+    ],
+  },
+  {
+    num: 5, date: 'Thursday 30 July', theme: 'Cutting edge applications and research',
+    sessions: [
+      { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
+      { time: '09:30 – 10:20', speaker: 'Maria Sansoni', topic: 'Cyberdelics: virtual reality as a drug-free path to altered states.', kind: 'lecture' },
+      { time: '11:00 – 13:00', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop.', kind: 'workshop' },
+      { time: '13:30 – 15:30', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (continued).', kind: 'workshop' },
+      { time: '16:00 – 17:00', speaker: 'Martha Havenith', topic: 'The neuroscience of breathwork: non-pharmacological altered states.', kind: 'lecture' },
+      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '20:00 – late', title: 'Psychedelic storytelling', topic: 'With Jason Day.', kind: 'social' },
+    ],
+  },
+  {
+    num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration',
+    sessions: [
+      { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
+      { time: '09:30 – 10:20', speaker: 'Daniel Villiger', topic: 'The ethics of psychedelic-assisted therapy.', kind: 'lecture' },
+      { time: '10:30 – 11:20', speaker: 'Jason Day', topic: 'Psychedelics in culture and society: an anthropological lens.', kind: 'lecture' },
+      { time: '11:30 – 12:20', speaker: 'Helena Aicher', topic: 'Integration in practice: the therapeutic frame in real-world care.', kind: 'lecture' },
+      { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
+      { time: '15:00 – 16:00', title: 'Dario Dornbierer & Serge Weydert', topic: 'Building in the psychedelic space: a founders’ panel.', kind: 'panel' },
+      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '20:00 – 20:30', title: 'Closing ritual', kind: 'closing' },
+      { time: '20:30 – late', title: 'Party', kind: 'social' },
+    ],
+  },
+  {
+    num: 7, date: 'Saturday 1 August', theme: 'Departure',
+    sessions: [
+      { time: '08:00 – 12:00', title: 'Breakfast', kind: 'meta' },
+      { time: 'from 11:30', title: 'Departure', topic: 'Drop-off at Neuchâtel train station.', kind: 'meta' },
+    ],
+  },
+];
+
 type Speaker = {
+  id: string;
   name: string;
   title?: string;
   affiliations?: string[];
@@ -19,6 +115,7 @@ type Speaker = {
 
 const speakers: Speaker[] = [
   {
+    id: 'speaker-helena-aicher',
     name: 'Helena Aicher',
     title: 'PhD',
     affiliations: ['University of Zurich', 'University of Basel'],
@@ -30,6 +127,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-christopher-boehlke',
     name: 'Christopher Böhlke',
     title: 'Prof. Dr.',
     affiliations: ['University Hospital Basel'],
@@ -41,6 +139,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-jason-day',
     name: 'Jason Day',
     title: 'PhD',
     affiliations: ['University of Fribourg'],
@@ -53,6 +152,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-klemens-egger',
     name: 'Klemens Egger',
     title: 'PhD',
     affiliations: ['University Hospital of Psychiatry Zurich'],
@@ -64,6 +164,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-martha-havenith',
     name: 'Martha Havenith',
     title: 'PhD',
     affiliations: ['Ernst Strüngmann Institute', 'Max Planck Society'],
@@ -75,6 +176,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-morten-lietz',
     name: 'Morten Lietz',
     title: 'PhD candidate',
     affiliations: ['University of Fribourg'],
@@ -88,6 +190,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-daniel-meling',
     name: 'Daniel Meling',
     title: 'PhD',
     affiliations: ['University of Zurich', 'University of Freiburg'],
@@ -99,6 +202,7 @@ const speakers: Speaker[] = [
     ],
   },
   {
+    id: 'speaker-daniel-villiger',
     name: 'Daniel Villiger',
     title: 'PhD',
     affiliations: ['University of Zurich'],
@@ -110,6 +214,17 @@ const speakers: Speaker[] = [
     ],
   },
 ];
+
+const speakerId: Record<string, string> = Object.fromEntries(
+  speakers.map((s) => [s.name, s.id]),
+);
+
+const kindLabel: Record<string, string> = {
+  workshop: 'Workshop',
+  panel: 'Panel',
+  social: 'Social',
+  closing: 'Closing',
+};
 ---
 
 <section id="program" class="py-[clamp(4rem,8vw,7rem)]">
@@ -118,12 +233,11 @@ const speakers: Speaker[] = [
       <span class="eyebrow self-start">Program</span>
       <h2>Six days, six themes — one cohesive journey.</h2>
       <p>
-        Each of the five full days of the ALPS Summer School 2026 focuses on
-        a different aspect of psychedelic research, featuring three
-        theoretical talks, a practical workshop and a social event every day.
-        A comprehensive overview of all lectures and workshops is coming soon.
-        Confirmed speakers and their bios are shown below and continually
-        updated. Stay tuned for more.
+        Each full day of the ALPS Summer School 2026 pairs three morning
+        lectures with an afternoon workshop and an evening gathering. The full
+        day-by-day programme is below. Tap a confirmed speaker to jump to their
+        bio; sessions still being finalised are marked
+        <em>to be announced</em>.
       </p>
     </div>
 
@@ -160,11 +274,88 @@ const speakers: Speaker[] = [
       }
     </ol>
 
+    {/* Full day-by-day timetable */}
+    <div class="mt-[clamp(3rem,6vw,5rem)] flex flex-col gap-10">
+      {
+        schedule.map((day) => (
+          <div>
+            <div class="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[var(--color-border)] pb-3">
+              <span class="grad-text text-[1.6rem] font-medium leading-none tracking-[-0.04em]">
+                {String(day.num).padStart(2, '0')}
+              </span>
+              <span class="text-[0.72rem] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)]">
+                {day.date}
+              </span>
+              <h3 class="m-0 text-[1.15rem] font-medium text-white">{day.theme}</h3>
+            </div>
+
+            <div class="flex flex-col">
+              {day.sessions.map((s) => {
+                const sid = s.speaker ? speakerId[s.speaker] : undefined;
+                const isLink = Boolean(sid);
+                const meta = s.kind === 'meta';
+                const tba = s.kind === 'tba';
+                const label = s.kind ? kindLabel[s.kind] : undefined;
+                const who = tba ? 'To be announced' : (s.speaker ?? s.title);
+                const topic = tba ? 'To be announced.' : s.topic;
+                const base =
+                  'grid grid-cols-[7.5rem_1fr] gap-x-5 gap-y-1 border-t border-[var(--color-border)] py-3 first:border-t-0 sm:grid-cols-[8rem_13rem_1fr]';
+                const whoCls =
+                  (meta || tba
+                    ? 'text-[0.95rem] font-medium text-[var(--color-fg-subtle)]'
+                    : 'text-[0.98rem] font-semibold text-white') + (tba ? ' italic' : '');
+                const topicCls =
+                  'col-span-2 text-[0.9rem] leading-[1.5] sm:col-span-1 ' +
+                  (meta || tba ? 'text-[var(--color-fg-subtle)]' : 'text-[var(--color-fg-muted)]') +
+                  (tba ? ' italic' : '');
+
+                return isLink ? (
+                  <a
+                    href={`#${sid}`}
+                    class={`group/slot -mx-3 rounded-[var(--radius-sm)] px-3 no-underline transition-colors hover:bg-[rgba(154,0,109,0.12)] ${base}`}
+                  >
+                    <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
+                      {s.time}
+                    </span>
+                    <span class={whoCls}>
+                      {label && (
+                        <span class="mb-[2px] block text-[0.62rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                          {label}
+                        </span>
+                      )}
+                      {who}
+                      <span aria-hidden="true" class="ml-1 text-[var(--color-accent)] opacity-0 transition-opacity group-hover/slot:opacity-100">›</span>
+                    </span>
+                    {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
+                  </a>
+                ) : (
+                  <div class={base}>
+                    <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
+                      {s.time}
+                    </span>
+                    <span class={whoCls}>
+                      {label && (
+                        <span class="mb-[2px] block text-[0.62rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                          {label}
+                        </span>
+                      )}
+                      {who}
+                    </span>
+                    {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
     <div
       class="mt-8 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-gradient-to-r from-[rgba(154,0,109,0.1)] to-[rgba(255,255,255,0.02)] px-6 py-5 text-[0.95rem] text-[var(--color-fg-muted)]"
     >
-      Full program details — lectures, workshops and learning objectives —
-      publishing soon. Sign up via the application form to be notified.
+      The programme is provisional and subject to change. Times, sessions and
+      speakers are updated as the summer school is finalised.
     </div>
 
     <div id="speakers" class="mt-[clamp(3.5rem,7vw,6rem)]">
@@ -182,7 +373,7 @@ const speakers: Speaker[] = [
       <div class="flex flex-col gap-5">
         {
           speakers.map((speaker) => (
-            <article class="card w-full overflow-hidden !p-0">
+            <article id={speaker.id} class="card w-full scroll-mt-24 overflow-hidden !p-0 target:border-[var(--color-accent)]">
               <div class="grid gap-0 md:grid-cols-[minmax(220px,28%)_1fr]">
                 <img
                   src={speaker.image}
