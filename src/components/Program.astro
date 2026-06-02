@@ -74,8 +74,9 @@ const schedule: ScheduleDay[] = [
     sessions: [
       { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
       { time: '09:30 – 10:20', speaker: 'Maria Sansoni', topic: 'Cyberdelics: virtual reality as a drug-free path to altered states.', kind: 'lecture' },
-      { time: '11:00 – 13:00', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop.', kind: 'workshop' },
-      { time: '13:30 – 15:30', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (continued).', kind: 'workshop' },
+      { time: '11:00 – 13:00', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (Group I).', kind: 'workshop' },
+      { time: '13:00 – 13:30', title: 'Lunch', kind: 'meta' },
+      { time: '13:30 – 15:30', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (Group II).', kind: 'workshop' },
       { time: '16:00 – 17:00', speaker: 'Martha Havenith', topic: 'The neuroscience of breathwork: non-pharmacological altered states.', kind: 'lecture' },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
       { time: '20:00 – late', title: 'Psychedelic storytelling', topic: 'With Jason Day.', kind: 'social' },
@@ -284,11 +285,41 @@ const speakerId: Record<string, string> = Object.fromEntries(
   speakers.map((s) => [s.name, s.id]),
 );
 
+// First timetable slot where each speaker appears -> anchor id, so bios can link back to the programme.
+const speakerSlot: Record<string, string> = {};
+schedule.forEach((day) =>
+  day.sessions.forEach((s, i) => {
+    const names = s.speaker ? [s.speaker] : (s.panelists ?? []);
+    names.forEach((nm) => {
+      const id = speakerId[nm];
+      if (id && !(id in speakerSlot)) speakerSlot[id] = `slot-d${day.num}-${i}`;
+    });
+  }),
+);
+
 const kindLabel: Record<string, string> = {
   workshop: 'Workshop',
   panel: 'Panel',
   social: 'Social',
   closing: 'Closing',
+};
+
+// Official websites for the affiliation badges (reviewed 2026-06-02).
+const affiliationUrl: Record<string, string> = {
+  'University of Zurich': 'https://www.uzh.ch/en.html',
+  'University of Basel': 'https://www.unibas.ch/en.html',
+  'University Hospital Basel': 'https://www.unispital-basel.ch/en/',
+  'University of Fribourg': 'https://www.unifr.ch/home/en/',
+  'University of Freiburg': 'https://uni-freiburg.de/en/',
+  'University Hospital of Psychiatry Zurich': 'https://www.pukzh.ch/',
+  'ZI Mannheim': 'https://www.zi-mannheim.de/en.html',
+  'MIND Foundation': 'https://mind-foundation.org/',
+  'Ernst Strüngmann Institute': 'https://www.esi-frankfurt.de/',
+  'Max Planck Society': 'https://www.mpg.de/en',
+  'Catholic University, Milan': 'https://www.unicatt.it/en.html',
+  'Reconnect Labs': 'https://reconnect-labs.com/',
+  'Aeon': 'https://aeon.life/',
+  'ALPS Foundation': 'https://alps.foundation/',
 };
 ---
 
@@ -309,7 +340,12 @@ const kindLabel: Record<string, string> = {
     <ol class="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
       {
         days.map((d) => (
-          <li class="card group relative flex min-h-[220px] flex-col gap-4 overflow-hidden">
+          <li class="card group relative flex min-h-[220px] cursor-pointer flex-col gap-4 overflow-hidden">
+            <a
+              href={`#day-${d.num}`}
+              class="absolute inset-0 z-10"
+              aria-label={`Jump to ${d.theme} in the schedule`}
+            />
             <div
               aria-hidden="true"
               class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
@@ -343,7 +379,7 @@ const kindLabel: Record<string, string> = {
     <div class="mt-[clamp(3rem,6vw,5rem)] flex flex-col gap-10">
       {
         schedule.map((day) => (
-          <div>
+          <div id={`day-${day.num}`} class="scroll-mt-24">
             <div class="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[var(--color-border)] pb-3">
               <span class="grad-text text-[1.6rem] font-medium leading-none tracking-[-0.04em]">
                 {String(day.num).padStart(2, '0')}
@@ -355,7 +391,8 @@ const kindLabel: Record<string, string> = {
             </div>
 
             <div class="flex flex-col">
-              {day.sessions.map((s) => {
+              {day.sessions.map((s, i) => {
+                const slotId = `slot-d${day.num}-${i}`;
                 const sid = s.speaker ? speakerId[s.speaker] : undefined;
                 const isLink = Boolean(sid);
                 const panelists = (s.panelists ?? [])
@@ -379,8 +416,9 @@ const kindLabel: Record<string, string> = {
 
                 return isLink ? (
                   <a
+                    id={slotId}
                     href={`#${sid}`}
-                    class={`group/slot -mx-3 rounded-[var(--radius-sm)] px-3 no-underline transition-colors hover:bg-[rgba(154,0,109,0.12)] ${base}`}
+                    class={`group/slot -mx-3 scroll-mt-24 rounded-[var(--radius-sm)] px-3 no-underline transition-colors hover:bg-[rgba(154,0,109,0.12)] ${base}`}
                   >
                     <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
                       {s.time}
@@ -397,7 +435,7 @@ const kindLabel: Record<string, string> = {
                     {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
                   </a>
                 ) : (
-                  <div class={base}>
+                  <div id={slotId} class={`scroll-mt-24 ${base}`}>
                     <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
                       {s.time}
                     </span>
@@ -497,14 +535,34 @@ const kindLabel: Record<string, string> = {
                     </div>
                     {speaker.affiliations && speaker.affiliations.length > 0 && (
                       <div class="flex flex-wrap gap-2 md:flex-shrink-0 md:justify-end">
-                        {speaker.affiliations.map((aff) => (
-                          <span class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]">
-                            {aff}
-                          </span>
-                        ))}
+                        {speaker.affiliations.map((aff) => {
+                          const affCls =
+                            'inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]';
+                          const href = affiliationUrl[aff];
+                          return href ? (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class={`${affCls} no-underline transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]`}
+                            >
+                              {aff}
+                            </a>
+                          ) : (
+                            <span class={affCls}>{aff}</span>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
+                  {speakerSlot[speaker.id] && (
+                    <a
+                      href={`#${speakerSlot[speaker.id]}`}
+                      class="inline-flex w-fit items-center gap-1 text-[0.8rem] text-[var(--color-accent)] no-underline transition-opacity hover:underline"
+                    >
+                      <span aria-hidden="true">↑</span> View in the programme
+                    </a>
+                  )}
                   <div class="flex flex-col gap-3">
                     {speaker.bio.map((paragraph) => (
                       <p
