@@ -28,7 +28,7 @@ const links = [
       <span class="flex flex-col leading-[1.1]">
         <span class="text-[0.95rem] font-semibold tracking-[0.08em]">ALPS</span>
         <span
-          class="text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-fg-subtle)]"
+          class="hidden text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-fg-subtle)] min-[380px]:block"
         >
           Summer School 2026
         </span>
@@ -83,23 +83,67 @@ const links = [
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-[var(--color-border)] bg-[rgba(5,0,7,0.92)] md:hidden">
-    <nav class="container-x flex flex-col py-1" aria-label="Mobile">
-      {
-        links.map((l) => (
-          <a
-            href={`/#${l.id}`}
-            data-scrollspy-target={l.id}
-            data-mobile-link
-            class="border-b border-[var(--color-border)] py-3 text-[1rem] text-[var(--color-fg-muted)] transition-colors last:border-b-0 hover:text-white aria-[current=location]:text-white"
-          >
-            {l.label}
-          </a>
-        ))
-      }
-    </nav>
+  <div
+    id="mobile-menu"
+    data-open="false"
+    inert
+    class="grid overflow-hidden bg-[rgba(5,0,7,0.96)] md:hidden"
+  >
+    <div class="min-h-0 overflow-hidden">
+      <nav class="container-x flex flex-col border-t border-[var(--color-border)] py-1" aria-label="Mobile">
+        {
+          links.map((l) => (
+            <a
+              href={`/#${l.id}`}
+              data-scrollspy-target={l.id}
+              data-mobile-link
+              class="border-b border-[var(--color-border)] py-3 text-[1rem] text-[var(--color-fg-muted)] transition-colors last:border-b-0 hover:text-white aria-[current=location]:text-white"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
   </div>
 </header>
+
+<div
+  id="mobile-backdrop"
+  data-open="false"
+  aria-hidden="true"
+  class="fixed inset-0 z-40 bg-black/50 backdrop-blur-[2px] md:hidden"
+>
+</div>
+
+<style>
+  #mobile-menu {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 300ms ease,
+      opacity 250ms ease;
+  }
+  #mobile-menu[data-open='true'] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  #mobile-backdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  #mobile-backdrop[data-open='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #mobile-menu,
+    #mobile-backdrop {
+      transition: none;
+    }
+  }
+</style>
 
 <script>
   function syncNavHeightVar() {
@@ -150,22 +194,26 @@ const links = [
   window.addEventListener('resize', onScrollOrResize);
   window.addEventListener('hashchange', updateScrollSpy);
 
-  // Mobile dropdown menu toggle
+  // Mobile dropdown menu toggle (animated, with backdrop + tap-outside-to-close)
   const navToggle = document.getElementById('nav-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const mobileBackdrop = document.getElementById('mobile-backdrop');
   if (navToggle && mobileMenu) {
     const openIcon = navToggle.querySelector('[data-icon="open"]');
     const closeIcon = navToggle.querySelector('[data-icon="close"]');
+    const isOpen = () => navToggle.getAttribute('aria-expanded') === 'true';
     const setMenu = (open) => {
-      mobileMenu.classList.toggle('hidden', !open);
       navToggle.setAttribute('aria-expanded', String(open));
+      mobileMenu.dataset.open = String(open);
+      if (open) mobileMenu.removeAttribute('inert');
+      else mobileMenu.setAttribute('inert', '');
+      if (mobileBackdrop) mobileBackdrop.dataset.open = String(open);
       if (openIcon) openIcon.classList.toggle('hidden', open);
       if (closeIcon) closeIcon.classList.toggle('hidden', !open);
-      syncNavHeightVar();
     };
-    navToggle.addEventListener('click', () =>
-      setMenu(mobileMenu.classList.contains('hidden')),
-    );
+    navToggle.addEventListener('click', () => setMenu(!isOpen()));
+    if (mobileBackdrop)
+      mobileBackdrop.addEventListener('click', () => setMenu(false));
     mobileMenu
       .querySelectorAll('[data-mobile-link]')
       .forEach((a) => a.addEventListener('click', () => setMenu(false)));
