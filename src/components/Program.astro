@@ -303,6 +303,24 @@ const kindLabel: Record<string, string> = {
   social: 'Social',
   closing: 'Closing',
 };
+
+// Official websites for the affiliation badges (reviewed 2026-06-02).
+const affiliationUrl: Record<string, string> = {
+  'University of Zurich': 'https://www.uzh.ch/en.html',
+  'University of Basel': 'https://www.unibas.ch/en.html',
+  'University Hospital Basel': 'https://www.unispital-basel.ch/en/',
+  'University of Fribourg': 'https://www.unifr.ch/home/en/',
+  'University of Freiburg': 'https://uni-freiburg.de/en/',
+  'University Hospital of Psychiatry Zurich': 'https://www.pukzh.ch/',
+  'ZI Mannheim': 'https://www.zi-mannheim.de/en.html',
+  'MIND Foundation': 'https://mind-foundation.org/',
+  'Ernst Strüngmann Institute': 'https://www.esi-frankfurt.de/',
+  'Max Planck Society': 'https://www.mpg.de/en',
+  'Catholic University, Milan': 'https://www.unicatt.it/en.html',
+  'Reconnect Labs': 'https://reconnect-labs.com/',
+  'Aeon': 'https://aeon.life/',
+  'ALPS Foundation': 'https://alps.foundation/',
+};
 ---
 
 <section id="program" class="py-[clamp(4rem,8vw,7rem)]">
@@ -517,11 +535,23 @@ const kindLabel: Record<string, string> = {
                     </div>
                     {speaker.affiliations && speaker.affiliations.length > 0 && (
                       <div class="flex flex-wrap gap-2 md:flex-shrink-0 md:justify-end">
-                        {speaker.affiliations.map((aff) => (
-                          <span class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]">
-                            {aff}
-                          </span>
-                        ))}
+                        {speaker.affiliations.map((aff) => {
+                          const affCls =
+                            'inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]';
+                          const href = affiliationUrl[aff];
+                          return href ? (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class={`${affCls} no-underline transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]`}
+                            >
+                              {aff}
+                            </a>
+                          ) : (
+                            <span class={affCls}>{aff}</span>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
