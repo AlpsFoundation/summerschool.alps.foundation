@@ -56,14 +56,48 @@ const links = [
       }
     </nav>
 
-    <a
-      href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="btn text-[0.88rem] !px-4 !py-[0.55rem]"
-    >
-      Join waiting list
-    </a>
+    <div class="flex items-center gap-2 md:gap-3">
+      <a
+        href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn text-[0.88rem] !px-4 !py-[0.55rem]"
+      >
+        Join waiting list
+      </a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="-mr-1 inline-flex items-center justify-center rounded-[var(--radius-sm)] p-2 text-[var(--color-fg-muted)] transition-colors hover:text-white md:hidden"
+        aria-label="Toggle navigation menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <svg data-icon="open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg data-icon="close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18" /><line x1="6" y1="18" x2="18" y2="6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-[var(--color-border)] bg-[rgba(5,0,7,0.92)] md:hidden">
+    <nav class="container-x flex flex-col py-1" aria-label="Mobile">
+      {
+        links.map((l) => (
+          <a
+            href={`/#${l.id}`}
+            data-scrollspy-target={l.id}
+            data-mobile-link
+            class="border-b border-[var(--color-border)] py-3 text-[1rem] text-[var(--color-fg-muted)] transition-colors last:border-b-0 hover:text-white aria-[current=location]:text-white"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
   </div>
 </header>
 
@@ -115,4 +149,31 @@ const links = [
   window.addEventListener('scroll', onScrollOrResize, { passive: true });
   window.addEventListener('resize', onScrollOrResize);
   window.addEventListener('hashchange', updateScrollSpy);
+
+  // Mobile dropdown menu toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (navToggle && mobileMenu) {
+    const openIcon = navToggle.querySelector('[data-icon="open"]');
+    const closeIcon = navToggle.querySelector('[data-icon="close"]');
+    const setMenu = (open) => {
+      mobileMenu.classList.toggle('hidden', !open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      if (openIcon) openIcon.classList.toggle('hidden', open);
+      if (closeIcon) closeIcon.classList.toggle('hidden', !open);
+      syncNavHeightVar();
+    };
+    navToggle.addEventListener('click', () =>
+      setMenu(mobileMenu.classList.contains('hidden')),
+    );
+    mobileMenu
+      .querySelectorAll('[data-mobile-link]')
+      .forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMenu(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) setMenu(false);
+    });
+  }
 </script>
