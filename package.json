@@ -2,6 +2,7 @@
   "name": "summerschool.alps.foundation",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=22.12.0"
   },
