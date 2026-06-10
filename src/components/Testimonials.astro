@@ -1,0 +1,72 @@
+---
+// Quotes from the anonymous 2025 participant feedback survey, lightly trimmed.
+const quotes = [
+  {
+    text: 'I expected to get a very informative but quite stiff gathering of knowledgeable researchers and got the most heartwarming, inspiring journey, surrounded by the most amazing people.',
+    highlight: true,
+  },
+  {
+    text: 'It almost felt like a psychedelic experience. There isn’t one thing I could pick — it’s more the way all of it magically created its own life.',
+  },
+  {
+    text: 'It’s super professional and feels fun at the same time.',
+  },
+  {
+    text: 'I expected to learn more about psychedelic therapies and meet people, and it’s exactly what happened — but 100 times better than what I was thinking.',
+  },
+  {
+    text: 'I felt like I could ask and talk about anything with everyone, because the whole community was very empathetic and available.',
+  },
+  {
+    text: 'I gained new and interesting insights from the talks, and at the same time had wonderful moments where I laughed a lot and felt truly connected.',
+  },
+];
+---
+
+<section id="testimonials" class="py-[clamp(3rem,6vw,5rem)]">
+  <div class="container-x">
+    <div class="mb-[clamp(1.5rem,3vw,2.5rem)] flex max-w-[820px] flex-col gap-3">
+      <span class="eyebrow self-start">Voices from 2025</span>
+      <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
+        What last year&rsquo;s participants told us.
+      </h2>
+      <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
+        Taken from our anonymous post-event feedback survey.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        quotes.map((q) => (
+          <figure
+            class:list={[
+              'card m-0 flex flex-col justify-between gap-5',
+              q.highlight && 'md:col-span-2 lg:col-span-1',
+            ]}
+          >
+            <blockquote class="m-0">
+              <span
+                aria-hidden="true"
+                class="grad-text mb-2 block text-[2rem] font-semibold leading-none"
+              >
+                &ldquo;
+              </span>
+              <p class="m-0 text-[0.98rem] leading-[1.65] text-white/90">
+                {q.text}
+              </p>
+            </blockquote>
+            <figcaption
+              class="flex items-center gap-[0.7rem] text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]"
+            >
+              <span
+                aria-hidden="true"
+                class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
+              />
+              2025 participant
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
