@@ -1,0 +1,155 @@
+---
+const chapters = [
+  {
+    title: 'Grounded purpose',
+    callout:
+      'The field of psychedelic sciences tends to attract brilliance and distortion. Our responsibility is to remain grounded.',
+    value:
+      'We operate at the intersection of <em>curiosity and scientific rigor</em>. Psychedelics can inspire insight, creativity, and connection — and they can also invite overconfidence, projection, and unexamined certainty. We do not romanticize the field. We take responsibility for shaping it.',
+    actions: [
+      'We anchor every decision in <strong>evidence</strong>, <strong>clear reasoning</strong>, and <strong>intellectual humility</strong>.',
+      'We treat ambition as something that must be <strong>disciplined by integrity</strong>.',
+    ],
+  },
+  {
+    title: 'Professional integrity in a psychedelic field',
+    callout: 'Enthusiasm is not evidence. Charisma is not competence.',
+    value:
+      '<em>Our credibility depends on discipline.</em> We must not contribute to hype or distortion.',
+    actions: [
+      'We present hypotheses as hypotheses and frame uncertainty explicitly.',
+      'We document decisions rather than relying on memory.',
+      'We prepare for foreseeable risks and maintain a plan B.',
+      'When inappropriate behavior or misinformation occurs, we <strong>act decisively</strong>.',
+      'Professionalism is reliability under pressure.',
+    ],
+  },
+  {
+    title: 'Designing the participant experience',
+    callout: 'Excellent events respect both human needs and intellectual depth.',
+    value:
+      'Participants deserve <em>coherence, clarity, and care</em>. Intellectual depth requires stable conditions. They deserve to be held with <strong>kindness</strong> and <strong>compassion</strong>.',
+    actions: [
+      'We provide <strong>clear schedules</strong>, <strong>visible contact persons</strong>, and <strong>real-time feedback loops</strong>.',
+      'We ensure foundational conditions: sufficient food, meaningful breaks, functional space, and psychological ease.',
+      'We cultivate an attitude of <strong>kindness</strong> and <strong>respect</strong> when talking with participants.',
+      'We curate <strong>evidence-based content</strong>, practical workshops, and structured interaction.',
+      'We maintain clear boundaries and intervene immediately when required.',
+      'Participants should leave feeling <strong>informed</strong>, <strong>respected</strong>, and <strong>connected</strong>.',
+    ],
+  },
+  {
+    title: 'Failures we refuse',
+    callout:
+      'Disorganization, indifference, and avoidable confusion undermine trust.',
+    value: '<em>Failure is not dramatic; it is preventable negligence.</em>',
+    actions: [
+      'We refuse unclear roles.',
+      'We refuse repeated unresolved debate.',
+      'We refuse low-quality content.',
+      'We refuse inaccessible leadership.',
+      'We refuse environments where speaking feels unsafe.',
+      'We do not excuse chaos as spontaneity.',
+    ],
+  },
+  {
+    title: 'Fun and kindness as core values',
+    callout: 'Excellence without joy is unsustainable. Rigor without warmth is brittle.',
+    value:
+      '<em>Fun and kindness are not luxuries — they are infrastructure.</em> A psychedelic science is deemed fulfilling if the <em>output</em> of energy and love outweighs the amount <em>put in</em>. We build environments where people want to be.',
+    actions: [
+      'We design space for spontaneity within structure and celebrate small wins.',
+      'We create moments of levity that reduce tension without undermining focus: shared meals, playful transitions between sessions, activities that nurture connection.',
+      'We resist the tendency to treat seriousness as suffering. When planning sessions, we ask: <em>Will this be intellectually rewarding AND human?</em>',
+      'Fun is the practice of making collaboration sustainable. Kindness is the refusal to sacrifice people for productivity.',
+    ],
+  },
+];
+
+const commitments = [
+  'We commit to <strong>clarity</strong>, <strong>accountability</strong>, <strong>scientific rigor</strong>, and <strong>care</strong>.',
+  'We commit to psychological safety paired with responsibility.',
+  'We commit to disciplined execution in service of participants and collaborators.',
+  'We commit to grounding ambition in humility.',
+  'We commit to making this work sustainable — through kindness, care, and the belief that rigour and humanity are not opposites.',
+];
+---
+
+<section id="manifesto" class="py-[clamp(4rem,8vw,7rem)]">
+  <div class="container-x">
+    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Manifesto</span>
+      <h2>The standard we hold <span class="grad-text">ourselves</span> to.</h2>
+      <p>
+        Our manifesto describes how we work and what you can expect from us as
+        a participant. These are the chapters that shape your experience at the
+        summer school.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      {
+        chapters.map((c) => (
+          <article class="card grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
+            <div class="flex flex-col gap-4">
+              <h3 class="m-0">{c.title}</h3>
+              <p
+                class="m-0 border-l-2 border-[var(--color-primary)] pl-4 text-[1.02rem] italic text-white/85"
+                set:html={c.callout}
+              />
+              <p class="m-0 text-[0.95rem]" set:html={c.value} />
+            </div>
+            <ul class="m-0 flex list-none flex-col gap-3 self-center p-0">
+              {c.actions.map((a) => (
+                <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
+                  <span
+                    aria-hidden="true"
+                    class="grad-primary mt-[0.55rem] h-[7px] w-[7px] flex-shrink-0 rounded-full"
+                  />
+                  <span set:html={a} />
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+
+      <div class="gradient-border">
+        <div
+          class="relative z-[1] flex flex-col gap-5 rounded-[inherit] bg-[var(--color-bg-elev)]/95 p-[clamp(1.5rem,3.5vw,2.75rem)]"
+        >
+          <h3 class="m-0">Collective commitment</h3>
+          <p class="m-0 max-w-[760px] text-[1.02rem] italic text-white/85">
+            We build deliberately. We act responsibly. We protect the integrity
+            of our work and our field. We do this with joy and warmth.
+          </p>
+          <ul class="m-0 flex list-none flex-col gap-3 p-0">
+            {
+              commitments.map((c) => (
+                <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
+                  <span
+                    aria-hidden="true"
+                    class="grad-primary mt-[0.55rem] h-[7px] w-[7px] flex-shrink-0 rounded-full"
+                  />
+                  <span set:html={c} />
+                </li>
+              ))
+            }
+          </ul>
+          <p class="m-0 font-medium text-white">
+            This is the standard we hold each other to.
+            <br />
+            This is ALPS Summer School.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #manifesto :global(strong) {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+  }
+</style>
