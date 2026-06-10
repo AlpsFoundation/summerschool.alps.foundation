@@ -19,6 +19,47 @@ const cards = [
     alt: 'ALPS participants gathered in a circle outdoors',
   },
 ];
+
+const values = [
+  'Openness',
+  'Loving-Kindness',
+  'Honesty',
+  'Responsibility',
+  'Rationality',
+];
+
+const overview = [
+  { label: 'Date', value: '26 July – 01 August 2026' },
+  { label: 'Location', value: 'Fondation Le Camp, Vaumarcus, Switzerland' },
+  { label: 'Applications', value: 'Closed (waiting list open)' },
+  { label: 'Language', value: 'English' },
+  { label: 'Participants', value: '25 – 30' },
+];
+
+const included = [
+  'All-inclusive stay at Le Camp (26 July – 01 August)',
+  'Accommodation, breakfast, lunch, dinner and coffee breaks',
+  'Expert-led lectures and discussions',
+  'Hands-on practical workshops',
+  'Engaging social program',
+  'Small cohort of 25–30 participants',
+  'Certificate of participation',
+  'ECTS depending on your institution’s policy',
+];
+
+const notIncluded = ['Personal insurance', 'Transportation to Vaumarcus'];
+
+const pricing = [
+  { category: "Bachelor's or Master's students", price: 'CHF 890' },
+  { category: 'PhD students', price: 'CHF 1250' },
+  { category: 'Professionals', price: 'CHF 1990' },
+  { category: 'Supporter', price: 'CHF 2500' },
+];
+
+const cancellationTerms = [
+  { deadline: 'Until 14 June 2026', charge: '50% of the participation fee' },
+  { deadline: 'From 15 June 2026', charge: '100% of the participation fee' },
+];
 ---
 
 <section
@@ -64,6 +105,166 @@ const cards = [
           </article>
         ))
       }
+    </div>
+
+    <div id="info" class="mt-[clamp(3.5rem,6vw,5.5rem)]">
+      <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+        <span class="eyebrow self-start">Philosophy &amp; practical details</span>
+        <h2>Our values, the offering &amp; everything you need to know.</h2>
+        <p>
+          The ALPS Foundation is guided by five core values that fuel the
+          Summer School&rsquo;s aim to support both academic and personal
+          growth. How we put them into practice — from evidence-led content
+          to the way we hold the participant experience — is written down in
+          our <a
+            href="/#manifesto"
+            class="text-white underline decoration-[var(--color-accent)] decoration-2 underline-offset-4 hover:text-[var(--color-accent)]"
+          >manifesto</a>.
+        </p>
+      </div>
+
+      <ul
+        class="gradient-border mb-[clamp(2.5rem,4vw,3.5rem)] grid list-none grid-cols-2 gap-px p-0 md:grid-cols-5"
+      >
+        {
+          values.map((v, i) => (
+            <li
+              class="flex min-h-[100px] flex-col gap-[0.35rem] bg-[#08030c] px-[1.2rem] py-[1.1rem]"
+            >
+              <span
+                class="text-[0.72rem] font-semibold tracking-[0.14em] text-[var(--color-primary)]"
+                style="color: var(--color-primary);"
+              >
+                0{i + 1}
+              </span>
+              <span class="text-[1.05rem] font-medium tracking-[-0.01em] text-white">
+                {v}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.2fr]">
+        <div class="card">
+          <h3 class="mb-5 text-[1.1rem] font-medium">Event overview</h3>
+          <dl class="m-0 grid gap-[0.9rem]">
+            {
+              overview.map((o, idx) => (
+                <div
+                  class:list={[
+                    'grid grid-cols-[120px_1fr] items-baseline gap-4 pb-[0.9rem]',
+                    idx < overview.length - 1 && 'border-b border-dashed border-[var(--color-border)]',
+                  ]}
+                >
+                  <dt
+                    class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]"
+                  >
+                    {o.label}
+                  </dt>
+                  <dd class="m-0 text-white">{o.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="card">
+          <h3 class="mb-5 text-[1.1rem] font-medium">What&rsquo;s included</h3>
+          <ul class="m-0 grid list-none gap-[0.55rem] p-0">
+            {
+              included.map((i) => (
+                <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
+                  <span
+                    aria-hidden="true"
+                    class="grad-primary absolute left-0 top-[0.45em] h-[14px] w-[14px] rounded-full shadow-[0_0_12px_rgba(154,0,109,0.55)]"
+                  />
+                  {i}
+                </li>
+              ))
+            }
+          </ul>
+
+          <h4
+            class="mb-3 mt-7 text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+          >
+            Not included
+          </h4>
+          <ul class="m-0 grid list-none gap-[0.55rem] p-0">
+            {
+              notIncluded.map((i) => (
+                <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
+                  <span
+                    aria-hidden="true"
+                    class="absolute left-[0.15em] top-[0.9em] h-[2px] w-[10px] rounded-[2px] bg-[var(--color-fg-subtle)]"
+                  />
+                  {i}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mt-[clamp(2rem,4vw,3rem)]">
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <h3 class="m-0 text-[1.1rem] font-medium">Participation fees</h3>
+          <details class="cancellation-popover relative">
+            <summary class="cursor-pointer text-[0.78rem] text-[var(--color-fg-subtle)] underline decoration-dotted underline-offset-2 transition-colors hover:text-[var(--color-accent)]">
+              Cancellation terms
+            </summary>
+            <div class="absolute right-0 top-full z-10 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[#0c0610] p-4 shadow-lg">
+              <p class="mb-3 text-[0.85rem] font-medium text-white">Cancellation policy</p>
+              <ul class="m-0 grid list-none gap-2 p-0 text-[0.82rem] text-[var(--color-fg-muted)]">
+                {cancellationTerms.map((term) => (
+                  <li class="flex justify-between gap-3">
+                    <span>{term.deadline}:</span>
+                    <span class="text-right text-white/90">{term.charge}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="mb-0 mt-3 text-[0.78rem] leading-snug text-[var(--color-fg-subtle)]">
+                If we can arrange a replacement from our waiting list, we provide a full refund.
+              </p>
+            </div>
+          </details>
+        </div>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            pricing.map((tier) => (
+              <div class="flex flex-col gap-1 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[rgba(5,0,7,0.5)] px-4 py-3">
+                <span class="text-[0.82rem] text-[var(--color-fg-muted)]">{tier.category}</span>
+                <span class="text-[1.15rem] font-semibold text-white">{tier.price}</span>
+              </div>
+            ))
+          }
+        </div>
+        <p class="mb-0 mt-4 text-[0.82rem] leading-snug text-[var(--color-fg-subtle)]">
+          Please select your applicable category in the application form — your selection will be verified during the evaluation process based on your submitted documents.
+        </p>
+      </div>
+
+      <div
+        class="card mt-[clamp(2rem,4vw,3rem)] flex flex-col items-start justify-between gap-5 md:flex-row md:items-center"
+        style="background: linear-gradient(135deg, rgba(154,0,109,0.25), rgba(255,255,255,0.02) 60%);"
+      >
+        <div>
+          <h3 class="mb-2 font-medium">Contribute to the week</h3>
+          <p class="m-0 max-w-[560px]">
+            Bring your favourite musical instrument or a research poster — we
+            love when participants shape the program. Mention it at the end of
+            the application form.
+          </p>
+        </div>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn"
+        >
+          Join waiting list
+        </a>
+      </div>
     </div>
   </div>
 </section>
