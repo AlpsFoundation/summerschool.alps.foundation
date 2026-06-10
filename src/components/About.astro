@@ -20,12 +20,14 @@ const cards = [
   },
 ];
 
+// One word per manifesto chapter, in manifesto order, linking to its anchor.
 const values = [
-  'Openness',
-  'Loving-Kindness',
-  'Honesty',
-  'Responsibility',
-  'Rationality',
+  { word: 'Groundedness', anchor: 'grounded-purpose' },
+  { word: 'Integrity', anchor: 'professional-integrity' },
+  { word: 'Care', anchor: 'participant-experience' },
+  { word: 'Accountability', anchor: 'failures-we-refuse' },
+  { word: 'Kindness', anchor: 'fun-and-kindness' },
+  { word: 'Commitment', anchor: 'collective-commitment' },
 ];
 
 const overview = [
@@ -112,34 +114,40 @@ const cancellationTerms = [
         <span class="eyebrow self-start">Philosophy &amp; practical details</span>
         <h2>Our values, the offering &amp; everything you need to know.</h2>
         <p>
-          The ALPS Foundation is guided by five core values that fuel the
-          Summer School&rsquo;s aim to support both academic and personal
-          growth. How we put them into practice — from evidence-led content
-          to the way we hold the participant experience — is written down in
-          our <a
+          The Summer School is guided by the values written down in our
+          <a
             href="/#manifesto"
             class="text-white underline decoration-[var(--color-accent)] decoration-2 underline-offset-4 hover:text-[var(--color-accent)]"
-          >manifesto</a>.
+          >manifesto</a> — the standard we hold ourselves to. Each word below
+          opens the chapter it summarizes.
         </p>
       </div>
 
       <ul
-        class="gradient-border mb-[clamp(2.5rem,4vw,3.5rem)] grid list-none grid-cols-2 gap-px p-0 md:grid-cols-5"
+        class="gradient-border mb-[clamp(2.5rem,4vw,3.5rem)] grid list-none grid-cols-2 gap-px p-0 md:grid-cols-3 lg:grid-cols-6"
       >
         {
           values.map((v, i) => (
-            <li
-              class="flex min-h-[100px] flex-col gap-[0.35rem] bg-[#08030c] px-[1.2rem] py-[1.1rem]"
-            >
-              <span
-                class="text-[0.72rem] font-semibold tracking-[0.14em] text-[var(--color-primary)]"
-                style="color: var(--color-primary);"
+            <li class="contents">
+              <a
+                href={`/#${v.anchor}`}
+                class="group flex min-h-[100px] flex-col gap-[0.35rem] bg-[#08030c] px-[1.2rem] py-[1.1rem] transition-colors hover:bg-[rgba(154,0,109,0.12)]"
               >
-                0{i + 1}
-              </span>
-              <span class="text-[1.05rem] font-medium tracking-[-0.01em] text-white">
-                {v}
-              </span>
+                <span
+                  class="text-[0.72rem] font-semibold tracking-[0.14em]"
+                  style="color: var(--color-primary);"
+                >
+                  0{i + 1}
+                </span>
+                <span class="text-[1.05rem] font-medium tracking-[-0.01em] text-white group-hover:text-white">
+                  {v.word}
+                </span>
+                <span
+                  class="mt-auto text-[0.72rem] text-[var(--color-fg-subtle)] opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  Read the chapter →
+                </span>
+              </a>
             </li>
           ))
         }
