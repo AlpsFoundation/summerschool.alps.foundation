@@ -1,72 +1,160 @@
 ---
-// Quotes from the anonymous 2025 participant feedback survey, lightly trimmed.
-const quotes = [
+// A horizontal, swipeable gallery interleaving ASS 2025 photos with quotes
+// from the anonymous post-event feedback survey. Kept vertically compact.
+type Slide =
+  | { type: 'photo'; src: string; alt: string }
+  | { type: 'quote'; text: string };
+
+const slides: Slide[] = [
+  { type: 'photo', src: '/assets/gallery/p07.jpg', alt: 'Participants laughing together at the Summer School' },
   {
-    text: 'I expected to get a very informative but quite stiff gathering of knowledgeable researchers and got the most heartwarming, inspiring journey, surrounded by the most amazing people.',
-    highlight: true,
+    type: 'quote',
+    text: 'I expected a quite stiff gathering of knowledgeable researchers and got the most heartwarming, inspiring journey, surrounded by the most amazing people.',
   },
+  { type: 'photo', src: '/assets/gallery/p06.jpg', alt: 'The 2025 cohort together on the hilltop above Lake Neuchâtel' },
+  { type: 'photo', src: '/assets/gallery/p03.jpg', alt: 'The group gathered in a circle under the big tree at Le Camp' },
   {
-    text: 'It almost felt like a psychedelic experience. There isn’t one thing I could pick — it’s more the way all of it magically created its own life.',
+    type: 'quote',
+    text: 'It almost felt like a psychedelic experience. There isn’t one thing I could pick — it’s the way all of it magically created its own life.',
   },
+  { type: 'photo', src: '/assets/gallery/p02.jpg', alt: 'A lecture during the ALPS Summer School' },
+  { type: 'photo', src: '/assets/gallery/p04.jpg', alt: 'Cacao ceremony with singing bowls and flowers' },
   {
-    text: 'It’s super professional and feels fun at the same time.',
+    type: 'quote',
+    text: 'I felt like I could ask and talk about anything with everyone, because the whole community was so empathetic and available.',
   },
+  { type: 'photo', src: '/assets/gallery/p05.jpg', alt: 'Carrying gear across the hill on another day at Le Camp' },
+  { type: 'photo', src: '/assets/gallery/p01.jpg', alt: 'Participants on the hillside overlooking Lake Neuchâtel' },
   {
-    text: 'I expected to learn more about psychedelic therapies and meet people, and it’s exactly what happened — but 100 times better than what I was thinking.',
+    type: 'quote',
+    text: 'I expected to learn more about psychedelic therapies and meet people — and it’s exactly what happened, but 100 times better than I imagined.',
   },
+  { type: 'photo', src: '/assets/gallery/p08.jpg', alt: 'The workshop space set up at Le Camp' },
   {
-    text: 'I felt like I could ask and talk about anything with everyone, because the whole community was very empathetic and available.',
-  },
-  {
-    text: 'I gained new and interesting insights from the talks, and at the same time had wonderful moments where I laughed a lot and felt truly connected.',
+    type: 'quote',
+    text: 'I gained new insights from the talks, and at the same time had wonderful moments where I laughed a lot and felt truly connected.',
   },
 ];
 ---
 
 <section id="testimonials" class="py-[clamp(3rem,6vw,5rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(1.5rem,3vw,2.5rem)] flex max-w-[820px] flex-col gap-3">
-      <span class="eyebrow self-start">Voices from 2025</span>
-      <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
-        What last year&rsquo;s participants told us.
-      </h2>
-      <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
-        Taken from our anonymous post-event feedback survey.
-      </p>
-    </div>
+    <div
+      class="mb-[clamp(1.5rem,3vw,2.5rem)] flex flex-wrap items-end justify-between gap-4"
+    >
+      <div class="flex max-w-[680px] flex-col gap-3">
+        <span class="eyebrow self-start">Moments &amp; voices from 2025</span>
+        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
+          A glimpse of last year, in pictures and words.
+        </h2>
+        <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
+          Photos from the week and quotes from our anonymous participant
+          feedback survey. Swipe through.
+        </p>
+      </div>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {
-        quotes.map((q) => (
-          <figure
-            class:list={[
-              'card m-0 flex flex-col justify-between gap-5',
-              q.highlight && 'md:col-span-2 lg:col-span-1',
-            ]}
-          >
+      <div class="hidden items-center gap-2 md:flex">
+        <button
+          type="button"
+          data-gallery-prev
+          aria-label="Previous"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)] disabled:opacity-30"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button
+          type="button"
+          data-gallery-next
+          aria-label="Next"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)] disabled:opacity-30"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- full-bleed track so photos can run to the screen edge -->
+  <div
+    data-gallery-track
+    class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[max(1rem,calc((100vw-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    style="-webkit-overflow-scrolling: touch;"
+  >
+    {
+      slides.map((s) =>
+        s.type === 'photo' ? (
+          <figure class="group relative m-0 h-[clamp(340px,44vh,460px)] shrink-0 snap-start overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+            <img
+              src={s.src}
+              alt={s.alt}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-auto max-w-none object-cover"
+            />
+          </figure>
+        ) : (
+          <figure class="card m-0 flex h-[clamp(340px,44vh,460px)] w-[clamp(260px,80vw,340px)] shrink-0 snap-start flex-col justify-between gap-5">
             <blockquote class="m-0">
-              <span
-                aria-hidden="true"
-                class="grad-text mb-2 block text-[2rem] font-semibold leading-none"
-              >
+              <span aria-hidden="true" class="grad-text mb-2 block text-[2.5rem] font-semibold leading-none">
                 &ldquo;
               </span>
-              <p class="m-0 text-[0.98rem] leading-[1.65] text-white/90">
-                {q.text}
-              </p>
+              <p class="m-0 text-[1rem] leading-[1.6] text-white/90">{s.text}</p>
             </blockquote>
-            <figcaption
-              class="flex items-center gap-[0.7rem] text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]"
-            >
-              <span
-                aria-hidden="true"
-                class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
-              />
+            <figcaption class="flex items-center gap-[0.7rem] text-[0.74rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+              <span aria-hidden="true" class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full" />
               2025 participant
             </figcaption>
           </figure>
-        ))
-      }
-    </div>
+        )
+      )
+    }
   </div>
 </section>
+
+<script>
+  const track = document.querySelector<HTMLElement>('[data-gallery-track]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-gallery-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
+
+  if (track) {
+    const step = () => Math.round(track.clientWidth * 0.8);
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+    const syncButtons = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    };
+    track.addEventListener('scroll', syncButtons, { passive: true });
+    window.addEventListener('resize', syncButtons);
+    syncButtons();
+
+    // Drag-to-scroll for pointer devices (touch already scrolls natively).
+    let down = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return;
+      down = true; moved = false;
+      startX = e.clientX; startScroll = track.scrollLeft;
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    });
+    const end = () => { down = false; };
+    track.addEventListener('pointerup', end);
+    track.addEventListener('pointerleave', end);
+    // Prevent a drag from triggering clicks/image-drag.
+    track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+    track.querySelectorAll('img').forEach((img) =>
+      img.addEventListener('dragstart', (e) => e.preventDefault())
+    );
+  }
+</script>
+
+<style>
+  [data-gallery-track] { cursor: grab; }
+  [data-gallery-track]:active { cursor: grabbing; }
+</style>
