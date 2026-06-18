@@ -1,68 +1,56 @@
 ---
-// A horizontal, swipeable gallery interleaving ASS 2025 photos with quotes
-// from the anonymous post-event feedback survey. Kept vertically compact.
+// A horizontal, infinitely-looping gallery interleaving ASS 2025 photos with
+// quotes from the anonymous post-event feedback survey. Kept vertically compact.
+const photos = [
+  { src: '/assets/gallery/p07.jpg', w: 960, h: 720, alt: 'Participants laughing together at the Summer School' },
+  { src: '/assets/gallery/p06.jpg', w: 479, h: 720, alt: 'The 2025 cohort together on the hilltop above Lake Neuchâtel' },
+  { src: '/assets/gallery/p13.jpg', w: 540, h: 720, alt: 'Sunset over Lake Neuchâtel' },
+  { src: '/assets/gallery/p11.jpg', w: 540, h: 720, alt: 'A breathwork session during the Summer School' },
+  { src: '/assets/gallery/p04.jpg', w: 405, h: 720, alt: 'Cacao ceremony with singing bowls and flowers' },
+  { src: '/assets/gallery/p02.jpg', w: 405, h: 720, alt: 'A lecture during the ALPS Summer School' },
+  { src: '/assets/gallery/p14.jpg', w: 540, h: 720, alt: 'A handful of wildflowers picked at Le Camp' },
+  { src: '/assets/gallery/p09.jpg', w: 540, h: 720, alt: 'Air-dry clay creations from the art workshop' },
+  { src: '/assets/gallery/p03.jpg', w: 405, h: 720, alt: 'The group gathered in a circle under the big tree at Le Camp' },
+  { src: '/assets/gallery/p15.jpg', w: 540, h: 720, alt: 'The catering spread at the Summer School' },
+  { src: '/assets/gallery/p10.jpg', w: 540, h: 720, alt: 'An evening ceremony in the workshop hall at Le Camp' },
+  { src: '/assets/gallery/p05.jpg', w: 405, h: 720, alt: 'Carrying gear across the hill on another day at Le Camp' },
+  { src: '/assets/gallery/p16.jpg', w: 540, h: 720, alt: 'The mountain cabin above Le Camp' },
+  { src: '/assets/gallery/p01.jpg', w: 405, h: 720, alt: 'Participants on the hillside overlooking Lake Neuchâtel' },
+  { src: '/assets/gallery/p17.jpg', w: 540, h: 720, alt: 'Flowers and details from a ceremony table' },
+  { src: '/assets/gallery/p12.jpg', w: 540, h: 720, alt: 'An evening sharing circle at Le Camp' },
+  { src: '/assets/gallery/p08.jpg', w: 405, h: 720, alt: 'The workshop space set up at Le Camp' },
+];
+
+const quotes = [
+  'I expected a quite stiff gathering of knowledgeable researchers and got the most heartwarming, inspiring journey, surrounded by the most amazing people.',
+  'It almost felt like a psychedelic experience. There isn’t one thing I could pick — it’s the way all of it magically created its own life.',
+  'The catering was absolutely amazing.',
+  'I appreciated the variety in the talks — scientific, therapeutic, philosophical and artistic. It gave me a comprehensive picture.',
+  'Everyone was committed to learn and to show their vulnerability. The workshops let us peel back the surface and bring back something valuable.',
+  'I felt like I could ask and talk about anything with everyone, because the whole community was so empathetic and available.',
+  'It’s been a long time since I felt this sense of belonging and of being in the right place at the right time.',
+  'I expected to learn more about psychedelic therapies and meet people — and it’s exactly what happened, but 100 times better than I imagined.',
+  'The organisation felt really smooth — everyone from the team was helpful and always had an open ear.',
+  'Time management was perfect — we had all the time we needed to both learn and to socialise.',
+  'I fell in love with the idea of becoming a researcher — and with the connection to the other participants.',
+  'Transformative, bonding, perspective-enriching.',
+  'Everyone was so kind and compassionate — from the participants to the team to the speakers.',
+  'A family-like atmosphere, the mix of theory and personal experience in the workshops, and the people.',
+  'I loved the exchange between people, all the discussions we had — and I loved the party.',
+  'I genuinely had a lovely time — I felt connected with like-minded people and learned I’m not alone in thinking like this.',
+  'I gained new insights from the talks, and at the same time had wonderful moments where I laughed a lot and felt truly connected.',
+];
+
 type Slide =
-  | { type: 'photo'; src: string; alt: string }
+  | { type: 'photo'; src: string; w: number; h: number; alt: string }
   | { type: 'quote'; text: string };
 
-const slides: Slide[] = [
-  { type: 'photo', src: '/assets/gallery/p07.jpg', alt: 'Participants laughing together at the Summer School' },
-  {
-    type: 'quote',
-    text: 'I expected a quite stiff gathering of knowledgeable researchers and got the most heartwarming, inspiring journey, surrounded by the most amazing people.',
-  },
-  { type: 'photo', src: '/assets/gallery/p06.jpg', alt: 'The 2025 cohort together on the hilltop above Lake Neuchâtel' },
-  {
-    type: 'quote',
-    text: 'It almost felt like a psychedelic experience. There isn’t one thing I could pick — it’s the way all of it magically created its own life.',
-  },
-  { type: 'photo', src: '/assets/gallery/p11.jpg', alt: 'A breathwork session during the Summer School' },
-  {
-    type: 'quote',
-    text: 'I appreciated the variety in the talks — scientific, therapeutic, philosophical and artistic. It gave me a comprehensive picture.',
-  },
-  { type: 'photo', src: '/assets/gallery/p02.jpg', alt: 'A lecture during the ALPS Summer School' },
-  {
-    type: 'quote',
-    text: 'Everyone was committed to learn and to show their vulnerability. The workshops let us peel back the surface and bring back something valuable.',
-  },
-  { type: 'photo', src: '/assets/gallery/p04.jpg', alt: 'Cacao ceremony with singing bowls and flowers' },
-  { type: 'photo', src: '/assets/gallery/p09.jpg', alt: 'Air-dry clay creations from the art workshop' },
-  {
-    type: 'quote',
-    text: 'I felt like I could ask and talk about anything with everyone, because the whole community was so empathetic and available.',
-  },
-  { type: 'photo', src: '/assets/gallery/p03.jpg', alt: 'The group gathered in a circle under the big tree at Le Camp' },
-  {
-    type: 'quote',
-    text: 'It’s been a long time since I felt this sense of belonging and of being in the right place at the right time.',
-  },
-  { type: 'photo', src: '/assets/gallery/p10.jpg', alt: 'An evening ceremony in the workshop hall at Le Camp' },
-  {
-    type: 'quote',
-    text: 'I expected to learn more about psychedelic therapies and meet people — and it’s exactly what happened, but 100 times better than I imagined.',
-  },
-  { type: 'photo', src: '/assets/gallery/p05.jpg', alt: 'Carrying gear across the hill on another day at Le Camp' },
-  {
-    type: 'quote',
-    text: 'The organisation felt really smooth — everyone from the team was helpful and always had an open ear.',
-  },
-  { type: 'photo', src: '/assets/gallery/p01.jpg', alt: 'Participants on the hillside overlooking Lake Neuchâtel' },
-  {
-    type: 'quote',
-    text: 'Time management was perfect — we had all the time we needed to both learn and to socialise.',
-  },
-  { type: 'photo', src: '/assets/gallery/p12.jpg', alt: 'An evening sharing circle at Le Camp' },
-  {
-    type: 'quote',
-    text: 'I fell in love with the idea of becoming a researcher — and with the connection to the other participants.',
-  },
-  { type: 'photo', src: '/assets/gallery/p08.jpg', alt: 'The workshop space set up at Le Camp' },
-  {
-    type: 'quote',
-    text: 'I gained new insights from the talks, and at the same time had wonderful moments where I laughed a lot and felt truly connected.',
-  },
-];
+const slides: Slide[] = [];
+const max = Math.max(photos.length, quotes.length);
+for (let i = 0; i < max; i++) {
+  if (photos[i]) slides.push({ type: 'photo', ...photos[i] });
+  if (quotes[i]) slides.push({ type: 'quote', text: quotes[i] });
+}
 ---
 
 <section id="testimonials" class="py-[clamp(3rem,6vw,5rem)]">
@@ -77,7 +65,7 @@ const slides: Slide[] = [
         </h2>
         <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
           Photos from the week and quotes from our anonymous participant
-          feedback survey. Swipe through.
+          feedback survey. Swipe through — it loops.
         </p>
       </div>
 
@@ -86,7 +74,7 @@ const slides: Slide[] = [
           type="button"
           data-gallery-prev
           aria-label="Previous"
-          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)] disabled:opacity-30"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         </button>
@@ -94,7 +82,7 @@ const slides: Slide[] = [
           type="button"
           data-gallery-next
           aria-label="Next"
-          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)] disabled:opacity-30"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
@@ -105,15 +93,17 @@ const slides: Slide[] = [
   <!-- full-bleed track so photos can run to the screen edge -->
   <div
     data-gallery-track
-    class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[max(1rem,calc((100vw-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    class="flex gap-4 overflow-x-auto px-[max(1rem,calc((100vw-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     style="-webkit-overflow-scrolling: touch;"
   >
     {
       slides.map((s) =>
         s.type === 'photo' ? (
-          <figure class="group relative m-0 h-[clamp(340px,44vh,460px)] shrink-0 snap-start overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+          <figure class="m-0 h-[clamp(340px,44vh,460px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
             <img
               src={s.src}
+              width={s.w}
+              height={s.h}
               alt={s.alt}
               loading="lazy"
               decoding="async"
@@ -121,7 +111,7 @@ const slides: Slide[] = [
             />
           </figure>
         ) : (
-          <figure class="card m-0 flex h-[clamp(340px,44vh,460px)] w-[clamp(260px,80vw,340px)] shrink-0 snap-start flex-col justify-between gap-5">
+          <figure class="card m-0 flex h-[clamp(340px,44vh,460px)] w-[clamp(260px,80vw,340px)] shrink-0 flex-col justify-between gap-5">
             <blockquote class="m-0">
               <span aria-hidden="true" class="grad-text mb-2 block text-[2.5rem] font-semibold leading-none">
                 &ldquo;
@@ -145,18 +135,63 @@ const slides: Slide[] = [
   const next = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
 
   if (track) {
+    // Build a seamless loop: keep the originals as the middle copy, with one
+    // identical copy on each side. Wrapping by exactly one set-width lands on
+    // pixel-identical content, so the jump is invisible.
+    const originals = Array.from(track.children);
+    const N = originals.length;
+    for (let c = 0; c < 2; c++) {
+      originals.forEach((node) => {
+        const clone = node.cloneNode(true) as HTMLElement;
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('img').forEach((img) => img.setAttribute('loading', 'lazy'));
+        track.appendChild(clone);
+      });
+    }
+
+    let setWidth = 0;
+    const measure = () => {
+      // offset between the first child of copy-0 and the first child of copy-1
+      const a = track.children[0] as HTMLElement;
+      const b = track.children[N] as HTMLElement;
+      setWidth = b.offsetLeft - a.offsetLeft;
+    };
+
+    const recenter = () => {
+      if (setWidth > 0) track.scrollLeft = setWidth;
+    };
+
+    measure();
+    recenter();
+    // Re-measure once images have loaded, in case any width shifted.
+    window.addEventListener('load', () => {
+      const x = track.scrollLeft;
+      measure();
+      if (Math.abs(x - setWidth) < 4) recenter();
+    });
+
+    let raf = 0;
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (raf || setWidth <= 0) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const x = track.scrollLeft;
+          if (x < setWidth * 0.5) track.scrollLeft = x + setWidth;
+          else if (x > setWidth * 1.5) track.scrollLeft = x - setWidth;
+        });
+      },
+      { passive: true }
+    );
+
+    window.addEventListener('resize', () => {
+      measure();
+    });
+
     const step = () => Math.round(track.clientWidth * 0.8);
     prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
     next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-
-    const syncButtons = () => {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= max;
-    };
-    track.addEventListener('scroll', syncButtons, { passive: true });
-    window.addEventListener('resize', syncButtons);
-    syncButtons();
 
     // Drag-to-scroll for pointer devices (touch already scrolls natively).
     let down = false, startX = 0, startScroll = 0, moved = false;
@@ -174,7 +209,6 @@ const slides: Slide[] = [
     const end = () => { down = false; };
     track.addEventListener('pointerup', end);
     track.addEventListener('pointerleave', end);
-    // Prevent a drag from triggering clicks/image-drag.
     track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
     track.querySelectorAll('img').forEach((img) =>
       img.addEventListener('dragstart', (e) => e.preventDefault())
