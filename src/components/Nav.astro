@@ -9,27 +9,29 @@ const links = [
 ];
 ---
 
+<div data-announce class="grad-primary px-4 py-[0.5rem] text-center text-white">
+  <p class="m-0 text-[0.88rem] font-medium leading-snug">
+    A few spots have opened up — the waiting list for 2026 is still open.
+    <a
+      href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="whitespace-nowrap underline underline-offset-[3px] transition-opacity hover:opacity-90"
+    >Join the waiting list →</a>
+  </p>
+  <p class="m-0 mt-[2px] text-[0.82rem] font-normal leading-snug text-white/90">
+    Are the fees a stretch? Whether you’re interested or already taking part,
+    <a
+      href="mailto:summerschool@alps.foundation?subject=ALPS%20Summer%20School%20%E2%80%94%20fees"
+      class="whitespace-nowrap underline underline-offset-[3px] transition-opacity hover:opacity-90"
+    >get in touch</a> — we’re open to talking.
+  </p>
+</div>
+
 <header
-  class="sticky top-0 z-50 isolate border-b border-[var(--color-border)] bg-[rgba(5,0,7,0.72)] backdrop-blur-xl backdrop-saturate-[1.4] supports-[backdrop-filter]:bg-[rgba(5,0,7,0.38)]"
+  data-nav
+  class="z-50 isolate border-b border-[var(--color-border)] bg-[rgba(5,0,7,0.72)] backdrop-blur-xl backdrop-saturate-[1.4] supports-[backdrop-filter]:bg-[rgba(5,0,7,0.38)]"
 >
-  <div class="grad-primary px-4 py-[0.5rem] text-center text-white">
-    <p class="m-0 text-[0.88rem] font-medium leading-snug">
-      A few spots have opened up — the waiting list for 2026 is still open.
-      <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="whitespace-nowrap underline underline-offset-[3px] transition-opacity hover:opacity-90"
-      >Join the waiting list →</a>
-    </p>
-    <p class="m-0 mt-[2px] text-[0.82rem] font-normal leading-snug text-white/90">
-      Are the fees a stretch? Whether you’re interested or already taking part,
-      <a
-        href="mailto:summerschool@alps.foundation?subject=ALPS%20Summer%20School%20%E2%80%94%20fees"
-        class="whitespace-nowrap underline underline-offset-[3px] transition-opacity hover:opacity-90"
-      >get in touch</a> — we’re open to talking.
-    </p>
-  </div>
   <div class="container-x flex items-center justify-between gap-5 py-[0.9rem]">
     <a
       href="/"
@@ -126,6 +128,8 @@ const links = [
   </div>
 </header>
 
+<div data-nav-spacer aria-hidden="true"></div>
+
 <div
   id="mobile-backdrop"
   data-open="false"
@@ -135,6 +139,17 @@ const links = [
 </div>
 
 <style>
+  /* Nav scrolls with the page at the top (so the announcement strip above it
+     is never overlapped on load), then pins to the top once scrolled past it. */
+  header[data-nav] {
+    position: relative;
+  }
+  header[data-nav].pinned {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
   #mobile-menu {
     grid-template-rows: 0fr;
     opacity: 0;
@@ -172,6 +187,25 @@ const links = [
     return h;
   }
 
+  const announceEl = document.querySelector('[data-announce]');
+  const navEl = /** @type {HTMLElement|null} */ (document.querySelector('header[data-nav]'));
+  const navSpacer = /** @type {HTMLElement|null} */ (document.querySelector('[data-nav-spacer]'));
+  let navPinned = false;
+
+  function updateNavPin() {
+    if (!navEl) return;
+    const announceH = announceEl ? announceEl.getBoundingClientRect().height : 0;
+    const shouldPin = window.scrollY >= announceH;
+    if (shouldPin === navPinned) return;
+    navPinned = shouldPin;
+    // Reserve the nav's height as a spacer so the page doesn't jump when it
+    // leaves the flow on pin.
+    if (shouldPin && navSpacer)
+      navSpacer.style.height = `${navEl.getBoundingClientRect().height}px`;
+    navEl.classList.toggle('pinned', shouldPin);
+    if (!shouldPin && navSpacer) navSpacer.style.height = '0px';
+  }
+
   function updateScrollSpy() {
     const links = Array.from(document.querySelectorAll('[data-scrollspy-target]'));
     const ids = links
@@ -203,11 +237,14 @@ const links = [
     ticking = true;
     requestAnimationFrame(() => {
       updateScrollSpy();
+      updateNavPin();
       ticking = false;
     });
   }
 
   updateScrollSpy();
+  updateNavPin();
+  window.addEventListener('load', updateNavPin);
   window.addEventListener('scroll', onScrollOrResize, { passive: true });
   window.addEventListener('resize', onScrollOrResize);
   window.addEventListener('hashchange', updateScrollSpy);
