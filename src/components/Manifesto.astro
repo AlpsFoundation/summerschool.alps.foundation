@@ -7,9 +7,6 @@ const chapters = [
       'The field of psychedelic sciences tends to attract brilliance and distortion. Our responsibility is to remain grounded.',
     value:
       'We operate at the intersection of <em>curiosity and scientific rigor</em>. Psychedelics can inspire insight, creativity, and connection — and they can also invite overconfidence, projection, and unexamined certainty. We do not romanticize the field. We take responsibility for shaping it.',
-    prose: [
-      'We anchor every decision in <strong>evidence</strong>, <strong>clear reasoning</strong>, and <strong>intellectual humility</strong>, and treat ambition as something that must be <strong>disciplined by integrity</strong>.',
-    ],
     actions: [
       'We anchor every decision in <strong>evidence</strong>, <strong>clear reasoning</strong>, and <strong>intellectual humility</strong>.',
       'We treat ambition as something that must be <strong>disciplined by integrity</strong>.',
@@ -21,10 +18,6 @@ const chapters = [
     callout: 'Enthusiasm is not evidence. Charisma is not competence.',
     value:
       '<em>Our credibility depends on discipline.</em> We must not contribute to hype or distortion.',
-    prose: [
-      'We present hypotheses as hypotheses, frame uncertainty explicitly, and document decisions rather than relying on memory — preparing for foreseeable risks and maintaining a plan B.',
-      'When inappropriate behavior or misinformation occurs, we <strong>act decisively</strong>. Professionalism is <strong>reliability under pressure</strong>.',
-    ],
     actions: [
       'We present hypotheses as hypotheses and frame uncertainty explicitly.',
       'We document decisions rather than relying on memory.',
@@ -39,10 +32,6 @@ const chapters = [
     callout: 'Excellent events respect both human needs and intellectual depth.',
     value:
       'Participants deserve <em>coherence, clarity, and care</em>. Intellectual depth requires stable conditions. They deserve to be held with <strong>kindness</strong> and <strong>compassion</strong>.',
-    prose: [
-      'We provide <strong>clear schedules</strong>, <strong>visible contact persons</strong>, and <strong>real-time feedback loops</strong>, and ensure foundational conditions: sufficient food, meaningful breaks, functional space, and psychological ease.',
-      'We cultivate an attitude of <strong>kindness</strong> and <strong>respect</strong>, curate <strong>evidence-based content</strong> and structured interaction, and maintain clear boundaries — so participants leave feeling <strong>informed</strong>, <strong>respected</strong>, and <strong>connected</strong>.',
-    ],
     actions: [
       'We provide <strong>clear schedules</strong>, <strong>visible contact persons</strong>, and <strong>real-time feedback loops</strong>.',
       'We ensure foundational conditions: sufficient food, meaningful breaks, functional space, and psychological ease.',
@@ -58,9 +47,6 @@ const chapters = [
     callout:
       'Disorganization, indifference, and avoidable confusion undermine trust.',
     value: '<em>Failure is not dramatic; it is preventable negligence.</em>',
-    prose: [
-      'We refuse <strong>unclear roles</strong>, <strong>repeated unresolved debate</strong>, <strong>low-quality content</strong>, and <strong>inaccessible leadership</strong> — and any environment where speaking feels unsafe. We do not excuse chaos as spontaneity.',
-    ],
     actions: [
       'We refuse unclear roles.',
       'We refuse repeated unresolved debate.',
@@ -76,10 +62,6 @@ const chapters = [
     callout: 'Excellence without joy is unsustainable. Rigor without warmth is brittle.',
     value:
       '<em>Fun and kindness are not luxuries — they are infrastructure.</em> A psychedelic science is deemed fulfilling if the <em>output</em> of energy and love outweighs the amount <em>put in</em>. We build environments where people want to be.',
-    prose: [
-      'We design space for <strong>spontaneity</strong> within structure and celebrate small wins — creating moments of <strong>levity</strong> that reduce tension without undermining focus: shared meals, playful transitions between sessions, and activities that nurture connection.',
-      'We resist the tendency to treat seriousness as suffering. When planning sessions, we ask: <em>will this be intellectually rewarding AND human?</em> Fun is the practice of making collaboration <strong>sustainable</strong>; kindness is the refusal to sacrifice people for productivity.',
-    ],
     actions: [
       'We design space for spontaneity within structure and celebrate small wins.',
       'We create moments of levity that reduce tension without undermining focus: shared meals, playful transitions between sessions, activities that nurture connection.',
@@ -87,11 +69,6 @@ const chapters = [
       'Fun is the practice of making collaboration sustainable. Kindness is the refusal to sacrifice people for productivity.',
     ],
   },
-];
-
-const commitmentsProse = [
-  'We commit to <strong>clarity</strong>, <strong>accountability</strong>, <strong>scientific rigor</strong>, and <strong>care</strong> — to psychological safety paired with responsibility, and to disciplined execution in service of participants and collaborators.',
-  'We commit to grounding ambition in humility, and to making this work <strong>sustainable</strong> — through kindness, care, and the belief that rigour and humanity are not opposites.',
 ];
 
 const commitments = [
@@ -105,26 +82,14 @@ const commitments = [
 
 <section id="manifesto" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-      <div class="flex max-w-[820px] flex-col gap-4">
-        <span class="eyebrow self-start">Manifesto</span>
-        <h2>The standard we hold <span class="grad-text">ourselves</span> to.</h2>
-        <p>
-          Our manifesto describes how we work and what you can expect from us as
-          a participant. These are the chapters that shape your experience at the
-          summer school.
-        </p>
-      </div>
-      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 self-start rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)] sm:self-end">
-        <input type="checkbox" id="manifesto-toggle" class="peer sr-only" />
-        <span
-          aria-hidden="true"
-          class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
-        >
-          <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
-        </span>
-        <span class="text-[0.85rem] font-medium text-white">Show specifics</span>
-      </label>
+    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Manifesto</span>
+      <h2>The standard we hold <span class="grad-text">ourselves</span> to.</h2>
+      <p>
+        Our manifesto describes how we work and what you can expect from us as
+        a participant. These are the chapters that shape your experience at the
+        summer school.
+      </p>
     </div>
 
     <div class="flex flex-col gap-4">
@@ -139,22 +104,17 @@ const commitments = [
               />
               <p class="m-0 text-[0.95rem]" set:html={c.value} />
             </div>
-            <div class="flex flex-col gap-4 self-center">
-              {c.prose.map((p) => (
-                <p class="m-0 text-[0.95rem] text-[var(--color-fg-muted)]" set:html={p} />
+            <ul class="m-0 flex list-none flex-col gap-3 self-center p-0">
+              {c.actions.map((a) => (
+                <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
+                  <span
+                    aria-hidden="true"
+                    class="grad-primary mt-[0.55rem] h-[7px] w-[7px] flex-shrink-0 rounded-full"
+                  />
+                  <span set:html={a} />
+                </li>
               ))}
-              <ul data-manifesto-detail class="m-0 flex list-none flex-col gap-3 p-0">
-                {c.actions.map((a) => (
-                  <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
-                    <span
-                      aria-hidden="true"
-                      class="grad-primary mt-[0.55rem] h-[7px] w-[7px] flex-shrink-0 rounded-full"
-                    />
-                    <span set:html={a} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </ul>
           </article>
         ))
       }
@@ -168,12 +128,7 @@ const commitments = [
             We build deliberately. We act responsibly. We protect the integrity
             of our work and our field. We do this with joy and warmth.
           </p>
-          <div class="flex max-w-[760px] flex-col gap-4">
-            {commitmentsProse.map((p) => (
-              <p class="m-0 text-[0.95rem] text-[var(--color-fg-muted)]" set:html={p} />
-            ))}
-          </div>
-          <ul data-manifesto-detail class="m-0 flex list-none flex-col gap-3 p-0">
+          <ul class="m-0 flex list-none flex-col gap-3 p-0">
             {
               commitments.map((c) => (
                 <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
@@ -201,13 +156,5 @@ const commitments = [
   #manifesto :global(strong) {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
-  }
-
-  #manifesto [data-manifesto-detail] {
-    display: none;
-  }
-
-  #manifesto:has(#manifesto-toggle:checked) [data-manifesto-detail] {
-    display: flex;
   }
 </style>
