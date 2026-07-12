@@ -16,6 +16,8 @@ type Session = {
   title?: string;
   // 'lecture' | 'workshop' | 'panel' | 'social' | 'closing' | 'meta' | 'tba'
   kind?: string;
+  // Two short learning objectives per talk, from Parsa's programme note (2026-07-11).
+  learningObjectives?: string[];
 };
 
 type ScheduleDay = { num: number; date: string; theme: string; sessions: Session[] };
@@ -34,9 +36,18 @@ const schedule: ScheduleDay[] = [
     sessions: [
       { time: '07:30 – 07:50', title: 'Morning meditation', topic: 'Outside.', kind: 'meta' },
       { time: '08:00 – 09:00', title: 'Breakfast', kind: 'meta' },
-      { time: '09:30 – 10:20', speaker: 'Parsa Yousefi', topic: 'Beyond the hype: reading psychedelic research critically.', kind: 'lecture' },
-      { time: '10:30 – 11:20', speaker: 'Daniel Meling', topic: 'Mind, method, and meaning: philosophical foundations of psychedelic science.', kind: 'lecture' },
-      { time: '11:30 – 12:20', speaker: 'Friederike Holze', topic: 'Pharmacology of psychedelics: LSD, psilocybin, and MDMA.', kind: 'lecture' },
+      { time: '09:30 – 10:20', speaker: 'Parsa Yousefi', topic: 'Beyond the hype: reading psychedelic research critically.', kind: 'lecture', learningObjectives: [
+          'Spot common weaknesses in psychedelic studies, such as functional unblinding, expectancy effects, and small samples.',
+          'Tell apart what the evidence supports from what the media and industry oversell.',
+        ] },
+      { time: '10:30 – 11:20', speaker: 'Daniel Meling', topic: 'Mind, method, and meaning: philosophical foundations of psychedelic science.', kind: 'lecture', learningObjectives: [
+          'Name the core philosophy-of-mind questions in psychedelic science: consciousness, self, and meaning.',
+          'Describe first-person and phenomenological methods, and how they complement third-person neuroscience.',
+        ] },
+      { time: '11:30 – 12:20', speaker: 'Friederike Holze', topic: 'Pharmacology of psychedelics: LSD, psilocybin, and MDMA.', kind: 'lecture', learningObjectives: [
+          'Describe the receptor targets and pharmacokinetics of LSD, psilocybin, and MDMA.',
+          'Compare the acute dose-response and subjective-effect profiles of the three substances.',
+        ] },
       { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
       { time: '15:00 – 18:00', speaker: 'Daniel Meling', topic: 'Meditation workshop.', kind: 'workshop' },
       { time: '18:30 – 19:30', title: 'Dinner', topic: 'Vegetarian BBQ.', kind: 'meta' },
@@ -47,9 +58,18 @@ const schedule: ScheduleDay[] = [
     num: 3, date: 'Tuesday 28 July', theme: 'Clinical frontiers',
     sessions: [
       { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
-      { time: '09:30 – 10:20', speaker: 'Charles Scelles', topic: 'Breaking the cycle: psychedelic-assisted therapy for trauma and addiction.', kind: 'lecture' },
-      { time: '10:30 – 11:20', speaker: 'Christopher Böhlke', topic: 'When time is limited: psychedelic-assisted therapy in palliative care.', kind: 'lecture' },
-      { time: '11:30 – 12:20', speaker: 'Gerhard Gründer', topic: 'Treating depression and anxiety: clinical evidence and practice.', kind: 'lecture' },
+      { time: '09:30 – 10:20', speaker: 'Charles Scelles', topic: 'Breaking the cycle: psychedelic-assisted therapy for trauma and addiction.', kind: 'lecture', learningObjectives: [
+          'Explain the clinical rationale for psychedelic-assisted therapy in PTSD and addiction.',
+          'Describe how psychedelics may interrupt entrenched trauma and addiction cycles, and how treatment is delivered.',
+        ] },
+      { time: '10:30 – 11:20', speaker: 'Christopher Böhlke', topic: 'When time is limited: psychedelic-assisted therapy in palliative care.', kind: 'lecture', learningObjectives: [
+          'Describe psychedelic-assisted therapy for existential distress, anxiety, and depression in life-threatening illness.',
+          'Weigh the current evidence and the practical realities of palliative care.',
+        ] },
+      { time: '11:30 – 12:20', speaker: 'Gerhard Gründer', topic: 'Treating depression and anxiety: clinical evidence and practice.', kind: 'lecture', learningObjectives: [
+          'Summarise the trial evidence for psychedelics, above all psilocybin, in depression and anxiety.',
+          'Describe how trials such as EPIsoDE are designed and how their findings reach clinical practice.',
+        ] },
       { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
       { time: '15:00 – 18:00', speaker: 'Federico Seragnoli', topic: 'Contact dance & nature: a movement and connect-with-nature workshop, with Andrea Bacconi.', kind: 'workshop' },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
@@ -60,9 +80,18 @@ const schedule: ScheduleDay[] = [
     num: 4, date: 'Wednesday 29 July', theme: 'Psychedelics in the brain',
     sessions: [
       { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
-      { time: '09:30 – 10:20', speaker: 'Klemens Egger', topic: 'The conscious brain on psychedelics: connectivity and awareness.', kind: 'lecture' },
-      { time: '10:30 – 11:20', speaker: 'Morten Lietz', topic: 'Neuroplasticity in the aging brain: measuring the effects of LSD.', kind: 'lecture' },
-      { time: '11:30 – 12:20', speaker: 'Pedro Mediano', topic: 'PID & psychedelics.', kind: 'lecture' },
+      { time: '09:30 – 10:20', speaker: 'Klemens Egger', topic: 'The conscious brain on psychedelics: connectivity and awareness.', kind: 'lecture', learningObjectives: [
+          'Describe how psychedelics reshape large-scale brain connectivity, using fMRI and PET.',
+          'Link changes in brain networks to shifts in conscious awareness.',
+        ] },
+      { time: '10:30 – 11:20', speaker: 'Morten Lietz', topic: 'Neuroplasticity in the aging brain: measuring the effects of LSD.', kind: 'lecture', learningObjectives: [
+          'Explain how psychedelics drive neuroplasticity at the synaptic and cellular level.',
+          'Describe how researchers measure plasticity in humans, and why the aging brain is a distinct case.',
+        ] },
+      { time: '11:30 – 12:20', speaker: 'Pedro Mediano', topic: 'PID & psychedelics.', kind: 'lecture', learningObjectives: [
+          'Explain how information-theoretic and complexity measures quantify brain activity.',
+          'Describe what these whole-system measures add on top of standard connectivity analyses.',
+        ] },
       { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
       { time: '15:00 – 18:00', title: 'Art workshop', topic: 'With Fullblindness.', kind: 'workshop' },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
@@ -73,11 +102,17 @@ const schedule: ScheduleDay[] = [
     num: 5, date: 'Thursday 30 July', theme: 'Cutting edge applications and research',
     sessions: [
       { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
-      { time: '09:30 – 10:20', speaker: 'Maria Sansoni', topic: 'Cyberdelics: virtual reality as a drug-free path to altered states.', kind: 'lecture' },
+      { time: '09:30 – 10:20', speaker: 'Maria Sansoni', topic: 'Cyberdelics: virtual reality as a drug-free path to altered states.', kind: 'lecture', learningObjectives: [
+          'Explain how virtual reality and related technologies induce altered states without drugs.',
+          'Compare technology-induced and drug-induced states, and judge their therapeutic potential.',
+        ] },
       { time: '11:00 – 13:00', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (Group I).', kind: 'workshop' },
       { time: '13:00 – 13:30', title: 'Lunch', kind: 'meta' },
       { time: '13:30 – 15:30', speaker: 'Martha Havenith', topic: 'Breathwork experience workshop (Group II).', kind: 'workshop' },
-      { time: '16:00 – 17:00', speaker: 'Martha Havenith', topic: 'The neuroscience of breathwork: non-pharmacological altered states.', kind: 'lecture' },
+      { time: '16:00 – 17:00', speaker: 'Martha Havenith', topic: 'The neuroscience of breathwork: non-pharmacological altered states.', kind: 'lecture', learningObjectives: [
+          'Explain the physiology of breathwork and how it produces altered states.',
+          'Describe the neuroscience that links breathwork to psychedelic-like experiences, including its risks.',
+        ] },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
       { time: '20:00 – late', title: 'Psychedelic storytelling', topic: 'With Jason Day.', kind: 'social' },
     ],
@@ -86,11 +121,23 @@ const schedule: ScheduleDay[] = [
     num: 6, date: 'Friday 31 July', theme: 'Society, ethics & integration',
     sessions: [
       { time: '07:30 – 09:00', title: 'Meditation & breakfast', kind: 'meta' },
-      { time: '09:30 – 10:20', speaker: 'Daniel Villiger', topic: 'The ethics of psychedelic-assisted therapy.', kind: 'lecture' },
-      { time: '10:30 – 11:20', speaker: 'Jason Day', topic: 'Psychedelics in culture and society: an anthropological lens.', kind: 'lecture' },
-      { time: '11:30 – 12:20', speaker: 'Helena Aicher', topic: 'Integration in practice: the therapeutic frame in real-world care.', kind: 'lecture' },
+      { time: '09:30 – 10:20', speaker: 'Daniel Villiger', topic: 'The ethics of psychedelic-assisted therapy.', kind: 'lecture', learningObjectives: [
+          'Name the central ethical challenges of the therapy: informed consent, heightened vulnerability, and the therapeutic relationship.',
+          'Explain why transformative, hard-to-articulate experiences complicate consent and autonomy.',
+        ] },
+      { time: '10:30 – 11:20', speaker: 'Jason Day', topic: 'Psychedelics in culture and society: an anthropological lens.', kind: 'lecture', learningObjectives: [
+          'Place contemporary psychedelic use in its cultural, historical, and social context.',
+          'Compare Indigenous and Western biomedical framings, and see how setting shapes the experience.',
+        ] },
+      { time: '11:30 – 12:20', speaker: 'Helena Aicher', topic: 'Integration in practice: the therapeutic frame in real-world care.', kind: 'lecture', learningObjectives: [
+          'Explain how preparation, the therapeutic frame, and integration shape therapy outcomes.',
+          'Describe how real-world care departs from controlled trials, drawing on the Swiss experience.',
+        ] },
       { time: '13:00 – 15:00', title: 'Lunch & break', kind: 'meta' },
-      { time: '14:30 – 15:30', panelists: ['Dario Dornbierer', 'Serge Weydert'], topic: 'Building in the psychedelic space: a founders’ panel. Moderated by Parsa Yousefi.', kind: 'panel' },
+      { time: '14:30 – 15:30', panelists: ['Dario Dornbierer', 'Serge Weydert'], topic: 'Building in the psychedelic space: a founders’ panel. Moderated by Parsa Yousefi.', kind: 'panel', learningObjectives: [
+          'Grasp what it takes to turn psychedelic science into products, companies, and patient access.',
+          'Describe the regulatory, funding, and ethical hurdles of building ventures in this space.',
+        ] },
       { time: '16:00 – 18:00', title: 'Closing ritual', kind: 'closing' },
       { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
       { time: '20:30 – 21:30', title: 'Open mic', kind: 'social' },
@@ -348,16 +395,28 @@ const affiliationUrl: Record<string, string> = {
 
 <section id="program" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
-      <span class="eyebrow self-start">Program</span>
-      <h2>Six days, six themes — one cohesive journey.</h2>
-      <p>
-        Each full day of the ALPS Summer School 2026 pairs three morning
-        lectures with an afternoon workshop and an evening gathering. The full
-        day-by-day programme is below. Tap a confirmed speaker to jump to their
-        bio; sessions still being finalised are marked
-        <em>to be announced</em>.
-      </p>
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+      <div class="flex max-w-[820px] flex-col gap-4">
+        <span class="eyebrow self-start">Program</span>
+        <h2>Six days, six themes — one cohesive journey.</h2>
+        <p>
+          Each full day of the ALPS Summer School 2026 pairs three morning
+          lectures with an afternoon workshop and an evening gathering. The full
+          day-by-day programme is below. Tap a confirmed speaker to jump to their
+          bio; sessions still being finalised are marked
+          <em>to be announced</em>.
+        </p>
+      </div>
+      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 self-start rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)] sm:self-end">
+        <input type="checkbox" id="lo-toggle" class="peer sr-only" />
+        <span
+          aria-hidden="true"
+          class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
+        >
+          <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
+        </span>
+        <span class="text-[0.85rem] font-medium text-white">Show learning objectives</span>
+      </label>
     </div>
 
     <ol class="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
@@ -427,7 +486,7 @@ const affiliationUrl: Record<string, string> = {
                 const who = tba ? 'To be announced' : (s.speaker ?? s.title);
                 const topic = tba ? 'To be announced.' : s.topic;
                 const base =
-                  'grid grid-cols-[7.5rem_1fr] gap-x-5 gap-y-1 border-t border-[var(--color-border)] py-3 first:border-t-0 sm:grid-cols-[8rem_13rem_1fr]';
+                  'session-row grid grid-cols-[7.5rem_1fr] gap-x-5 gap-y-1 border-t border-[var(--color-border)] py-3 first:border-t-0 sm:grid-cols-[8rem_13rem_1fr]';
                 const whoCls =
                   (meta || tba
                     ? 'text-[0.95rem] font-medium text-[var(--color-fg-subtle)]'
@@ -436,6 +495,20 @@ const affiliationUrl: Record<string, string> = {
                   'col-span-2 text-[0.9rem] leading-[1.5] sm:col-span-1 ' +
                   (meta || tba ? 'text-[var(--color-fg-subtle)]' : 'text-[var(--color-fg-muted)]') +
                   (tba ? ' italic' : '');
+
+                const objectives = s.learningObjectives ?? [];
+                const objectivesBlock = objectives.length > 0 && (
+                  <div data-lo class="col-span-2 mt-2 max-w-[36rem] sm:col-span-1 sm:col-start-3">
+                    <span class="mb-1 block text-[0.62rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                      Learning objectives
+                    </span>
+                    <ul class="m-0 grid list-none gap-1 p-0 text-[0.82rem] leading-[1.45] text-[var(--color-fg-subtle)]">
+                      {objectives.map((lo) => (
+                        <li>{lo}</li>
+                      ))}
+                    </ul>
+                  </div>
+                );
 
                 return isLink ? (
                   <a
@@ -456,6 +529,7 @@ const affiliationUrl: Record<string, string> = {
                       <span aria-hidden="true" class="ml-1 text-[var(--color-accent)] opacity-0 transition-opacity group-hover/slot:opacity-100">›</span>
                     </span>
                     {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
+                    {objectivesBlock}
                   </a>
                 ) : (
                   <div id={slotId} class={`scroll-mt-24 ${base}`}>
@@ -485,6 +559,7 @@ const affiliationUrl: Record<string, string> = {
                       )}
                     </span>
                     {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
+                    {objectivesBlock}
                   </div>
                 );
               })}
@@ -494,12 +569,6 @@ const affiliationUrl: Record<string, string> = {
       }
     </div>
 
-    <div
-      class="mt-8 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-gradient-to-r from-[rgba(154,0,109,0.1)] to-[rgba(255,255,255,0.02)] px-6 py-5 text-[0.95rem] text-[var(--color-fg-muted)]"
-    >
-      The programme is provisional and subject to change. Times, sessions and
-      speakers are updated as the summer school is finalised.
-    </div>
 
     <div id="speakers" class="mt-[clamp(3.5rem,7vw,6rem)]">
       <div
@@ -603,3 +672,16 @@ const affiliationUrl: Record<string, string> = {
     </div>
   </div>
 </section>
+
+<style>
+  /* Global learning-objectives visibility, driven by the #lo-toggle switch
+     in the Program section header. No JS: a single :has() rule reveals
+     every [data-lo] block (each sits under its session's topic column). */
+  #program [data-lo] {
+    display: none;
+  }
+
+  #program:has(#lo-toggle:checked) [data-lo] {
+    display: block;
+  }
+</style>
