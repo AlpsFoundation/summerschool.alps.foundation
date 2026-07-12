@@ -395,28 +395,16 @@ const affiliationUrl: Record<string, string> = {
 
 <section id="program" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(2rem,4vw,3rem)] flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-      <div class="flex max-w-[820px] flex-col gap-4">
-        <span class="eyebrow self-start">Program</span>
-        <h2>Six days, six themes — one cohesive journey.</h2>
-        <p>
-          Each full day of the ALPS Summer School 2026 pairs three morning
-          lectures with an afternoon workshop and an evening gathering. The full
-          day-by-day programme is below. Tap a confirmed speaker to jump to their
-          bio; sessions still being finalised are marked
-          <em>to be announced</em>.
-        </p>
-      </div>
-      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 self-start rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)] sm:self-end">
-        <input type="checkbox" id="lo-toggle" class="peer sr-only" />
-        <span
-          aria-hidden="true"
-          class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
-        >
-          <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
-        </span>
-        <span class="text-[0.85rem] font-medium text-white">Show learning objectives</span>
-      </label>
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Program</span>
+      <h2>Six days, six themes — one cohesive journey.</h2>
+      <p>
+        Each full day of the ALPS Summer School 2026 pairs three morning
+        lectures with an afternoon workshop and an evening gathering. The full
+        day-by-day programme is below. Tap a confirmed speaker to jump to their
+        bio; sessions still being finalised are marked
+        <em>to be announced</em>.
+      </p>
     </div>
 
     <ol class="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">
@@ -457,8 +445,25 @@ const affiliationUrl: Record<string, string> = {
       }
     </ol>
 
+    <div class="mt-6 flex justify-end sm:mt-8">
+      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)]">
+        <span class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center">
+          <input type="checkbox" id="lo-toggle" class="peer absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
+          />
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]"
+          />
+        </span>
+        <span class="text-[0.85rem] font-medium text-white">Show learning objectives</span>
+      </label>
+    </div>
+
     {/* Full day-by-day timetable */}
-    <div class="mt-[clamp(3rem,6vw,5rem)] flex flex-col gap-10">
+    <div class="mt-6 flex flex-col gap-10">
       {
         schedule.map((day) => (
           <div id={`day-${day.num}`} class="scroll-mt-24">
