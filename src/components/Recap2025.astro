@@ -1,0 +1,89 @@
+---
+import Aftermovie from './Aftermovie.astro';
+import Testimonials from './Testimonials.astro';
+---
+
+<section id="recap-2025" class="py-[clamp(1.5rem,3vw,2.5rem)]">
+  <div class="container-x">
+  <details
+    class="recap-callout overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border-strong)]"
+  >
+    <summary
+      class="recap-callout__summary flex list-none cursor-pointer flex-wrap items-center justify-between gap-4 px-[clamp(1.25rem,3vw,2rem)] py-[clamp(1.1rem,2.4vw,1.6rem)]"
+    >
+      <div class="flex flex-col gap-2">
+        <span class="eyebrow self-start">Summer school 2025</span>
+        <h2 class="m-0 text-[clamp(1.15rem,2.4vw,1.6rem)]">
+          Relive last year&rsquo;s week at Le Camp
+        </h2>
+        <p class="m-0 text-[0.88rem] text-[var(--color-fg-subtle)]">
+          The aftermovie, photo gallery and quotes from ASS 2025.
+        </p>
+      </div>
+      <span
+        class="recap-callout__toggle inline-flex shrink-0 items-center gap-2 rounded-[var(--radius-2xl)] border border-[var(--color-border-strong)] bg-white/[0.08] px-4 py-2 text-[0.78rem] font-medium uppercase tracking-[0.1em] text-white"
+      >
+        <span class="recap-callout__label-show">Show recap</span>
+        <span class="recap-callout__label-hide">Hide recap</span>
+        <svg
+          class="recap-callout__chevron h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </span>
+    </summary>
+
+    <div class="recap-callout__body border-t border-white/10">
+      <Aftermovie />
+      <Testimonials />
+    </div>
+  </details>
+  </div>
+</section>
+
+<style>
+  .recap-callout {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 196, 136, 0.22) 0%,
+      rgba(154, 0, 109, 0.32) 100%
+    );
+    transition: border-color 200ms ease;
+  }
+
+  .recap-callout[open] {
+    border-color: rgba(255, 196, 136, 0.4);
+  }
+
+  .recap-callout__summary::-webkit-details-marker {
+    display: none;
+  }
+  .recap-callout__summary::marker {
+    content: '';
+  }
+
+  .recap-callout__chevron {
+    transition: transform 220ms ease;
+  }
+  .recap-callout[open] .recap-callout__chevron {
+    transform: rotate(180deg);
+  }
+
+  .recap-callout__label-hide {
+    display: none;
+  }
+  .recap-callout[open] .recap-callout__label-show {
+    display: none;
+  }
+  .recap-callout[open] .recap-callout__label-hide {
+    display: inline;
+  }
+</style>
