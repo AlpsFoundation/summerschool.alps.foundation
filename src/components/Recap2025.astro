@@ -4,8 +4,9 @@ import Testimonials from './Testimonials.astro';
 ---
 
 <section id="recap-2025" class="py-[clamp(1.5rem,3vw,2.5rem)]">
+  <div class="container-x">
   <details
-    class="recap-callout container-x rounded-[var(--radius-xl)] border border-[var(--color-border-strong)]"
+    class="recap-callout overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border-strong)]"
   >
     <summary
       class="recap-callout__summary flex list-none cursor-pointer flex-wrap items-center justify-between gap-4 px-[clamp(1.25rem,3vw,2rem)] py-[clamp(1.1rem,2.4vw,1.6rem)]"
@@ -39,11 +40,12 @@ import Testimonials from './Testimonials.astro';
         </svg>
       </span>
     </summary>
-  </details>
 
-  <div class="recap-callout__body">
-    <Aftermovie />
-    <Testimonials />
+    <div class="recap-callout__body border-t border-white/10">
+      <Aftermovie />
+      <Testimonials />
+    </div>
+  </details>
   </div>
 </section>
 
@@ -83,12 +85,5 @@ import Testimonials from './Testimonials.astro';
   }
   .recap-callout[open] .recap-callout__label-hide {
     display: inline;
-  }
-
-  .recap-callout__body {
-    display: none;
-  }
-  .recap-callout[open] ~ .recap-callout__body {
-    display: block;
   }
 </style>

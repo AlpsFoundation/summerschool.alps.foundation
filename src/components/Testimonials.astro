@@ -90,10 +90,11 @@ for (let i = 0; i < max; i++) {
     </div>
   </div>
 
-  <!-- full-bleed track so photos can run to the screen edge -->
+  <!-- full-bleed track: runs to the edge of whatever contains this section
+       (the screen edge on the normal page flow, or a wrapping callout box) -->
   <div
     data-gallery-track
-    class="flex gap-4 overflow-x-auto px-[max(1rem,calc((100vw-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    class="flex gap-4 overflow-x-auto px-[max(1rem,calc((100%-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     style="-webkit-overflow-scrolling: touch;"
   >
     {
