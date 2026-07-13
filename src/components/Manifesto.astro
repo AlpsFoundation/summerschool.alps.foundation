@@ -74,29 +74,38 @@ const commitments = [
 
 <section id="manifesto" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-      <div class="flex max-w-[820px] flex-col gap-4">
-        <span class="eyebrow self-start">Manifesto</span>
-        <h2>The standard we hold <span class="grad-text">ourselves</span> to.</h2>
-        <p>
-          Our manifesto describes how we work and what you can expect from us as
-          a participant. These are the chapters that shape your experience at the
-          summer school.
-        </p>
-      </div>
-      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 self-start rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)] sm:self-end">
-        <input type="checkbox" id="manifesto-toggle" class="peer sr-only" />
-        <span
-          aria-hidden="true"
-          class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
-        >
-          <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
-        </span>
-        <span class="text-[0.85rem] font-medium text-white">Show specifics</span>
-      </label>
+    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Manifesto</span>
+      <h2>The standard we hold <span class="grad-text">ourselves</span> to.</h2>
+      <p>
+        Our manifesto describes how we work and what you can expect from us as
+        a participant. These are the chapters that shape your experience at the
+        summer school.
+      </p>
     </div>
 
-    <div class="flex flex-col gap-4">
+    {/* Wraps the toggle + chapters/commitment list so the toggle can stick to
+        the viewport for exactly the height of this list, then release once it
+        ends (position: sticky is bound to this wrapper as its containing
+        block). */}
+    <div class="relative">
+      <div
+        class="sticky z-20 mb-4 flex justify-end"
+        style="top: calc(var(--nav-h) + 0.75rem)"
+      >
+        <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 rounded-full border border-[var(--color-border-strong)] bg-[rgba(5,0,7,0.75)] px-4 py-[0.6rem] backdrop-blur-xl backdrop-saturate-[1.4] transition-colors supports-[backdrop-filter]:bg-[rgba(5,0,7,0.55)] hover:border-[var(--color-accent)]">
+          <input type="checkbox" id="manifesto-toggle" class="peer sr-only" />
+          <span
+            aria-hidden="true"
+            class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
+          >
+            <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
+          </span>
+          <span class="text-[0.85rem] font-medium text-white">Show specifics</span>
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-4">
       {
         chapters.map((c) => (
           <article id={c.id} class="card grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
@@ -156,6 +165,7 @@ const commitments = [
             This is ALPS Summer School.
           </p>
         </div>
+      </div>
       </div>
     </div>
   </div>
