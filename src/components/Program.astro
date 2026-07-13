@@ -445,8 +445,16 @@ const affiliationUrl: Record<string, string> = {
       }
     </ol>
 
-    <div class="mt-6 flex justify-end sm:mt-8">
-      <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 rounded-full border border-[var(--color-border-strong)] bg-white/[0.04] px-4 py-[0.6rem] transition-colors hover:border-[var(--color-accent)]">
+    {/* Wraps the toggle + full schedule so the toggle can stick to the
+        viewport for exactly the height of the day-by-day list below, then
+        release once the schedule ends (position: sticky is bound to this
+        wrapper as its containing block). */}
+    <div class="relative">
+      <div
+        class="sticky z-20 mt-6 flex justify-end sm:mt-8"
+        style="top: calc(var(--nav-h) + 0.75rem)"
+      >
+        <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 rounded-full border border-[var(--color-border-strong)] bg-[rgba(5,0,7,0.75)] px-4 py-[0.6rem] backdrop-blur-xl backdrop-saturate-[1.4] transition-colors supports-[backdrop-filter]:bg-[rgba(5,0,7,0.55)] hover:border-[var(--color-accent)]">
         <span class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center">
           <input type="checkbox" id="lo-toggle" class="peer absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" />
           <span
@@ -458,12 +466,12 @@ const affiliationUrl: Record<string, string> = {
             class="pointer-events-none absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]"
           />
         </span>
-        <span class="text-[0.85rem] font-medium text-white">Show learning objectives</span>
-      </label>
-    </div>
+          <span class="text-[0.85rem] font-medium text-white">Show learning objectives</span>
+        </label>
+      </div>
 
-    {/* Full day-by-day timetable */}
-    <div class="mt-6 flex flex-col gap-10">
+      {/* Full day-by-day timetable */}
+      <div class="mt-6 flex flex-col gap-10">
       {
         schedule.map((day) => (
           <div id={`day-${day.num}`} class="scroll-mt-24">
@@ -572,6 +580,7 @@ const affiliationUrl: Record<string, string> = {
           </div>
         ))
       }
+      </div>
     </div>
 
 
