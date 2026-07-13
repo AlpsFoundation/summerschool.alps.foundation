@@ -94,12 +94,21 @@ const commitments = [
         style="top: calc(var(--nav-h) + 0.75rem)"
       >
         <label class="inline-flex w-fit shrink-0 cursor-pointer items-center gap-3 rounded-full border border-[var(--color-border-strong)] bg-[rgba(5,0,7,0.75)] px-4 py-[0.6rem] backdrop-blur-xl backdrop-saturate-[1.4] transition-colors supports-[backdrop-filter]:bg-[rgba(5,0,7,0.55)] hover:border-[var(--color-accent)]">
-          <input type="checkbox" id="manifesto-toggle" class="peer sr-only" />
-          <span
-            aria-hidden="true"
-            class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
-          >
-            <span class="absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]" />
+          {/* The knob must be a direct sibling of the checkbox (not nested
+              inside the track span) — Tailwind's peer-checked variant compiles
+              to a `~` general-sibling selector, which can't reach into a
+              sibling's descendants. This mirrors the working toggle in
+              Program.astro. */}
+          <span class="relative inline-flex h-[1.4rem] w-[2.6rem] flex-shrink-0 items-center">
+            <input type="checkbox" id="manifesto-toggle" class="peer absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" />
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-0 rounded-full bg-[var(--color-border-strong)] transition-colors duration-200 peer-checked:bg-[var(--color-accent)]"
+            />
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute left-[3px] h-[1.05rem] w-[1.05rem] rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-[1.2rem]"
+            />
           </span>
           <span class="text-[0.85rem] font-medium text-white">Show specifics</span>
         </label>
