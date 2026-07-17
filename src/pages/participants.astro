@@ -1,0 +1,239 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const schedule = [
+  ['07:30', 'Mindful morning moments'],
+  ['08:00', 'Breakfast'],
+  ['09:30–12:20', 'Lectures 1, 2 and 3'],
+  ['13:00', 'Lunch'],
+  ['15:00–18:00', 'Workshop'],
+  ['18:30', 'Dinner'],
+  ['20:00', 'Evening social activities'],
+];
+---
+
+<Layout
+  title="Participant space — ALPS Summer School 2026"
+  description="Practical details for registered ALPS Summer School 2026 participants — arrival, programme, meals, accommodation, and what to bring."
+>
+  <Nav />
+  <main>
+    <section class="container-x pt-[clamp(4rem,8vw,7rem)] pb-[clamp(2rem,4vw,3rem)]">
+      <span class="eyebrow">For registered participants</span>
+      <h1 class="mt-6 max-w-[16ch]">Everything you need before Le Camp</h1>
+      <p class="max-w-[60ch] text-[clamp(1.05rem,1.6vw,1.2rem)] text-white/85">
+        A single place for the practical details ahead of the ALPS Summer
+        School 2026 —
+        <strong class="text-white">
+          arrival, programme, meals, accommodation, and what to bring
+        </strong>. Details are refined as we get closer to the event; you'll
+        always receive important updates by email too.
+      </p>
+      <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+        <div>
+          <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+            Dates
+          </dt>
+          <dd class="m-0 mt-1 text-[1.15rem] font-medium text-white">
+            Sun 26 Jul – Sat 1 Aug 2026
+          </dd>
+        </div>
+        <div>
+          <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+            Venue
+          </dt>
+          <dd class="m-0 mt-1 text-[1.15rem] font-medium text-white">
+            Fondation Le Camp, Vaumarcus
+          </dd>
+        </div>
+        <div>
+          <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+            Format
+          </dt>
+          <dd class="m-0 mt-1 text-[1.15rem] font-medium text-white">
+            Residential, 6 days / 5 nights
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="container-x grid grid-cols-1 gap-4 pb-6 md:grid-cols-2">
+      <div class="card md:col-span-2">
+        <h2 class="mb-4 text-[1.35rem]">Dates &amp; venue</h2>
+        <p>
+          The Summer School runs from
+          <strong class="text-white">Sunday 26 July</strong> to
+          <strong class="text-white">Saturday 1 August 2026</strong> at
+          <strong class="text-white">Fondation Le Camp</strong>, Route du Camp
+          7, 2028 Vaumarcus, Switzerland (<a
+            href="https://www.google.com/maps/place/Fondation+Le+Camp/@46.870872,6.74835,16z"
+            target="_blank"
+            rel="noopener noreferrer">open in Google Maps</a
+          >).
+        </p>
+        <ul class="m-0 grid gap-2 pl-5">
+          <li>
+            <strong class="text-white">
+              Arrival window: Sunday, 16:00–18:00
+            </strong>, at the Carré building. The programme starts at
+            <strong class="text-white">18:30</strong>, so please arrive
+            within the window if you can — if you can't, just let the team
+            know and they'll bring you up to speed on-site.
+          </li>
+          <li>
+            <strong class="text-white">Departure: Saturday, 11:00</strong>,
+            after a final breakfast and closing sharing circle.
+          </li>
+          <li>By car: there is on-site parking at Le Camp.</li>
+          <li>
+            By train: it's about a
+            <strong class="text-white">30-minute uphill walk</strong> from
+            the station to the venue.
+          </li>
+        </ul>
+        <div class="mt-5 flex items-center gap-4 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white/[0.03] p-4">
+          <img
+            src="/assets/people-andrea.jpg"
+            alt="Andrea Bacconi"
+            class="h-16 w-16 flex-shrink-0 rounded-full object-cover"
+          />
+          <div>
+            <p class="m-0 font-medium text-white">
+              Look for Andrea Bacconi on arrival
+            </p>
+            <p class="m-0 mt-1 text-[0.88rem] text-[var(--color-fg-subtle)]">
+              Runs the morning sessions and coordinates participant
+              logistics — she'll be at the welcome point on Sunday.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Programme &amp; daily rhythm</h2>
+        <p>
+          The full timetable, speaker abstracts and bios are kept up to date
+          on the <a href="/#program">programme page</a>. In general, days
+          follow this rhythm:
+        </p>
+        <table class="w-full border-collapse text-[0.95rem]">
+          <tbody>
+            {
+              schedule.map(([time, label]) => (
+                <tr class="border-t border-[var(--color-border)]">
+                  <td class="w-[130px] whitespace-nowrap py-2 font-medium text-white">
+                    {time}
+                  </td>
+                  <td class="py-2 text-[var(--color-fg-muted)]">{label}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p class="mt-3 text-[0.85rem] text-[var(--color-fg-subtle)]">
+          Mindful morning moments are optional — movement, breathing, and
+          meditation, no experience needed.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Meals</h2>
+        <p>
+          A fresh <strong class="text-white">vegetarian menu</strong>,
+          prepared on-site by chef Alex Wester and team, runs from dinner on
+          Sunday through breakfast on the final Saturday.
+        </p>
+        <p class="text-[0.85rem] text-[var(--color-fg-subtle)]">
+          <strong class="text-white">
+            Dietary preferences are taken into account
+          </strong> — if yours has changed since you registered, let the
+          team know as soon as possible.
+        </p>
+      </div>
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Accommodation</h2>
+        <p>
+          You'll be lodged in
+          <strong class="text-white">
+            same-gender dormitories of 4–8 beds
+          </strong>. Bed sheets and one towel are provided — bring a second
+          towel if you'd like one for showering and one for outside.
+        </p>
+        <p class="text-[0.85rem] text-[var(--color-fg-subtle)]">
+          Personal preferences and any accessibility or roommate requests
+          are accommodated wherever possible.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">What to bring</h2>
+        <p>
+          Pack for <strong class="text-white">
+            six days and five nights
+          </strong>. Beyond the everyday essentials, you might want:
+        </p>
+        <ul class="m-0 grid gap-2 pl-5">
+          <li>Comfortable outdoor clothes and shoes</li>
+          <li>A pen, and sunscreen</li>
+          <li>Swimwear, in case we swim in Lake Neuchâtel</li>
+          <li>Insect repellent, if you're sensitive outdoors</li>
+          <li>Earplugs, in case of noisy roommates</li>
+          <li>A yoga mat, if you have one (spares are available)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Your contribution</h2>
+        <p>
+          Beyond being present, you're warmly invited to bring anything that
+          might enrich the group's experience — a research poster,
+          meaningful psychedelic literature, or a musical instrument.
+          <strong class="text-white">Entirely optional.</strong> We'll set
+          up a dedicated "living room" space to showcase these
+          contributions.
+        </p>
+      </div>
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Evenings &amp; social life</h2>
+        <p>
+          Each day winds down with time together in a relaxed setting —
+          think bonfire, music, a vegetarian BBQ, and ecstatic dance.
+          There's also an <strong class="text-white">
+            entirely optional
+          </strong> open mic evening: bring a poem, a story, a joke, an
+          instrument, or simply come to enjoy.
+        </p>
+      </div>
+
+      <div class="card md:col-span-2">
+        <h2 class="mb-4 text-[1.35rem]">Wellbeing</h2>
+        <p>
+          The programme can be intense.
+          <strong class="text-white">
+            We encourage you to rest where you can
+          </strong> and to minimise outside commitments during the week, so
+          you can get the most out of the experience.
+        </p>
+      </div>
+    </section>
+
+    <section class="container-x pb-[clamp(4rem,8vw,7rem)]">
+      <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white/[0.03] p-6">
+        <h3 class="mb-2 text-[1rem] font-medium text-white">Questions?</h3>
+        <p class="m-0">
+          If anything above is unclear, or your situation has changed since
+          you registered (dietary needs, accessibility, roommate
+          preferences), reach out to the team at
+          <strong class="text-white">
+            <a href="mailto:summerschool@alps.foundation">
+              summerschool@alps.foundation
+            </a>
+          </strong>. Some details are still being refined — you'll always
+          receive important updates by email.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
