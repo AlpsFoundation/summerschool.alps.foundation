@@ -94,11 +94,19 @@ const schedule = [
           </li>
         </ul>
         <div class="mt-5 flex items-center gap-4 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white/[0.03] p-4">
-          <img
-            src="/assets/people-andrea.jpg"
-            alt="Andrea Bacconi"
-            class="h-16 w-16 flex-shrink-0 rounded-full object-cover"
-          />
+          <button
+            type="button"
+            data-photo-trigger="andrea"
+            aria-haspopup="dialog"
+            aria-label="Enlarge photo of Andrea Bacconi"
+            class="h-16 w-16 flex-shrink-0 cursor-zoom-in rounded-full border-0 bg-transparent p-0 ring-offset-2 ring-offset-[var(--color-bg)] transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+          >
+            <img
+              src="/assets/people-andrea.jpg"
+              alt="Andrea Bacconi"
+              class="h-16 w-16 rounded-full object-cover"
+            />
+          </button>
           <div>
             <p class="m-0 font-medium text-white">
               Look for Andrea Bacconi on arrival
@@ -235,5 +243,75 @@ const schedule = [
       </div>
     </section>
   </main>
+
+  <div
+    id="photo-lightbox"
+    data-photo-lightbox="andrea"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-6 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Andrea Bacconi"
+  >
+    <button
+      type="button"
+      data-photo-close
+      aria-label="Close"
+      class="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="6" y1="18" x2="18" y2="6"></line>
+      </svg>
+    </button>
+    <img
+      src="/assets/people-andrea.jpg"
+      alt="Andrea Bacconi"
+      class="max-h-[80vh] max-w-[90vw] rounded-[var(--radius-lg)] border border-[var(--color-border)] object-contain shadow-2xl"
+    />
+  </div>
+
   <Footer />
 </Layout>
+
+<script>
+  const trigger = document.querySelector('[data-photo-trigger="andrea"]');
+  const lightbox = document.querySelector('[data-photo-lightbox="andrea"]');
+  const closeBtn = lightbox?.querySelector('[data-photo-close]');
+
+  function openLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    (closeBtn as HTMLElement | null)?.focus();
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+    (trigger as HTMLElement | null)?.focus();
+  }
+
+  trigger?.addEventListener('click', openLightbox);
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox?.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
+</script>
