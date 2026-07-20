@@ -7,6 +7,9 @@ const links = [
   { id: 'people', label: 'People' },
   { id: 'manifesto', label: 'Manifesto' },
 ];
+
+const isParticipantsPage =
+  Astro.url.pathname.replace(/\/+$/, '') === '/participants';
 ---
 
 <div data-announce class="grad-primary px-4 py-[0.5rem] text-center text-white">
@@ -77,14 +80,22 @@ const links = [
     </nav>
 
     <div class="flex items-center gap-2 md:gap-3">
-      <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn text-[0.88rem] !px-4 !py-[0.55rem]"
-      >
-        Join last-minute registration
-      </a>
+      {
+        isParticipantsPage ? (
+          <a href="/helper-tasks" class="btn text-[0.88rem] !px-4 !py-[0.55rem]">
+            Helper
+          </a>
+        ) : (
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn text-[0.88rem] !px-4 !py-[0.55rem]"
+          >
+            Join last-minute registration
+          </a>
+        )
+      }
       <button
         id="nav-toggle"
         type="button"
