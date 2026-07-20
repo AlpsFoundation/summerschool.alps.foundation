@@ -88,17 +88,38 @@ const schedule = [
             rel="noopener noreferrer">open in Google Maps</a
           >) on <strong class="text-white">Sunday 26 July 2026</strong>.
         </p>
-        <div class="overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)]">
-          <div class="aspect-[16/9] w-full">
-            <iframe
-              src="https://maps-api-ssl.google.com/maps?hl=en-US&ll=46.870872,6.74835&output=embed&q=46.870834,6.748455&z=16"
-              title="Map of Fondation Le Camp in Vaumarcus, Switzerland"
-              aria-label="Map"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              class="h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_grayscale(0.2)_contrast(0.92)]"
-            >
-            </iframe>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)]">
+            <div class="aspect-square w-full">
+              <iframe
+                src="https://maps-api-ssl.google.com/maps?hl=en-US&ll=46.870872,6.74835&output=embed&q=46.870834,6.748455&z=16"
+                title="Map of Fondation Le Camp in Vaumarcus, Switzerland"
+                aria-label="Map of the venue"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_grayscale(0.2)_contrast(0.92)]"
+              >
+              </iframe>
+            </div>
+            <p class="m-0 border-t border-[var(--color-border)] px-2 py-1 text-center text-[0.72rem] text-[var(--color-fg-subtle)]">
+              Venue
+            </p>
+          </div>
+          <div class="overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)]">
+            <div class="aspect-square w-full">
+              <iframe
+                src="https://maps-api-ssl.google.com/maps?hl=en-US&ll=46.877769,6.757278&output=embed&q=46.877769,6.757278&z=16"
+                title="Map of Vaumarcus train station"
+                aria-label="Map of the train station"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_grayscale(0.2)_contrast(0.92)]"
+              >
+              </iframe>
+            </div>
+            <p class="m-0 border-t border-[var(--color-border)] px-2 py-1 text-center text-[0.72rem] text-[var(--color-fg-subtle)]">
+              Train station
+            </p>
           </div>
         </div>
         <ul class="m-0 mt-5 grid list-disc gap-2 pl-5 marker:text-[var(--color-fg-subtle)]">
@@ -210,18 +231,6 @@ const schedule = [
           contributions.
         </p>
       </div>
-      <div class="card">
-        <h2 class="mb-4 text-[1.35rem]">Helping out on site</h2>
-        <p>
-          A small rotating group of team members and participants helps keep
-          the house, tables, dishes, and bedsheets in order throughout the
-          week. If you're part of that rotation, see the
-          <strong class="text-white">
-            <a href="/helper-tasks">on-site helper tasks</a>
-          </strong> page for what's needed and who's on each day.
-        </p>
-      </div>
-
       <div class="card">
         <h2 class="mb-4 text-[1.35rem]">Evenings &amp; social life</h2>
         <p>
