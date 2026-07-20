@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const duties = [
+  {
+    name: 'House cleaning',
+    detail: 'One person tidies the house after lunch each day.',
+  },
+  {
+    name: 'Tables',
+    detail:
+      'Two people rearrange tables after breakfast, before and after lunch, and before dinner.',
+  },
+  {
+    name: 'Dishes & kitchen',
+    detail: 'Three people wash dishes and clean the kitchen after every meal.',
+  },
+  {
+    name: 'Bedsheets',
+    detail:
+      'Fresh bedsheets are made up for each incoming speaker, handled by Matthias throughout the week.',
+  },
+];
+
+const rota: [string, string, string, string, string][] = [
+  ['Sun 26 Jul', '— (no lunch that day)', 'Federico, Valentin', 'Ismail, Abel, Sofia', 'Matthias'],
+  ['Mon 27 Jul', 'Parsa', 'Mateea, Ece', 'Andrea, Gerel, Lennert', 'Matthias'],
+  ['Tue 28 Jul', 'Ece', 'Federico, Valentin', 'Ismail, Abel, Sofia', 'Matthias'],
+  ['Wed 29 Jul', 'Valentin', 'Mateea, Ece', 'Andrea, Lennert, Federico', 'Matthias'],
+  ['Thu 30 Jul', 'Andrea', 'Valentin, Ismail', 'Abel, Sofia, Ece', 'Matthias'],
+  ['Fri 31 Jul', 'Ismail', 'Mateea, Andrea', 'Lennert, Federico, Valentin', 'Matthias'],
+  ['Sat 1 Aug', '— (no lunch, departure)', 'Ismail, Abel', 'Sofia, Lennert, Federico', '— (departure day)'],
+];
+---
+
+<Layout
+  title="On-site helper tasks — ALPS Summer School 2026"
+  description="Daily cleanup and helper duties for the ALPS Summer School 2026 on-site team — house cleaning, tables, dishes, and bedsheets."
+>
+  <Nav />
+  <main>
+    <section class="container-x pt-[clamp(4rem,8vw,7rem)] pb-[clamp(2rem,4vw,3rem)]">
+      <span class="eyebrow">For the on-site helper rotation</span>
+      <h1 class="mt-6 max-w-[18ch]">Keeping Le Camp running</h1>
+      <p class="max-w-[60ch] text-[clamp(1.05rem,1.6vw,1.2rem)] text-white/85">
+        A small rotating group of team members and participants keeps the
+        <strong class="text-white">
+          house, tables, dishes, and bedsheets
+        </strong> in order throughout the week. Here's what needs doing, and
+        who's on each day.
+      </p>
+    </section>
+
+    <section class="container-x grid grid-cols-1 gap-4 pb-6 md:grid-cols-2">
+      {
+        duties.map((duty) => (
+          <div class="card">
+            <h2 class="mb-2 text-[1.15rem]">{duty.name}</h2>
+            <p class="m-0 text-[var(--color-fg-muted)]">{duty.detail}</p>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="container-x pb-6">
+      <div class="card">
+        <h2 class="mb-4 text-[1.35rem]">Daily rota</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[560px] border-collapse text-[0.92rem]">
+            <thead>
+              <tr class="border-b border-[var(--color-border)] text-left text-[0.78rem] uppercase tracking-[0.08em] text-[var(--color-fg-subtle)]">
+                <th class="py-2 pr-3 font-medium">Day</th>
+                <th class="py-2 pr-3 font-medium">House cleaning</th>
+                <th class="py-2 pr-3 font-medium">Tables</th>
+                <th class="py-2 pr-3 font-medium">Dishes</th>
+                <th class="py-2 font-medium">Bedsheets</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                rota.map(([day, house, tables, dishes, bedsheets]) => (
+                  <tr class="border-t border-[var(--color-border)]">
+                    <td class="whitespace-nowrap py-2 pr-3 font-medium text-white">
+                      {day}
+                    </td>
+                    <td class="py-2 pr-3 text-[var(--color-fg-muted)]">
+                      {house}
+                    </td>
+                    <td class="py-2 pr-3 text-[var(--color-fg-muted)]">
+                      {tables}
+                    </td>
+                    <td class="py-2 pr-3 text-[var(--color-fg-muted)]">
+                      {dishes}
+                    </td>
+                    <td class="py-2 text-[var(--color-fg-muted)]">
+                      {bedsheets}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 text-[0.85rem] text-[var(--color-fg-subtle)]">
+          Coordinated by Matthias — this rotation may still shift slightly
+          as final headcount and rooming are confirmed. Want to swap a slot,
+          or have a question? Reach out at
+          <a href="mailto:summerschool@alps.foundation">
+            summerschool@alps.foundation
+          </a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="container-x pb-[clamp(4rem,8vw,7rem)]">
+      <a href="/participants" class="btn btn--ghost">
+        ← Back to participant space
+      </a>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
