@@ -14,7 +14,7 @@ type Session = {
   panelists?: string[];
   topic?: string;
   title?: string;
-  // 'lecture' | 'workshop' | 'panel' | 'social' | 'closing' | 'meta' | 'tba'
+  // 'lecture' | 'workshop' | 'panel' | 'social' | 'opening' | 'closing' | 'meta' | 'tba'
   kind?: string;
   // Two short learning objectives per talk, from Parsa's programme note (2026-07-11).
   learningObjectives?: string[];
@@ -26,8 +26,10 @@ const schedule: ScheduleDay[] = [
   {
     num: 1, date: 'Sunday 26 July', theme: 'Arrivals, welcome & introduction',
     sessions: [
-      { time: '15:00 – 18:00', title: 'Arrival', topic: 'Check-in and settling at Le Camp.', kind: 'meta' },
-      { time: '18:30 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '16:00 – 18:00', title: 'Arrival', topic: 'Check-in and settling at Le Camp.', kind: 'meta' },
+      { time: '18:15 – 19:00', title: 'Welcoming speech', topic: 'Opening welcome and introductions for the week.', kind: 'opening' },
+      { time: '19:00 – 19:30', title: 'Dinner', kind: 'meta' },
+      { time: '19:30 – 20:00', title: 'Introduction / sharing circle', topic: 'First round of introductions and reflections as a group.', kind: 'social' },
       { time: '20:00 – 22:00', title: 'Bonfire night', topic: 'Opening gathering on site.', kind: 'social' },
     ],
   },
@@ -391,6 +393,7 @@ const kindLabel: Record<string, string> = {
   workshop: 'Workshop',
   panel: 'Panel',
   social: 'Social',
+  opening: 'Opening',
   closing: 'Closing',
 };
 
