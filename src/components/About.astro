@@ -32,7 +32,7 @@ const values = [
 const overview = [
   { label: 'Date', value: '26 July – 01 August 2026' },
   { label: 'Location', value: 'Fondation Le Camp, Vaumarcus, Switzerland' },
-  { label: 'Applications', value: 'Closed (last-minute registration open)' },
+  { label: 'Applications', value: 'Closed' },
   { label: 'Language', value: 'English' },
   { label: 'Participants', value: '25 – 30' },
 ];
@@ -49,18 +49,6 @@ const included = [
 ];
 
 const notIncluded = ['Personal insurance', 'Transportation to Vaumarcus'];
-
-const pricing = [
-  { category: "Bachelor's or Master's students", price: 'CHF 890' },
-  { category: 'PhD students', price: 'CHF 1250' },
-  { category: 'Professionals', price: 'CHF 1990' },
-  { category: 'Supporter', price: 'CHF 2500' },
-];
-
-const cancellationTerms = [
-  { deadline: 'Until 14 June 2026', charge: '50% of the participation fee' },
-  { deadline: 'From 15 June 2026', charge: '100% of the participation fee' },
-];
 ---
 
 <section
@@ -213,72 +201,6 @@ const cancellationTerms = [
         </div>
       </div>
 
-      <div class="card mt-[clamp(2rem,4vw,3rem)]">
-        <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h3 class="m-0 text-[1.1rem] font-medium">Participation fees</h3>
-          <details class="cancellation-popover relative">
-            <summary class="cursor-pointer text-[0.78rem] text-[var(--color-fg-subtle)] underline decoration-dotted underline-offset-2 transition-colors hover:text-[var(--color-accent)]">
-              Cancellation terms
-            </summary>
-            <div class="absolute right-0 top-full z-10 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-[var(--radius-md)] border border-[var(--color-border-strong)] bg-[#0c0610] p-4 shadow-lg">
-              <p class="mb-3 text-[0.85rem] font-medium text-white">Cancellation policy</p>
-              <ul class="m-0 grid list-none gap-2 p-0 text-[0.82rem] text-[var(--color-fg-muted)]">
-                {cancellationTerms.map((term) => (
-                  <li class="flex justify-between gap-3">
-                    <span>{term.deadline}:</span>
-                    <span class="text-right text-white/90">{term.charge}</span>
-                  </li>
-                ))}
-              </ul>
-              <p class="mb-0 mt-3 text-[0.78rem] leading-snug text-[var(--color-fg-subtle)]">
-                If we can arrange a replacement through last-minute registration, we provide a full refund.
-              </p>
-            </div>
-          </details>
-        </div>
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            pricing.map((tier) => (
-              <div class="flex flex-col gap-1 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[rgba(5,0,7,0.5)] px-4 py-3">
-                <span class="text-[0.82rem] text-[var(--color-fg-muted)]">{tier.category}</span>
-                <span class="text-[1.15rem] font-semibold text-white">{tier.price}</span>
-              </div>
-            ))
-          }
-        </div>
-        <p class="mb-0 mt-4 text-[0.82rem] leading-snug text-[var(--color-fg-subtle)]">
-          Please select your applicable category in the application form — your selection will be verified during the evaluation process based on your submitted documents.
-        </p>
-        <p class="mb-0 mt-3 text-[0.9rem] leading-snug text-[var(--color-fg-muted)]">
-          Are the fees a stretch? Whether you’re interested or already taking part,
-          <a
-            href="mailto:summerschool@alps.foundation?subject=ALPS%20Summer%20School%20%E2%80%94%20fees"
-            class="text-white underline decoration-[var(--color-accent)] decoration-2 underline-offset-2 hover:text-[var(--color-accent)]"
-          >get in touch</a> — we’re open to talking.
-        </p>
-      </div>
-
-      <div
-        class="card mt-[clamp(2rem,4vw,3rem)] flex flex-col items-start justify-between gap-5 md:flex-row md:items-center"
-        style="background: linear-gradient(135deg, rgba(154,0,109,0.25), rgba(255,255,255,0.02) 60%);"
-      >
-        <div>
-          <h3 class="mb-2 font-medium">Contribute to the week</h3>
-          <p class="m-0 max-w-[560px]">
-            Bring your favourite musical instrument or a research poster — we
-            love when participants shape the program. Mention it at the end of
-            the application form.
-          </p>
-        </div>
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLScbruwrTJoezVXMo9Wf-L62wcfEnWKX8PllpCaui1l3TiWEMw/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn"
-        >
-          Join last-minute registration
-        </a>
-      </div>
     </div>
   </div>
 </section>
