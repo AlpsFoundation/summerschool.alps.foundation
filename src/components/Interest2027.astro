@@ -1,0 +1,62 @@
+---
+// ASS27 teaser + interest-list sign-up. Dates are provisional until the
+// Le Camp rental contract is signed — keep the asterisk until then.
+const interestFormUrl = 'INTEREST_FORM_URL_TBD';
+const facts = [
+  { label: 'Dates', value: '8 – 13 Aug 2027*' },
+  { label: 'Location', value: 'Le Camp, Vaumarcus' },
+  { label: 'Format', value: 'Residential week' },
+  { label: 'Language', value: 'English' },
+];
+---
+
+<section id="interest-2027" class="py-[clamp(3rem,6vw,5rem)]">
+  <div class="container-x">
+    <div
+      class="gradient-border overflow-hidden rounded-[var(--radius-xl)]"
+    >
+      <div class="flex flex-col gap-7 bg-[#08030c] px-[clamp(1.5rem,4vw,3rem)] py-[clamp(2rem,4vw,3rem)]">
+        <div class="flex max-w-[720px] flex-col gap-3">
+          <span class="eyebrow self-start">Summer School 2027</span>
+          <h2 class="m-0 text-[clamp(1.5rem,3vw,2.25rem)]">
+            The third edition is coming.
+          </h2>
+          <p class="m-0 text-white/85">
+            Same lake, same mountains: we are planning the 2027 week at
+            Le Camp. Join the interest list and you will hear from us first
+            when applications open &mdash; before we announce anything
+            publicly.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a
+            href={interestFormUrl}
+            target="_blank"
+            rel="noopener"
+            class="btn btn--registration"
+          >
+            Join the 2027 interest list
+          </a>
+        </div>
+
+        <dl class="grid max-w-[720px] grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
+          {
+            facts.map((f) => (
+              <div class="flex flex-col gap-1">
+                <dt class="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">
+                  {f.label}
+                </dt>
+                <dd class="m-0 text-[0.98rem] font-medium text-white">{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p class="m-0 text-[0.78rem] text-[var(--color-fg-subtle)]">
+          *Dates are provisional until the venue booking is finalised.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

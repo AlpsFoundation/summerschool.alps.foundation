@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Aftermovie from '../components/Aftermovie.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <section id="recap-2025" class="pt-[clamp(3rem,6vw,5rem)]">
+      <div class="container-x">
+        <div class="flex max-w-[820px] flex-col gap-4">
+          <span class="eyebrow self-start">Summer school 2025</span>
+          <h1 class="m-0 text-[clamp(1.8rem,4vw,2.8rem)] font-medium tracking-[-0.02em]">
+            Relive the 2025 week at Le Camp.
+          </h1>
+          <p class="m-0 text-white/85">
+            The first edition of the ALPS Summer School &mdash; the
+            aftermovie, photo gallery and quotes from ASS 2025.
+            For this year&rsquo;s edition, head
+            <a href="/#recap-2026" class="underline decoration-white/30 underline-offset-2 hover:text-white">back to the main page</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+    <Aftermovie />
+    <Testimonials />
+  </main>
+  <Footer />
+</Layout>

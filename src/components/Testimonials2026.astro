@@ -1,0 +1,244 @@
+---
+// 2026 counterpart of Testimonials.astro: a horizontal, infinitely-looping
+// gallery interleaving ASS 2026 photos with quotes from the anonymous
+// post-event feedback survey.
+const photos = [
+  { src: '/assets/gallery-2026/q01.jpg', alt: 'A lecture during the ALPS Summer School 2026' },
+  { src: '/assets/gallery-2026/q02.jpg', alt: 'Panel discussion in the lecture hall' },
+  { src: '/assets/gallery-2026/q03.jpg', alt: 'A workshop session at Le Camp' },
+  { src: '/assets/gallery-2026/q04.jpg', alt: 'The breathwork experience workshop' },
+  { src: '/assets/gallery-2026/q05.jpg', alt: 'Moonrise over Lake Neuchâtel' },
+  { src: '/assets/gallery-2026/q06.jpg', alt: 'The cohort gathered on the hilltop at sunset' },
+  { src: '/assets/gallery-2026/q07.jpg', alt: 'A flower mandala from the art session' },
+  { src: '/assets/gallery-2026/q08.jpg', alt: 'The catering spread at the Summer School' },
+  { src: '/assets/gallery-2026/q09.jpg', alt: 'The chef at work in the Le Camp kitchen' },
+  { src: '/assets/gallery-2026/q10.jpg', alt: 'Swans on Lake Neuchâtel below Le Camp' },
+  { src: '/assets/gallery-2026/q11.jpg', alt: 'An evening gathering under fairy lights' },
+  { src: '/assets/gallery-2026/q12.jpg', alt: 'Violin music between the trees' },
+  { src: '/assets/gallery-2026/q13.jpg', alt: 'The group on an excursion above the lake' },
+  { src: '/assets/gallery-2026/q14.jpg', alt: 'A sharing circle on the hillside' },
+  { src: '/assets/gallery-2026/q15.jpg', alt: 'The group gathered in a circle under the big tree' },
+  { src: '/assets/gallery-2026/q16.jpg', alt: 'The farewell group hug on the last day' },
+  { src: '/assets/gallery-2026/q17.jpg', alt: 'The party on the final evening' },
+];
+
+const quotes = [
+  'A place to feel kindly accepted while mentally stimulated.',
+  'Top edge academic value combined with practical insight and networking.',
+  'Finding oneself through community.',
+  'Community, visionary, scientific, integrative, humanitarian.',
+  'Exploring the field of psychedelics from diverse, carefully curated perspectives through high-quality content and speakers, in a highly organized, professional and welcoming environment.',
+  'The ALPS Summer School is an immersive learning experience, where you get to be part of a movement that is striving to change the world in a better, more humane way.',
+  'Food for the soul.',
+  'It was so precious to witness the progressive relaxing, letting go and healing of the students during the week.',
+  'Thank you for such an intensive, inspiring, communal, heart-warming and motivating week.',
+  'Thank you so much for making me feel visible again.',
+  'It’s hard to see any room for improvement after such an amazing week.',
+  'The most special moment? All of us, together, in this container.',
+  'The dedication of the team to track wishes and possible problems during the week, and their motivation to immediately take action.',
+  'We are ants, and this was an ant-ropological study.',
+];
+
+type Slide =
+  | { type: 'photo'; src: string; alt: string }
+  | { type: 'quote'; text: string };
+
+const slides: Slide[] = [];
+const max = Math.max(photos.length, quotes.length);
+for (let i = 0; i < max; i++) {
+  if (photos[i]) slides.push({ type: 'photo', ...photos[i] });
+  if (quotes[i]) slides.push({ type: 'quote', text: quotes[i] });
+}
+---
+
+<section id="recap-2026" class="py-[clamp(3rem,6vw,5rem)]">
+  <div class="container-x">
+    <div
+      class="mb-[clamp(1.5rem,3vw,2.5rem)] flex flex-wrap items-end justify-between gap-4"
+    >
+      <div class="flex max-w-[680px] flex-col gap-3">
+        <span class="eyebrow self-start">Moments &amp; voices from 2026</span>
+        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
+          A glimpse of this year&rsquo;s week, in pictures and words.
+        </h2>
+        <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
+          Photos from the week and quotes from our anonymous participant
+          feedback survey. Swipe through &mdash; it loops. Looking for last
+          year? <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
+        </p>
+      </div>
+
+      <div class="hidden items-center gap-2 md:flex">
+        <button
+          type="button"
+          data-gallery-prev
+          aria-label="Previous"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button
+          type="button"
+          data-gallery-next
+          aria-label="Next"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    data-gallery-track
+    class="flex gap-4 overflow-x-auto px-[max(1rem,calc((100%-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    style="-webkit-overflow-scrolling: touch;"
+  >
+    {
+      slides.map((s) =>
+        s.type === 'photo' ? (
+          <figure class="m-0 h-[clamp(340px,44vh,460px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+            <img
+              src={s.src}
+              height="720"
+              alt={s.alt}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-auto max-w-none object-cover"
+            />
+          </figure>
+        ) : (
+          <figure class="card m-0 flex h-[clamp(340px,44vh,460px)] w-[clamp(260px,80vw,340px)] shrink-0 flex-col justify-between gap-5">
+            <blockquote class="m-0">
+              <span aria-hidden="true" class="grad-text mb-2 block text-[2.5rem] font-semibold leading-none">
+                &ldquo;
+              </span>
+              <p class="m-0 text-[1rem] leading-[1.6] text-white/90">{s.text}</p>
+            </blockquote>
+            <figcaption class="flex items-center gap-[0.7rem] text-[0.74rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+              <span aria-hidden="true" class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full" />
+              2026 participant
+            </figcaption>
+          </figure>
+        )
+      )
+    }
+  </div>
+  <div class="container-x mt-4">
+    <p
+      class="swipe-hint m-0 flex items-center justify-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] md:hidden"
+      aria-hidden="true"
+    >
+      <svg class="swipe-hint__l" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Swipe to explore
+      <svg class="swipe-hint__r" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </p>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>('[data-gallery-track]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-gallery-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
+
+  if (track) {
+    // Build a seamless loop: keep the originals as the middle copy, with one
+    // identical copy on each side. Wrapping by exactly one set-width lands on
+    // pixel-identical content, so the jump is invisible.
+    const originals = Array.from(track.children);
+    const N = originals.length;
+    for (let c = 0; c < 2; c++) {
+      originals.forEach((node) => {
+        const clone = node.cloneNode(true) as HTMLElement;
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('img').forEach((img) => img.setAttribute('loading', 'lazy'));
+        track.appendChild(clone);
+      });
+    }
+
+    let setWidth = 0;
+    const measure = () => {
+      // offset between the first child of copy-0 and the first child of copy-1
+      const a = track.children[0] as HTMLElement;
+      const b = track.children[N] as HTMLElement;
+      setWidth = b.offsetLeft - a.offsetLeft;
+    };
+
+    const recenter = () => {
+      if (setWidth > 0) track.scrollLeft = setWidth;
+    };
+
+    measure();
+    recenter();
+    // Re-measure once images have loaded, in case any width shifted.
+    window.addEventListener('load', () => {
+      const x = track.scrollLeft;
+      measure();
+      if (Math.abs(x - setWidth) < 4) recenter();
+    });
+
+    let raf = 0;
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (raf || setWidth <= 0) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const x = track.scrollLeft;
+          if (x < setWidth * 0.5) track.scrollLeft = x + setWidth;
+          else if (x > setWidth * 1.5) track.scrollLeft = x - setWidth;
+        });
+      },
+      { passive: true }
+    );
+
+    window.addEventListener('resize', () => {
+      measure();
+    });
+
+    const step = () => Math.round(track.clientWidth * 0.8);
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+    // Drag-to-scroll for pointer devices (touch already scrolls natively).
+    let down = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return;
+      down = true; moved = false;
+      startX = e.clientX; startScroll = track.scrollLeft;
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    });
+    const end = () => { down = false; };
+    track.addEventListener('pointerup', end);
+    track.addEventListener('pointerleave', end);
+    track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+    track.querySelectorAll('img').forEach((img) =>
+      img.addEventListener('dragstart', (e) => e.preventDefault())
+    );
+  }
+</script>
+
+<style>
+  [data-gallery-track] { cursor: grab; }
+  [data-gallery-track]:active { cursor: grabbing; }
+
+  /* Gentle outward nudge on the swipe hint to signal the gallery is draggable. */
+  .swipe-hint__l { animation: swipe-hint-l 1.8s ease-in-out infinite; }
+  .swipe-hint__r { animation: swipe-hint-r 1.8s ease-in-out infinite; }
+  @keyframes swipe-hint-l {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50% { transform: translateX(-3px); opacity: 1; }
+  }
+  @keyframes swipe-hint-r {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50% { transform: translateX(3px); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .swipe-hint__l, .swipe-hint__r { animation: none; }
+  }
+</style>
