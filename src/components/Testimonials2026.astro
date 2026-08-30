@@ -160,7 +160,7 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
     {
       slides.map((s) =>
         s.type === 'photo' ? (
-          <figure class="m-0 h-[clamp(180px,24vh,250px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+          <figure class="m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
             <img
               src={s.src}
               height="480"
@@ -171,8 +171,8 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
             />
           </figure>
         ) : (
-          <figure class="card m-0 flex h-[clamp(180px,24vh,250px)] w-[clamp(230px,60vw,300px)] shrink-0 flex-col justify-between gap-3 overflow-hidden">
-            <blockquote class="m-0 min-h-0">
+          <figure class="card m-0 flex h-[clamp(280px,36vh,380px)] w-[clamp(250px,64vw,320px)] shrink-0 flex-col justify-between gap-3 overflow-hidden">
+            <blockquote class="m-0 min-h-0 overflow-hidden">
               <span aria-hidden="true" class="grad-text mb-1 block text-[1.8rem] font-semibold leading-none">
                 &ldquo;
               </span>
