@@ -3,7 +3,7 @@ const facts = [
   { label: 'Edition', value: '2nd · 2026' },
   { label: 'Dates', value: '26 Jul – 01 Aug 2026' },
   { label: 'Location', value: 'Vaumarcus, Switzerland' },
-  { label: 'Next edition', value: '8 – 13 Aug 2027*' },
+  { label: 'Next edition', value: '8 – 13 Aug 2027*', accent2027: true },
 ];
 ---
 
@@ -53,7 +53,7 @@ const facts = [
     </p>
 
     <div class="mb-12 flex flex-wrap gap-3">
-      <a href="#interest-2027" class="btn btn--registration">Join the 2027 interest list</a>
+      <a href="#interest-2027" class="btn btn--2027">Join the 2027 interest list</a>
       <a href="#recap-2026" class="btn btn--ghost">Relive 2026</a>
       <a href="/participants" class="btn btn--ghost">Participant space</a>
     </div>
@@ -67,7 +67,7 @@ const facts = [
             >
               {f.label}
             </dt>
-            <dd class="m-0 text-[0.98rem] font-medium text-white">
+            <dd class={`m-0 text-[0.98rem] font-medium ${(f as any).accent2027 ? 'grad-text-2027' : 'text-white'}`}>
               {f.value}
             </dd>
           </div>

@@ -1,26 +1,58 @@
 ---
-// 2026 counterpart of Testimonials.astro: a horizontal, infinitely-looping
-// gallery interleaving ASS 2026 photos with quotes from the anonymous
-// post-event feedback survey.
-const photos = [
-  { src: '/assets/gallery-2026/q01.jpg', alt: 'A lecture during the ALPS Summer School 2026' },
-  { src: '/assets/gallery-2026/q02.jpg', alt: 'Panel discussion in the lecture hall' },
-  { src: '/assets/gallery-2026/q03.jpg', alt: 'A workshop session at Le Camp' },
-  { src: '/assets/gallery-2026/q04.jpg', alt: 'The breathwork experience workshop' },
-  { src: '/assets/gallery-2026/q05.jpg', alt: 'Moonrise over Lake Neuchâtel' },
-  { src: '/assets/gallery-2026/q06.jpg', alt: 'The cohort gathered on the hilltop at sunset' },
-  { src: '/assets/gallery-2026/q07.jpg', alt: 'A flower mandala from the art session' },
-  { src: '/assets/gallery-2026/q08.jpg', alt: 'The catering spread at the Summer School' },
-  { src: '/assets/gallery-2026/q09.jpg', alt: 'The chef at work in the Le Camp kitchen' },
-  { src: '/assets/gallery-2026/q10.jpg', alt: 'Swans on Lake Neuchâtel below Le Camp' },
-  { src: '/assets/gallery-2026/q11.jpg', alt: 'An evening gathering under fairy lights' },
-  { src: '/assets/gallery-2026/q12.jpg', alt: 'Violin music between the trees' },
-  { src: '/assets/gallery-2026/q13.jpg', alt: 'The group on an excursion above the lake' },
-  { src: '/assets/gallery-2026/q14.jpg', alt: 'A sharing circle on the hillside' },
-  { src: '/assets/gallery-2026/q15.jpg', alt: 'The group gathered in a circle under the big tree' },
-  { src: '/assets/gallery-2026/q16.jpg', alt: 'The farewell group hug on the last day' },
-  { src: '/assets/gallery-2026/q17.jpg', alt: 'The party on the final evening' },
+// 2026 recap: survey stats + a self-scrolling, infinitely-looping gallery
+// interleaving ASS 2026 photos with quotes from the anonymous post-event
+// feedback survey. Photos live in /public/assets/gallery-2026 (gNN_tag.jpg,
+// 480px tall). Excluded on request: ASS26-121 (dredging barge on the lake).
+const files = [
+  'g01_lecture-hall-audience-wide',
+  'g02_panel-discussion-wide',
+  'g03_workshop-audience-hall',
+  'g04_breathwork-group-candid',
+  'g05_moonrise-over-lake',
+  'g06_sunset-hilltop-gathering',
+  'g07_flower-mandala-art',
+  'g08_catering-food-trays',
+  'g09_kitchen-chef-cooking',
+  'g10_evening-fairy-lights-gathering',
+  'g11_violin-through-leaves',
+  'g12_excursion-group-wide-lake',
+  'g13_group-circle-hillside-wide',
+  'g14_group-circle-under-tree',
+  'g15_farewell-group-hug',
+  'g16_dj-party-night',
+  'g17_blindfold-forest-search',
+  'g18_moonrise-amphitheater-crowd',
+  'g19_lakeview-dining-hall',
+  'g20_outdoor-painting-lakeview',
+  'g21_evening-sharing-circle',
+  'g22_sunset-lake-clouds',
+  'g23_terrace-view-lake',
+  'g24_outdoor-craft-amphitheater',
+  'g25_clay-painting-closeup',
+  'g26_panel-discussion-talk',
+  'g27_lakeview-sunrise-cottages',
+  'g28_lecture-hall-wide-view',
+  'g29_blanket-mandala-relaxation',
+  'g30_circle-group-listening',
+  'g31_outdoor-group-walking',
+  'g32_outdoor-lawn-group-sunlight',
+  'g33_pergola-group-lakeview',
+  'g34_lake-swim-platform',
+  'g35_moonrise-lakeside-gathering',
+  'g36_workshop-audience-hands-raised',
+  'g37_dining-hall-wide-audience',
+  'g38_lecture-hall-wide-shot',
+  'g39_workshop-wide-red-lighting',
+  'g40_workshop-wide-laptops',
+  'g41_flags-sky-scenic',
+  'g42_food-spread-closeup',
+  'g43_tree-canopy-gathering',
+  'g44_action-jump-outdoor',
 ];
+const photos = files.map((f) => ({
+  src: `/assets/gallery-2026/${f}.jpg`,
+  alt: `${f.slice(4).replace(/-/g, ' ')} — ALPS Summer School 2026`,
+}));
 
 const quotes = [
   'A place to feel kindly accepted while mentally stimulated.',
@@ -39,16 +71,28 @@ const quotes = [
   'We are ants, and this was an ant-ropological study.',
 ];
 
+// Survey stat tiles. Source: anonymous ASS26 feedback form, 13 responses;
+// the first form version used 5-point answers — scaled x2 to the 10-point
+// scale before averaging. Recompute when new responses arrive.
+const stats = [
+  { value: '9.5 / 10', label: 'Average experience rating' },
+  { value: '9.7 / 10', label: 'Would recommend to a friend' },
+  { value: '100%', label: 'Rated the week 8 or higher' },
+];
+
+// Interleave: one quote after every third photo.
 type Slide =
   | { type: 'photo'; src: string; alt: string }
   | { type: 'quote'; text: string };
-
 const slides: Slide[] = [];
-const max = Math.max(photos.length, quotes.length);
-for (let i = 0; i < max; i++) {
-  if (photos[i]) slides.push({ type: 'photo', ...photos[i] });
-  if (quotes[i]) slides.push({ type: 'quote', text: quotes[i] });
-}
+let q = 0;
+photos.forEach((p, i) => {
+  slides.push({ type: 'photo', ...p });
+  if ((i + 1) % 3 === 0 && q < quotes.length) {
+    slides.push({ type: 'quote', text: quotes[q++] });
+  }
+});
+while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
 ---
 
 <section id="recap-2026" class="py-[clamp(3rem,6vw,5rem)]">
@@ -63,8 +107,9 @@ for (let i = 0; i < max; i++) {
         </h2>
         <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
           Photos from the week and quotes from our anonymous participant
-          feedback survey. Swipe through &mdash; it loops. Looking for last
-          year? <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
+          feedback survey. It scrolls by itself &mdash; drag or swipe to
+          explore at your own pace. Looking for last year?
+          <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
         </p>
       </div>
 
@@ -87,20 +132,38 @@ for (let i = 0; i < max; i++) {
         </button>
       </div>
     </div>
+
+    <dl class="mb-[clamp(1.5rem,3vw,2.5rem)] grid max-w-[720px] grid-cols-1 gap-px sm:grid-cols-3 gradient-border">
+      {
+        stats.map((s) => (
+          <div class="flex flex-col gap-1 bg-[#08030c] px-[1.2rem] py-[1.1rem]">
+            <dd class="m-0 order-1 text-[1.5rem] font-semibold tracking-[-0.02em] grad-text">
+              {s.value}
+            </dd>
+            <dt class="order-2 text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">
+              {s.label}
+            </dt>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="mb-0 -mt-[clamp(1rem,2vw,1.8rem)] text-[0.72rem] text-[var(--color-fg-subtle)]">
+      Anonymous post-event survey, 13 responses. Five-point answers scaled to ten.
+    </p>
   </div>
 
   <div
     data-gallery-track
-    class="flex gap-4 overflow-x-auto px-[max(1rem,calc((100%-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    class="mt-[clamp(1.5rem,3vw,2.5rem)] flex gap-3 overflow-x-auto px-[max(1rem,calc((100%-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     style="-webkit-overflow-scrolling: touch;"
   >
     {
       slides.map((s) =>
         s.type === 'photo' ? (
-          <figure class="m-0 h-[clamp(340px,44vh,460px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+          <figure class="m-0 h-[clamp(180px,24vh,250px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
             <img
               src={s.src}
-              height="720"
+              height="480"
               alt={s.alt}
               loading="lazy"
               decoding="async"
@@ -108,15 +171,15 @@ for (let i = 0; i < max; i++) {
             />
           </figure>
         ) : (
-          <figure class="card m-0 flex h-[clamp(340px,44vh,460px)] w-[clamp(260px,80vw,340px)] shrink-0 flex-col justify-between gap-5">
-            <blockquote class="m-0">
-              <span aria-hidden="true" class="grad-text mb-2 block text-[2.5rem] font-semibold leading-none">
+          <figure class="card m-0 flex h-[clamp(180px,24vh,250px)] w-[clamp(230px,60vw,300px)] shrink-0 flex-col justify-between gap-3 overflow-hidden">
+            <blockquote class="m-0 min-h-0">
+              <span aria-hidden="true" class="grad-text mb-1 block text-[1.8rem] font-semibold leading-none">
                 &ldquo;
               </span>
-              <p class="m-0 text-[1rem] leading-[1.6] text-white/90">{s.text}</p>
+              <p class="m-0 text-[0.85rem] leading-[1.5] text-white/90">{s.text}</p>
             </blockquote>
-            <figcaption class="flex items-center gap-[0.7rem] text-[0.74rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
-              <span aria-hidden="true" class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full" />
+            <figcaption class="flex items-center gap-[0.6rem] text-[0.68rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+              <span aria-hidden="true" class="grad-primary h-[6px] w-[6px] flex-shrink-0 rounded-full" />
               2026 participant
             </figcaption>
           </figure>
@@ -124,6 +187,7 @@ for (let i = 0; i < max; i++) {
       )
     }
   </div>
+
   <div class="container-x mt-4">
     <p
       class="swipe-hint m-0 flex items-center justify-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] md:hidden"
@@ -142,9 +206,7 @@ for (let i = 0; i < max; i++) {
   const next = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
 
   if (track) {
-    // Build a seamless loop: keep the originals as the middle copy, with one
-    // identical copy on each side. Wrapping by exactly one set-width lands on
-    // pixel-identical content, so the jump is invisible.
+    // Seamless loop: originals as the middle copy, one identical copy each side.
     const originals = Array.from(track.children);
     const N = originals.length;
     for (let c = 0; c < 2; c++) {
@@ -158,19 +220,15 @@ for (let i = 0; i < max; i++) {
 
     let setWidth = 0;
     const measure = () => {
-      // offset between the first child of copy-0 and the first child of copy-1
       const a = track.children[0] as HTMLElement;
       const b = track.children[N] as HTMLElement;
       setWidth = b.offsetLeft - a.offsetLeft;
     };
-
     const recenter = () => {
       if (setWidth > 0) track.scrollLeft = setWidth;
     };
-
     measure();
     recenter();
-    // Re-measure once images have loaded, in case any width shifted.
     window.addEventListener('load', () => {
       const x = track.scrollLeft;
       measure();
@@ -191,16 +249,13 @@ for (let i = 0; i < max; i++) {
       },
       { passive: true }
     );
-
-    window.addEventListener('resize', () => {
-      measure();
-    });
+    window.addEventListener('resize', () => measure());
 
     const step = () => Math.round(track.clientWidth * 0.8);
     prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
     next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
 
-    // Drag-to-scroll for pointer devices (touch already scrolls natively).
+    // Drag-to-scroll for pointer devices.
     let down = false, startX = 0, startScroll = 0, moved = false;
     track.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'touch') return;
@@ -220,14 +275,41 @@ for (let i = 0; i < max; i++) {
     track.querySelectorAll('img').forEach((img) =>
       img.addEventListener('dragstart', (e) => e.preventDefault())
     );
+
+    // Autoplay: slow continuous scroll; pauses on hover/touch/drag and when
+    // the tab is hidden; respects prefers-reduced-motion.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) {
+      let paused = false;
+      let resumeTimer = 0;
+      const pause = () => { paused = true; window.clearTimeout(resumeTimer); };
+      const resumeSoon = () => {
+        window.clearTimeout(resumeTimer);
+        resumeTimer = window.setTimeout(() => { paused = false; }, 2500);
+      };
+      track.addEventListener('pointerenter', pause);
+      track.addEventListener('pointerleave', resumeSoon);
+      track.addEventListener('pointerdown', pause);
+      track.addEventListener('pointerup', resumeSoon);
+      track.addEventListener('touchstart', pause, { passive: true });
+      track.addEventListener('touchend', resumeSoon);
+      let carry = 0;
+      const tick = () => {
+        if (!paused && !document.hidden && setWidth > 0) {
+          carry += 0.6;
+          const px = Math.floor(carry);
+          if (px > 0) { track.scrollLeft += px; carry -= px; }
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
   }
 </script>
 
 <style>
   [data-gallery-track] { cursor: grab; }
   [data-gallery-track]:active { cursor: grabbing; }
-
-  /* Gentle outward nudge on the swipe hint to signal the gallery is draggable. */
   .swipe-hint__l { animation: swipe-hint-l 1.8s ease-in-out infinite; }
   .swipe-hint__r { animation: swipe-hint-r 1.8s ease-in-out infinite; }
   @keyframes swipe-hint-l {
