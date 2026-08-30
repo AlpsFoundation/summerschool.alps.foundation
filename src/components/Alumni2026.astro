@@ -1,0 +1,69 @@
+---
+// The 2026 cohort, shown directly under the recap (moved out of People
+// 2026-08-30). Names appear ONLY with the person's explicit written consent —
+// email replies collected via summerschool@, tracked in the ALPS Assistant
+// project doc "ass26-post-event-website-grill-ledger-2026-08-27".
+// "First name only" entries are listed by first name, at the person's request.
+// Opt-in by design: a participant who has not replied is not listed.
+const alumni2026 = [
+  'Anne Ala-Pöntiö',
+  'Claire Prudent',
+  'Elie',
+  'Giuseppe Vacca',
+  'Juan Romero',
+  'Olga Rabei',
+  'Riccardo Lamberti',
+  'Robin Grylka',
+  'Sofía López',
+  'Swapnamoy Roy',
+];
+---
+
+<section id="alumni-2026" class="pb-[clamp(2rem,4vw,3rem)]">
+  <div class="container-x">
+    <div
+      class="mb-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-b border-[var(--color-border)] pb-4"
+    >
+      <div class="flex items-baseline gap-4">
+        <span class="eyebrow">Alumni 2026</span>
+        <h2 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
+          The people who shared the week
+        </h2>
+      </div>
+      <span class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]">
+        {alumni2026.length} listed
+      </span>
+    </div>
+
+    <ul
+      class="m-0 grid list-none gap-2 p-0"
+      style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"
+    >
+      {
+        alumni2026.map((name) => (
+          <li class="flex items-center gap-[0.9rem] rounded-full border border-[var(--color-border)] bg-white/[0.025] px-4 py-3 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:bg-[rgba(154,0,109,0.1)]">
+            <span
+              aria-hidden="true"
+              class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
+            />
+            <span class="text-[0.9rem] font-normal text-white/90">{name}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-4 text-[0.8rem] text-[var(--color-fg-subtle)]">
+      Every name is listed with that person&rsquo;s permission, and more appear
+      as replies come in. Were you there in 2026 and would like to be added, or
+      taken off? Write to
+      <a
+        href="mailto:summerschool@alps.foundation"
+        class="underline decoration-white/30 underline-offset-2 hover:text-white"
+      >summerschool@alps.foundation</a>. Alumni of the first edition are on the
+      <a
+        href="/recap-2025"
+        class="underline decoration-white/30 underline-offset-2 hover:text-white"
+      >2025 recap page</a>.
+    </p>
+  </div>
+</section>

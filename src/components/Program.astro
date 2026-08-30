@@ -414,19 +414,28 @@ const affiliationUrl: Record<string, string> = {
   'Aeon': 'https://aeon.life/',
   'ALPS Foundation': 'https://alps.foundation/',
 };
+
+import SpeakerBio from './SpeakerBio.astro';
+
+// Speakers merged into the programme 2026-08-30: every bio now lives inside the
+// session it belongs to. A speaker with no scheduled slot (guest facilitator,
+// late change) would otherwise vanish, so they are listed after the schedule.
+const speakerById: Record<string, Speaker> = Object.fromEntries(
+  speakers.map((s) => [s.id, s])
+);
+const unscheduled = speakers.filter((s) => !speakerSlot[s.id]);
 ---
 
 <section id="program" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
     <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
-      <span class="eyebrow self-start">Program</span>
+      <span class="eyebrow self-start">Programme &amp; speakers</span>
       <h2>Six days, six themes — one cohesive journey.</h2>
       <p>
         Each full day of the ALPS Summer School 2026 pairs three morning
         lectures with an afternoon workshop and an evening gathering. The full
-        day-by-day programme is below. Tap a confirmed speaker to jump to their
-        bio; sessions still being finalised are marked
-        <em>to be announced</em>.
+        day-by-day programme is below &mdash; <strong>open any session to read
+        who led it</strong>, with their affiliations and background.
       </p>
     </div>
 
@@ -523,8 +532,12 @@ const affiliationUrl: Record<string, string> = {
                 const label = s.kind ? kindLabel[s.kind] : undefined;
                 const who = tba ? 'To be announced' : (s.speaker ?? s.title);
                 const topic = tba ? 'To be announced.' : s.topic;
+                // The row border lives on the OUTER wrapper (details/div) so
+                // `first:border-t-0` still measures position within the day —
+                // a <summary> is always its <details>'s first child.
                 const base =
-                  'session-row grid grid-cols-[7.5rem_1fr] gap-x-5 gap-y-1 border-t border-[var(--color-border)] py-3 first:border-t-0 sm:grid-cols-[8rem_13rem_1fr]';
+                  'session-row grid grid-cols-[7.5rem_1fr] gap-x-5 gap-y-1 py-3 sm:grid-cols-[8rem_13rem_1fr]';
+                const rowEdge = 'border-t border-[var(--color-border)] first:border-t-0';
                 const whoCls =
                   (meta || tba
                     ? 'text-[0.95rem] font-medium text-[var(--color-fg-subtle)]'
@@ -548,12 +561,16 @@ const affiliationUrl: Record<string, string> = {
                   </div>
                 );
 
-                return isLink ? (
-                  <a
-                    id={slotId}
-                    href={`#${sid}`}
-                    class={`group/slot -mx-3 scroll-mt-24 rounded-[var(--radius-sm)] px-3 no-underline transition-colors hover:bg-[rgba(154,0,109,0.12)] ${base}`}
-                  >
+                // Bios shown inline under the row: the lead speaker plus any
+                // co-facilitators who have one.
+                const bioIds = [
+                  ...(sid ? [sid] : []),
+                  ...panelists.map((p) => p.id).filter(Boolean),
+                ] as string[];
+                const bios = bioIds.map((id) => speakerById[id]).filter(Boolean);
+
+                const rowInner = (
+                  <Fragment>
                     <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
                       {s.time}
                     </span>
@@ -563,45 +580,44 @@ const affiliationUrl: Record<string, string> = {
                           {label}
                         </span>
                       )}
-                      {who}
-                      <span aria-hidden="true" class="ml-1 text-[var(--color-accent)] opacity-0 transition-opacity group-hover/slot:opacity-100">›</span>
+                      {panelists.length
+                        ? panelists.map((p, i) => (
+                            <Fragment>
+                              {i > 0 ? ' & ' : ''}
+                              {p.name}
+                            </Fragment>
+                          ))
+                        : who}
+                      {bios.length > 0 && (
+                        <span
+                          aria-hidden="true"
+                          class="slot-chev ml-1.5 inline-block text-[var(--color-accent)] transition-transform duration-200"
+                        >
+                          ›
+                        </span>
+                      )}
                     </span>
                     {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
                     {objectivesBlock}
-                  </a>
+                  </Fragment>
+                );
+
+                return bios.length > 0 ? (
+                  <details id={slotId} class={`session-details scroll-mt-24 ${rowEdge}`}>
+                    <summary
+                      class={`session-summary -mx-3 cursor-pointer rounded-[var(--radius-sm)] px-3 transition-colors hover:bg-[rgba(154,0,109,0.12)] ${base}`}
+                    >
+                      {rowInner}
+                    </summary>
+                    <div class="mb-4 mt-1 flex flex-col gap-3 sm:pl-[8rem]">
+                      {bios.map((sp) => (
+                        <SpeakerBio speaker={sp} affiliationUrl={affiliationUrl} />
+                      ))}
+                    </div>
+                  </details>
                 ) : (
-                  <div id={slotId} class={`scroll-mt-24 ${base}`}>
-                    <span class="pt-[2px] font-mono text-[0.78rem] whitespace-nowrap text-[var(--color-fg-subtle)]">
-                      {s.time}
-                    </span>
-                    <span class={whoCls}>
-                      {label && (
-                        <span class="mb-[2px] block text-[0.62rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                          {label}
-                        </span>
-                      )}
-                      {panelists.length ? (
-                        panelists.map((p, i) => (
-                          <Fragment>
-                            {i > 0 ? ' & ' : ''}
-                            {p.id ? (
-                              <a
-                                href={`#${p.id}`}
-                                class="text-white no-underline transition-colors hover:text-[var(--color-accent)] hover:underline"
-                              >
-                                {p.name}
-                              </a>
-                            ) : (
-                              p.name
-                            )}
-                          </Fragment>
-                        ))
-                      ) : (
-                        who
-                      )}
-                    </span>
-                    {topic ? <span class={topicCls}>{topic}</span> : <span class="hidden sm:block" />}
-                    {objectivesBlock}
+                  <div id={slotId} class={`scroll-mt-24 ${rowEdge} ${base}`}>
+                    {rowInner}
                   </div>
                 );
               })}
@@ -613,110 +629,51 @@ const affiliationUrl: Record<string, string> = {
     </div>
 
 
-    <div id="speakers" class="mt-[clamp(3.5rem,7vw,6rem)]">
-      <div
-        class="mb-6 flex flex-col gap-3 border-b border-[var(--color-border)] pb-4 sm:flex-row sm:items-end sm:justify-between"
-      >
-        <div class="flex max-w-[760px] flex-col gap-3">
-          <span class="eyebrow self-start">Speakers</span>
-          <h3 class="m-0 text-[clamp(1.6rem,3vw,2.2rem)]">
-            Confirmed speakers and facilitators
-          </h3>
+    {/* Speakers are merged into the schedule above (2026-08-30). This keeps
+        the old /#speakers anchor landing here, and catches any speaker who has
+        no scheduled slot so their bio never silently disappears. */}
+    <div id="speakers" class="scroll-mt-24">
+      {unscheduled.length > 0 && (
+        <div class="mt-[clamp(3rem,6vw,5rem)]">
+          <div class="mb-6 flex flex-col gap-3 border-b border-[var(--color-border)] pb-4">
+            <span class="eyebrow self-start">Also with us</span>
+            <h3 class="m-0 text-[clamp(1.4rem,2.6vw,1.9rem)]">
+              Facilitators beyond the timetable
+            </h3>
+          </div>
+          <div class="flex flex-col gap-4">
+            {unscheduled.map((sp) => (
+              <SpeakerBio speaker={sp} affiliationUrl={affiliationUrl} />
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div class="flex flex-col gap-5">
-        {
-          speakers.map((speaker) => (
-            <article id={speaker.id} class="card w-full scroll-mt-24 overflow-hidden !p-0 target:border-[var(--color-accent)]">
-              <div class="grid gap-0 md:grid-cols-[minmax(220px,28%)_1fr]">
-                <img
-                  src={speaker.image}
-                  alt={speaker.name}
-                  class="aspect-[4/5] h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <div class="flex flex-col gap-4 p-5 sm:p-6">
-                  <div class="flex flex-col gap-2.5 md:flex-row md:items-center md:justify-between md:gap-4">
-                    <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                      <h4 class="m-0 text-[1.25rem] font-medium text-white">
-                        {speaker.name}
-                      </h4>
-                      {speaker.title && (
-                        <span class="text-[0.95rem] text-[var(--color-fg-subtle)]">
-                          {speaker.title}
-                        </span>
-                      )}
-                      {speaker.scholar && (
-                        <a
-                          href={speaker.scholar}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${speaker.name} on Google Scholar`}
-                          title="Google Scholar"
-                          class="inline-flex translate-y-[2px] items-center text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-accent)]"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="h-[1rem] w-[1rem]"
-                            aria-hidden="true"
-                          >
-                            <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                    {speaker.affiliations && speaker.affiliations.length > 0 && (
-                      <div class="flex flex-wrap gap-2 md:flex-shrink-0 md:justify-end">
-                        {speaker.affiliations.map((aff) => {
-                          const affCls =
-                            'inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]';
-                          const href = affiliationUrl[aff];
-                          return href ? (
-                            <a
-                              href={href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class={`${affCls} no-underline transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]`}
-                            >
-                              {aff}
-                            </a>
-                          ) : (
-                            <span class={affCls}>{aff}</span>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                  {speakerSlot[speaker.id] && (
-                    <a
-                      href={`#${speakerSlot[speaker.id]}`}
-                      class="inline-flex w-fit items-center gap-1 text-[0.8rem] text-[var(--color-accent)] no-underline transition-opacity hover:underline"
-                    >
-                      <span aria-hidden="true">↑</span> View in the programme
-                    </a>
-                  )}
-                  <div class="flex flex-col gap-3">
-                    {speaker.bio.map((paragraph) => (
-                      <p
-                        class="speaker-bio m-0 text-[0.92rem] leading-[1.65] text-[var(--color-fg-muted)]"
-                        set:html={paragraph}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </article>
-          ))
-        }
-      </div>
+      )}
     </div>
   </div>
 </section>
 
 <style>
+  /* Sessions with a speaker expand in place to reveal that speaker's bio
+     (Programme + Speakers merged 2026-08-30). No JS: native <details>. */
+  #program .session-summary {
+    list-style: none;
+  }
+  #program .session-summary::-webkit-details-marker {
+    display: none;
+  }
+  #program .session-details[open] .slot-chev {
+    transform: rotate(90deg);
+  }
+  #program .session-summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #program .slot-chev {
+      transition: none;
+    }
+  }
+
   /* Global learning-objectives visibility, driven by the #lo-toggle switch
      in the Program section header. No JS: a single :has() rule reveals
      every [data-lo] block (each sits under its session's topic column). */

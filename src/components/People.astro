@@ -4,18 +4,6 @@
 // project doc "ass26-post-event-website-grill-ledger-2026-08-27").
 // "First name only" entries are listed by first name, at the person's request.
 // Alphabetical. The 2025 alumni list lives on /recap-2025.
-const alumni2026 = [
-  'Anne Ala-Pöntiö',
-  'Claire Prudent',
-  'Elie',
-  'Giuseppe Vacca',
-  'Juan Romero',
-  'Olga Rabei',
-  'Riccardo Lamberti',
-  'Robin Grylka',
-  'Sofía López',
-  'Swapnamoy Roy',
-];
 
 const team = [
   {
@@ -58,60 +46,16 @@ const team = [
 <section id="people" class="py-[clamp(4rem,8vw,7rem)]">
   <div class="container-x">
     <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
-      <span class="eyebrow self-start">People</span>
-      <h2>Meet the people at the ALPS Summer School.</h2>
+      <span class="eyebrow self-start">Team</span>
+      <h2>The team behind the week.</h2>
       <p>
-        A small, international cohort and the team that makes the week
-        happen.
+        A small volunteer team plans the programme, runs the days on site and
+        keeps the Summer School affordable. The 2026 cohort itself is listed
+        <a href="/#alumni-2026" class="underline decoration-white/30 underline-offset-2 hover:text-white">with the recap above</a>.
       </p>
     </div>
 
     <div>
-      <div
-        class="mb-6 flex items-baseline justify-between gap-4 border-b border-[var(--color-border)] pb-4"
-      >
-        <h3 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
-          Alumni 2026
-        </h3>
-        <span
-          class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]"
-        >
-          {alumni2026.length} participants
-        </span>
-      </div>
-      <ul
-        class="m-0 grid list-none gap-2 p-0"
-        style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"
-      >
-        {alumni2026.map((name) => (
-          <li
-            class="group flex items-center gap-[0.9rem] rounded-full border border-[var(--color-border)] bg-white/[0.025] px-4 py-3 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:bg-[rgba(154,0,109,0.1)]"
-          >
-            <span
-              aria-hidden="true"
-              class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
-            />
-            <span class="text-[0.9rem] font-normal text-white/90">
-              {name}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <p class="mt-4 text-[0.8rem] text-[var(--color-fg-subtle)]">
-        Every name here is listed with the person&rsquo;s permission &mdash;
-        more appear as replies come in. Alumni of the first edition:
-        <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">see the 2025 recap</a>.
-      </p>
-    </div>
-
-    <div class="mt-[clamp(3rem,5vw,4.5rem)]">
-      <div
-        class="mb-6 flex items-baseline justify-between gap-4 border-b border-[var(--color-border)] pb-4"
-      >
-        <h3 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
-          Team 2026
-        </h3>
-      </div>
       <ul
         class="m-0 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-2"
       >

@@ -1,32 +1,83 @@
 ---
-const cards = [
-  {
-    title: 'Expert-led lectures',
-    body: 'Renowned psychedelic researchers deliver daily talks and guide group discussions on current science.',
-    image: '/assets/lecture.jpg',
-    alt: 'A lecture at the ALPS Summer School',
-  },
-  {
-    title: 'Hands-on workshops',
-    body: 'Experienced facilitators lead interactive workshops blending theory with practical skills and reflection.',
-    image: '/assets/location-mood.jpg',
-    alt: 'Evening mood and setting at the summer school venue',
-  },
-  {
-    title: 'Community & nature',
-    body: 'Evenings and breaks unfold in forest, under the stars and overlooking Lake Neuchâtel — in a small cohort of 25–30.',
-    image: '/assets/group-circle.jpg',
-    alt: 'ALPS participants gathered in a circle outdoors',
-  },
-];
-
-// One word per manifesto chapter, in manifesto order, linking to its anchor.
+// Philosophy & practical details — merged 2026-08-30 with the former standalone
+// Manifesto section: each value below expands in place to its manifesto chapter.
+// Source of truth for the chapters: ASS Manifesto Slack canvas (F0AHWTLV8V7).
 const values = [
-  { word: 'Groundedness', anchor: 'grounded-purpose' },
-  { word: 'Safety', anchor: 'psychological-safety' },
-  { word: 'Care', anchor: 'participant-experience' },
-  { word: 'Kindness', anchor: 'fun-and-kindness' },
-  { word: 'Commitment', anchor: 'collective-commitment' },
+  {
+    id: 'grounded-purpose',
+    word: 'Groundedness',
+    title: 'Grounded purpose',
+    callout:
+      'The field of psychedelic sciences tends to attract brilliance and distortion. Our responsibility is to remain grounded.',
+    value:
+      'We operate at the intersection of <strong>curiosity and scientific rigor</strong>. Psychedelics can inspire insight, creativity, and connection — and they can also invite overconfidence, projection, and unexamined certainty. We do not romanticize the field. We take <strong>responsibility</strong> for shaping it.',
+    actions: [
+      'We anchor every decision in <strong>evidence</strong>, <strong>clear reasoning</strong>, and <strong>intellectual humility</strong>.',
+      'We treat ambition as something that must be <strong>disciplined by integrity</strong>.',
+    ],
+  },
+  {
+    id: 'psychological-safety',
+    word: 'Safety',
+    title: 'Psychological safety with accountability',
+    callout: 'You must be able to speak without punishment.',
+    value:
+      'Psychological safety means <strong>disagreement is safe and silence is not enforced</strong>. It does not mean avoiding difficulty.',
+    actions: [
+      'We treat disagreement as data, not threat.',
+      'We separate critique of strategy from critique of character.',
+      'We respond to messages and concerns promptly.',
+      'We ask for help early when overloaded.',
+      'We reject patterns that erode trust: ignoring communication, passive avoidance, territorial behavior, and silent resentment.',
+      'Silence in the face of harm is not neutrality — it is failure.',
+    ],
+  },
+  {
+    id: 'participant-experience',
+    word: 'Care',
+    title: 'Designing the participant experience',
+    callout: 'Excellent events respect both human needs and intellectual depth.',
+    value:
+      'Participants deserve <strong>coherence, clarity, and care</strong>. Intellectual depth requires stable conditions. They deserve to be held with <strong>kindness</strong> and <strong>compassion</strong>.',
+    actions: [
+      'We provide <strong>clear schedules</strong>, <strong>visible contact persons</strong>, and <strong>real-time feedback loops</strong>.',
+      'We ensure foundational conditions: sufficient food, meaningful breaks, functional space, and psychological ease.',
+      'We cultivate an attitude of <strong>kindness</strong> and <strong>respect</strong> when talking with participants.',
+      'We curate <strong>evidence-based content</strong>, practical workshops, and structured interaction.',
+      'We maintain clear boundaries and intervene immediately when required.',
+      'Participants should leave feeling <strong>informed</strong>, <strong>respected</strong>, and <strong>connected</strong>.',
+    ],
+  },
+  {
+    id: 'fun-and-kindness',
+    word: 'Kindness',
+    title: 'Fun and kindness as core values',
+    callout: 'Excellence without joy is unsustainable. Rigor without warmth is brittle.',
+    value:
+      '<strong>Fun and kindness are not luxuries — they are infrastructure.</strong> A psychedelic science is deemed fulfilling if the output of energy and love outweighs the amount put in. We build environments where people want to be.',
+    actions: [
+      'We design space for spontaneity within structure and celebrate small wins.',
+      'We create moments of levity that reduce tension without undermining focus: shared meals, playful transitions between sessions, activities that nurture connection.',
+      'We resist the tendency to treat seriousness as suffering. When planning sessions, we ask: <em>Will this be intellectually rewarding AND human?</em>',
+      'Fun is the practice of making collaboration sustainable. Kindness is the refusal to sacrifice people for productivity.',
+    ],
+  },
+  {
+    id: 'collective-commitment',
+    word: 'Commitment',
+    title: 'Collective commitment',
+    callout:
+      'We build deliberately. We act responsibly. We protect the integrity of our work and our field. We do this with joy and warmth.',
+    value:
+      'We commit to <strong>clarity</strong>, <strong>accountability</strong>, <strong>rigor</strong>, and <strong>care</strong> — grounding ambition in humility and building this work to last.',
+    actions: [
+      'We commit to <strong>clarity</strong>, <strong>accountability</strong>, <strong>scientific rigor</strong>, and <strong>care</strong>.',
+      'We commit to psychological safety paired with responsibility.',
+      'We commit to disciplined execution in service of participants and collaborators.',
+      'We commit to grounding ambition in humility.',
+      'We commit to making this work sustainable — through kindness, care, and the belief that rigour and humanity are not opposites.',
+    ],
+  },
 ];
 
 const overview = [
@@ -51,163 +102,166 @@ const included = [
 const notIncluded = ['Personal insurance', 'Transportation to Vaumarcus'];
 ---
 
-<section
-  id="about"
-  class="py-[clamp(4rem,8vw,7rem)]"
->
+{/* #about and #manifesto are kept as anchor aliases: both sections were merged
+    into this one, and astro.config redirects /about and /manifesto here. */}
+<section id="info" class="py-[clamp(4rem,8vw,7rem)]">
+  <span id="about" class="sr-only-anchor" aria-hidden="true"></span>
+  <span id="manifesto" class="sr-only-anchor" aria-hidden="true"></span>
   <div class="container-x">
-    <div class="mb-[clamp(2.5rem,5vw,4rem)] flex max-w-[820px] flex-col gap-4">
-      <span class="eyebrow self-start">What is the Summer School?</span>
-      <h2>
-        An immersive week of{' '}
-        <span class="grad-text">psychedelic science</span>, therapy
-        and personal growth.
-      </h2>
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">Philosophy &amp; practical details</span>
+      <h2>Our values, the offering &amp; everything you need to know.</h2>
       <p>
-        The ALPS Summer School is an educational program focused
-        on <strong>psychedelic science</strong> — offering a holistic
-        opportunity for both <strong>professional and personal development</strong>.
-      </p>
-      <p>
-        Renowned researchers deliver lectures and lead discussions;
-        experienced facilitators guide <strong>interactive workshops</strong>; engaging
-        social events complement the experience — all in close proximity to
-        nature. A well-balanced schedule offers a <strong>comprehensive overview of
-        current research</strong> and space to explore intersections between fields.
+        The Summer School is guided by the values written down in our
+        manifesto &mdash; the standard we hold ourselves to. <strong>Open a value
+        to read its chapter.</strong>
       </p>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="mb-[clamp(2.5rem,4vw,3.5rem)] flex flex-col gap-2">
       {
-        cards.map((c) => (
-          <article class="card flex flex-col overflow-hidden !p-0">
-            <img
-              src={c.image}
-              alt={c.alt}
-              loading="lazy"
-              class="aspect-[4/3] w-full shrink-0 object-cover"
-            />
-            <div class="flex flex-col gap-3 p-[clamp(1.25rem,2.5vw,2rem)]">
-              <h3>{c.title}</h3>
-              <p>{c.body}</p>
+        values.map((v, i) => (
+          <details id={v.id} class="value-details card scroll-mt-24 !p-0">
+            <summary class="value-summary flex cursor-pointer items-baseline gap-4 px-[clamp(1.1rem,2.5vw,1.6rem)] py-[1.1rem] transition-colors hover:bg-[rgba(154,0,109,0.1)]">
+              <span
+                class="text-[0.72rem] font-semibold tracking-[0.14em]"
+                style="color: var(--color-primary);"
+              >
+                0{i + 1}
+              </span>
+              <span class="flex min-w-0 flex-1 flex-col gap-1">
+                <span class="text-[1.05rem] font-medium tracking-[-0.01em] text-white">
+                  {v.word}
+                </span>
+                <span class="text-[0.85rem] text-[var(--color-fg-subtle)]">{v.title}</span>
+              </span>
+              <span
+                aria-hidden="true"
+                class="value-chev shrink-0 text-[var(--color-accent)] transition-transform duration-200"
+              >
+                ›
+              </span>
+            </summary>
+            <div class="grid gap-5 border-t border-[var(--color-border)] px-[clamp(1.1rem,2.5vw,1.6rem)] py-[clamp(1.1rem,2.5vw,1.6rem)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
+              <p
+                class="m-0 border-l-2 border-[var(--color-primary)] pl-4 text-[1.02rem] italic text-white/85"
+                set:html={v.callout}
+              />
+              <p
+                class="m-0 self-center text-[0.95rem] text-[var(--color-fg-muted)]"
+                set:html={v.value}
+              />
+              <ul class="m-0 flex list-none flex-col gap-3 p-0 md:col-span-2 md:border-t md:border-[var(--color-border)] md:pt-5">
+                {v.actions.map((a) => (
+                  <li class="flex items-start gap-[0.9rem] text-[0.95rem] text-[var(--color-fg-muted)]">
+                    <span
+                      aria-hidden="true"
+                      class="grad-primary mt-[0.55rem] h-[7px] w-[7px] flex-shrink-0 rounded-full"
+                    />
+                    <span set:html={a} />
+                  </li>
+                ))}
+              </ul>
             </div>
-          </article>
+          </details>
         ))
       }
     </div>
 
-    <div id="info" class="mt-[clamp(3.5rem,6vw,5.5rem)]">
-      <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
-        <span class="eyebrow self-start">Philosophy &amp; practical details</span>
-        <h2>Our values, the offering &amp; everything you need to know.</h2>
-        <p>
-          The Summer School is guided by the values written down in our
-          <a
-            href="/#manifesto"
-            class="text-white underline decoration-[var(--color-accent)] decoration-2 underline-offset-4 hover:text-[var(--color-accent)]"
-          >manifesto</a> — the standard we hold ourselves to. Each word below
-          opens the chapter it summarizes.
-        </p>
-      </div>
-
-      <ul
-        class="gradient-border mb-[clamp(2.5rem,4vw,3.5rem)] grid list-none grid-cols-1 gap-px p-0 md:grid-cols-5"
-      >
-        {
-          values.map((v, i) => (
-            <li class="contents">
-              <a
-                href={`/#${v.anchor}`}
-                class="group flex min-h-[100px] flex-col gap-[0.35rem] bg-[#08030c] px-[1.2rem] py-[1.1rem] transition-colors hover:bg-[rgba(154,0,109,0.12)]"
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.2fr]">
+      <div class="card flex flex-col">
+        <h3 class="mb-5 text-[1.1rem] font-medium">Event overview</h3>
+        <dl class="m-0 grid gap-[0.9rem]">
+          {
+            overview.map((o, idx) => (
+              <div
+                class:list={[
+                  'grid grid-cols-[120px_1fr] items-baseline gap-4 pb-[0.9rem]',
+                  idx < overview.length - 1 &&
+                    'border-b border-dashed border-[var(--color-border)]',
+                ]}
               >
-                <span
-                  class="text-[0.72rem] font-semibold tracking-[0.14em]"
-                  style="color: var(--color-primary);"
-                >
-                  0{i + 1}
-                </span>
-                <span class="text-[1.05rem] font-medium tracking-[-0.01em] text-white group-hover:text-white">
-                  {v.word}
-                </span>
-                <span
-                  class="mt-auto text-[0.72rem] text-[var(--color-fg-subtle)] opacity-0 transition-opacity group-hover:opacity-100"
-                >
-                  Read the chapter →
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.2fr]">
-        <div class="card">
-          <h3 class="mb-5 text-[1.1rem] font-medium">Event overview</h3>
-          <dl class="m-0 grid gap-[0.9rem]">
-            {
-              overview.map((o, idx) => (
-                <div
-                  class:list={[
-                    'grid grid-cols-[120px_1fr] items-baseline gap-4 pb-[0.9rem]',
-                    idx < overview.length - 1 && 'border-b border-dashed border-[var(--color-border)]',
-                  ]}
-                >
-                  <dt
-                    class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]"
-                  >
-                    {o.label}
-                  </dt>
-                  <dd class="m-0 text-white">{o.value}</dd>
-                </div>
-              ))
-            }
-          </dl>
-        </div>
-
-        <div class="card">
-          <h3 class="mb-5 text-[1.1rem] font-medium">What&rsquo;s included</h3>
-          <ul class="m-0 grid list-none gap-[0.55rem] p-0">
-            {
-              included.map((i) => (
-                <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
-                  <span
-                    aria-hidden="true"
-                    class="grad-primary absolute left-0 top-[0.45em] h-[14px] w-[14px] rounded-full shadow-[0_0_12px_rgba(154,0,109,0.55)]"
-                  />
-                  {i}
-                </li>
-              ))
-            }
-          </ul>
-
-          <h4
-            class="mb-3 mt-7 text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
-          >
-            Not included
-          </h4>
-          <ul class="m-0 grid list-none gap-[0.55rem] p-0">
-            {
-              notIncluded.map((i) => (
-                <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
-                  <span
-                    aria-hidden="true"
-                    class="absolute left-[0.15em] top-[0.9em] h-[2px] w-[10px] rounded-[2px] bg-[var(--color-fg-subtle)]"
-                  />
-                  {i}
-                </li>
-              ))
-            }
-          </ul>
+                <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+                  {o.label}
+                </dt>
+                <dd class="m-0 text-white">{o.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="mt-auto border-t border-[var(--color-border)] pt-5">
+          <p class="m-0 mb-3 text-[0.88rem] text-[var(--color-fg-subtle)]">
+            Joined us in 2026? Your certificate, photos, slides and practical
+            info all live in the participant space.
+          </p>
+          <a href="/participants" class="btn btn--registration">Participant space</a>
         </div>
       </div>
 
+      <div class="card">
+        <h3 class="mb-5 text-[1.1rem] font-medium">What&rsquo;s included</h3>
+        <ul class="m-0 grid list-none gap-[0.55rem] p-0">
+          {
+            included.map((i) => (
+              <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
+                <span
+                  aria-hidden="true"
+                  class="grad-primary absolute left-0 top-[0.45em] h-[14px] w-[14px] rounded-full shadow-[0_0_12px_rgba(154,0,109,0.55)]"
+                />
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+
+        <h4 class="mb-3 mt-7 text-[0.78rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">
+          Not included
+        </h4>
+        <ul class="m-0 grid list-none gap-[0.55rem] p-0">
+          {
+            notIncluded.map((i) => (
+              <li class="relative pl-[1.6rem] leading-[1.45] text-white/90">
+                <span
+                  aria-hidden="true"
+                  class="absolute left-[0.15em] top-[0.9em] h-[2px] w-[10px] rounded-[2px] bg-[var(--color-fg-subtle)]"
+                />
+                {i}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  #about strong {
+  #info :global(strong) {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
+  }
+  #info .value-summary {
+    list-style: none;
+  }
+  #info .value-summary::-webkit-details-marker {
+    display: none;
+  }
+  #info .value-details[open] .value-chev {
+    transform: rotate(90deg);
+  }
+  #info .value-summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  /* Anchor aliases for the merged-away #about / #manifesto sections. */
+  #info .sr-only-anchor {
+    display: block;
+    height: 0;
+    scroll-margin-top: 6rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #info .value-chev {
+      transition: none;
+    }
   }
 </style>

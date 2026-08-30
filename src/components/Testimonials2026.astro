@@ -74,6 +74,29 @@ const quotes = [
 // Survey stat tiles. Source: anonymous ASS26 feedback form, 13 responses;
 // the first form version used 5-point answers — scaled x2 to the 10-point
 // scale before averaging. Recompute when new responses arrive.
+// "What is the Summer School?" was merged into this recap on 2026-08-30 —
+// the week itself now answers the question, illustrated with 2026 photos.
+const pillars = [
+  {
+    title: 'Expert-led lectures',
+    body: 'Renowned psychedelic researchers deliver daily talks and guide group discussions on current science.',
+    image: '/assets/gallery-2026/g01_lecture-hall-audience-wide.jpg',
+    alt: 'A lecture in the main hall at the ALPS Summer School 2026',
+  },
+  {
+    title: 'Hands-on workshops',
+    body: 'Experienced facilitators lead interactive workshops blending theory with practical skills and reflection.',
+    image: '/assets/gallery-2026/g04_breathwork-group-candid.jpg',
+    alt: 'Participants during the breathwork workshop, 2026',
+  },
+  {
+    title: 'Community & nature',
+    body: 'Evenings and breaks unfold in forest, under the stars and overlooking Lake Neuchâtel — in a small cohort of 25–30.',
+    image: '/assets/gallery-2026/g13_group-circle-hillside-wide.jpg',
+    alt: 'The 2026 cohort gathered in a circle on the hillside above the lake',
+  },
+];
+
 const stats = [
   { value: '9.5 / 10', label: 'Average experience rating' },
   { value: '9.7 / 10', label: 'Would recommend to a friend' },
@@ -97,6 +120,47 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
 
 <section id="recap-2026" class="py-[clamp(3rem,6vw,5rem)]">
   <div class="container-x">
+    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
+      <span class="eyebrow self-start">What is the Summer School?</span>
+      <h2>
+        An immersive week of{' '}
+        <span class="grad-text">psychedelic science</span>, therapy
+        and personal growth.
+      </h2>
+      <p>
+        The ALPS Summer School is an educational program focused on
+        <strong> psychedelic science</strong> &mdash; offering a holistic
+        opportunity for both <strong>professional and personal development</strong>.
+        Renowned researchers deliver lectures and lead discussions; experienced
+        facilitators guide <strong>interactive workshops</strong>; engaging social
+        events complement the experience &mdash; all in close proximity to nature.
+      </p>
+      <p>
+        The second edition ran from 26 July to 1 August 2026 at Le Camp. Here is
+        what that week looked like, in the words and pictures of the people who
+        were there.
+      </p>
+    </div>
+
+    <div class="mb-[clamp(2.5rem,5vw,4rem)] grid grid-cols-1 gap-4 md:grid-cols-3">
+      {
+        pillars.map((c) => (
+          <article class="card flex flex-col overflow-hidden !p-0">
+            <img
+              src={c.image}
+              alt={c.alt}
+              loading="lazy"
+              class="aspect-[4/3] w-full shrink-0 object-cover"
+            />
+            <div class="flex flex-col gap-3 p-[clamp(1.25rem,2.5vw,2rem)]">
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
     <div
       class="mb-[clamp(1.5rem,3vw,2.5rem)] flex flex-wrap items-end justify-between gap-4"
     >
