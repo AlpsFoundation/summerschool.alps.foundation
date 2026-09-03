@@ -5,11 +5,16 @@
 //
 // Which photos run here, and which session each belongs to, come from
 // src/data/gallery-2026.ts — Matthias's review in the ASS26 Photo Review
-// tool (2026-09-03: 216 reviewed, 141 excluded, 75 kept). Do not add or
+// tool (2026-09-03: 216 reviewed, 141 excluded, 75 kept, then 2 duplicate
+// pairs collapsed -> 73). Do not add or
 // remove photos by hand here; change the review and regenerate the data.
+// The strip never stops moving (Matthias, 2026-09-03) — it pauses only while
+// you are actually dragging it or have a photo open. Clicking a photo opens it
+// full-size in the middle of the screen.
 import {
   photos as galleryPhotos,
   photoSrc,
+  photoLarge,
   photoAlt,
   eventLabel,
   eventSlot,
@@ -17,10 +22,35 @@ import {
 
 const photos = galleryPhotos.map((p) => ({
   src: photoSrc(p),
+  large: photoLarge(p),
   alt: photoAlt(p),
   event: eventLabel(p),
   slot: eventSlot(p),
 }));
+
+// Quote cards are a fixed size, but the quotes run from 18 to 186 characters.
+// One font size for all of them leaves the short ones marooned in white space
+// and pushes the long ones into the attribution line, so each card picks a
+// size from its own length. Steps, not a continuous fit: a handful of sizes
+// reads as typography, an arbitrary per-card value reads as a bug.
+// The vw term in each clamp is what keeps a long quote inside a small card:
+// the card itself is sized off vw/vh, so the text has to shrink with it or a
+// 186-character quote overruns the attribution on a phone. In practice the
+// clamp resolves to the minimum on mobile and the maximum from ~700px up.
+const quoteScale: { max: number; size: string; leading: string }[] = [
+  { max: 25, size: 'clamp(2.7rem, 9vw, 3.4rem)', leading: '1.05' },
+  { max: 45, size: 'clamp(2rem, 6.5vw, 2.5rem)', leading: '1.1' },
+  { max: 70, size: 'clamp(1.5rem, 4.8vw, 1.85rem)', leading: '1.15' },
+  { max: 100, size: 'clamp(1.2rem, 3.9vw, 1.5rem)', leading: '1.25' },
+  { max: 140, size: 'clamp(1rem, 3.2vw, 1.25rem)', leading: '1.35' },
+  { max: 200, size: 'clamp(0.9rem, 2.9vw, 1.1rem)', leading: '1.4' },
+];
+const quoteStyle = (text: string) => {
+  const step =
+    quoteScale.find((s) => text.length <= s.max) ??
+    { size: 'clamp(0.82rem, 2.6vw, 1rem)', leading: '1.45' };
+  return `font-size:${step.size};line-height:${step.leading};overflow-wrap:break-word`;
+};
 
 const quotes = [
   'A place to feel kindly accepted while mentally stimulated.',
@@ -76,6 +106,7 @@ type Slide =
   | {
       type: 'photo';
       src: string;
+      large: string;
       alt: string;
       event: string | null;
       slot: string | null;
@@ -146,7 +177,7 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
         <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
           Photos from the week and quotes from our anonymous participant
           feedback survey. It scrolls by itself &mdash; drag or swipe to
-          explore at your own pace, and tap a photo&rsquo;s caption to jump
+          explore at your own pace. Tap any photo to see it full size, or its caption to jump
           to that session in the programme. Looking for last year?
           <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
         </p>
@@ -199,7 +230,16 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
     {
       slides.map((s) =>
         s.type === 'photo' ? (
-          <figure class="group relative m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+          <figure
+            class="gallery-photo group relative m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]"
+            data-photo
+            data-large={s.large}
+            data-event={s.event ?? ''}
+            data-slot={s.slot ?? ''}
+            role="button"
+            tabindex="0"
+            aria-label={`View this photo full size: ${s.alt}`}
+          >
             <img
               src={s.src}
               height="480"
@@ -229,14 +269,16 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
             }
           </figure>
         ) : (
-          <figure class="card m-0 flex h-[clamp(280px,36vh,380px)] w-[clamp(250px,64vw,320px)] shrink-0 flex-col justify-between gap-3 overflow-hidden">
-            <blockquote class="m-0 min-h-0 overflow-hidden">
+          <figure class="card m-0 flex h-[clamp(280px,36vh,380px)] w-[clamp(250px,64vw,320px)] shrink-0 flex-col gap-3 overflow-hidden">
+            <blockquote class="m-0 flex min-h-0 flex-1 flex-col justify-center overflow-hidden">
               <span aria-hidden="true" class="grad-text mb-1 block text-[1.8rem] font-semibold leading-none">
                 &ldquo;
               </span>
-              <p class="m-0 text-[0.85rem] leading-[1.5] text-white/90">{s.text}</p>
+              <p class="m-0 text-balance text-white/90" style={quoteStyle(s.text)}>
+                {s.text}
+              </p>
             </blockquote>
-            <figcaption class="flex items-center gap-[0.6rem] text-[0.68rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+            <figcaption class="flex shrink-0 items-center gap-[0.6rem] text-[0.68rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
               <span aria-hidden="true" class="grad-primary h-[6px] w-[6px] flex-shrink-0 rounded-full" />
               2026 participant
             </figcaption>
@@ -256,6 +298,41 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
       <svg class="swipe-hint__r" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
     </p>
   </div>
+
+  {/* Full-size viewer for a clicked photo. One instance, filled in from the
+      clicked figure's data attributes — the track is cloned twice for the
+      infinite loop, so per-slide markup would triple. */}
+  <div
+    data-lightbox
+    hidden
+    class="fixed inset-0 z-[80] grid place-items-center bg-black/88 p-4 backdrop-blur-sm sm:p-8"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo from the ALPS Summer School 2026"
+  >
+    <button
+      type="button"
+      data-lightbox-close
+      class="absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border-strong)] bg-black/50 text-white transition-colors hover:bg-[rgba(154,0,109,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:right-6 sm:top-6"
+      aria-label="Close photo"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+
+    <figure class="pointer-events-none m-0 flex max-h-full flex-col items-center gap-3">
+      <img
+        data-lightbox-img
+        src=""
+        alt=""
+        decoding="async"
+        class="pointer-events-auto max-h-[76vh] w-auto max-w-full rounded-[var(--radius-lg)] border border-[var(--color-border)] object-contain shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
+      />
+      <figcaption
+        data-lightbox-cap
+        class="pointer-events-auto min-h-[1.2rem] text-center text-[0.8rem] text-white/75"
+      />
+    </figure>
+  </div>
 </section>
 
 <script>
@@ -272,6 +349,14 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
         const clone = node.cloneNode(true) as HTMLElement;
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('img').forEach((img) => img.setAttribute('loading', 'lazy'));
+        // A clone is decoration: it must not be reachable by keyboard, or the
+        // same 73 photos would appear three times in the tab order. Mouse
+        // clicks still work — opening is delegated on the track, and a link
+        // with tabindex="-1" is still clickable.
+        clone.removeAttribute('role');
+        clone.removeAttribute('tabindex');
+        clone.removeAttribute('aria-label');
+        clone.querySelectorAll('a').forEach((a) => a.setAttribute('tabindex', '-1'));
         track.appendChild(clone);
       });
     }
@@ -334,26 +419,91 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
       img.addEventListener('dragstart', (e) => e.preventDefault())
     );
 
-    // Autoplay: slow continuous scroll; pauses on hover/touch/drag and when
-    // the tab is hidden; respects prefers-reduced-motion.
+    // Full-size viewer. Delegated on the track so the two clone copies work
+    // without their own listeners.
+    const lb = document.querySelector<HTMLElement>('[data-lightbox]');
+    const lbImg = lb?.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const lbCap = lb?.querySelector<HTMLElement>('[data-lightbox-cap]');
+    const lbClose = lb?.querySelector<HTMLButtonElement>('[data-lightbox-close]');
+    let lastFocus: HTMLElement | null = null;
+
+    const openPhoto = (fig: HTMLElement) => {
+      if (!lb || !lbImg || !lbCap) return;
+      const large = fig.dataset.large ?? '';
+      const img = fig.querySelector('img');
+      if (!large) return;
+      lbImg.src = large;
+      lbImg.alt = img?.alt ?? '';
+      const event = fig.dataset.event ?? '';
+      const slot = fig.dataset.slot ?? '';
+      lbCap.textContent = '';
+      if (event && slot) {
+        const a = document.createElement('a');
+        a.href = `#${slot}`;
+        a.className = 'underline decoration-white/30 underline-offset-2 hover:text-white';
+        a.textContent = `${event} — see it in the programme`;
+        // Jumping to the programme means leaving the photo behind.
+        a.addEventListener('click', () => closePhoto());
+        lbCap.appendChild(a);
+      } else if (event) {
+        lbCap.textContent = event;
+      }
+      lastFocus = document.activeElement as HTMLElement | null;
+      lb.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      lbClose?.focus();
+    };
+
+    const closePhoto = () => {
+      if (!lb || lb.hidden) return;
+      lb.hidden = true;
+      document.documentElement.style.overflow = '';
+      if (lbImg) lbImg.src = '';
+      lastFocus?.focus();
+    };
+
+    track.addEventListener('click', (e) => {
+      // A drag that ends on a photo is a drag, not a click on it.
+      if (moved) return;
+      const target = e.target as HTMLElement;
+      // The caption link is its own action — let it navigate.
+      if (target.closest('a')) return;
+      const fig = target.closest<HTMLElement>('[data-photo]');
+      if (fig) openPhoto(fig);
+    });
+    track.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const fig = (e.target as HTMLElement).closest<HTMLElement>('[data-photo]');
+      if (!fig) return;
+      e.preventDefault();
+      openPhoto(fig);
+    });
+    lbClose?.addEventListener('click', closePhoto);
+    lb?.addEventListener('click', (e) => {
+      // Click the backdrop, not the photo itself.
+      if (e.target === lb) closePhoto();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePhoto();
+    });
+
+    // Autoplay: slow, continuous, and deliberately NOT paused by hovering —
+    // it stops only while you are dragging the strip, while a photo is open,
+    // and when the tab is hidden. Respects prefers-reduced-motion.
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduced) {
-      let paused = false;
-      let resumeTimer = 0;
-      const pause = () => { paused = true; window.clearTimeout(resumeTimer); };
-      const resumeSoon = () => {
-        window.clearTimeout(resumeTimer);
-        resumeTimer = window.setTimeout(() => { paused = false; }, 2500);
-      };
-      track.addEventListener('pointerenter', pause);
-      track.addEventListener('pointerleave', resumeSoon);
-      track.addEventListener('pointerdown', pause);
-      track.addEventListener('pointerup', resumeSoon);
-      track.addEventListener('touchstart', pause, { passive: true });
-      track.addEventListener('touchend', resumeSoon);
+      let dragging = false;
+      const holdOn = () => { dragging = true; };
+      const holdOff = () => { dragging = false; };
+      track.addEventListener('pointerdown', holdOn);
+      window.addEventListener('pointerup', holdOff);
+      window.addEventListener('pointercancel', holdOff);
+      track.addEventListener('touchstart', holdOn, { passive: true });
+      window.addEventListener('touchend', holdOff);
       let carry = 0;
       const tick = () => {
-        if (!paused && !document.hidden && setWidth > 0) {
+        const open = lb ? !lb.hidden : false;
+        if (!dragging && !open && !document.hidden && setWidth > 0) {
           carry += 0.6;
           const px = Math.floor(carry);
           if (px > 0) { track.scrollLeft += px; carry -= px; }
@@ -368,6 +518,21 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
 <style>
   [data-gallery-track] { cursor: grab; }
   [data-gallery-track]:active { cursor: grabbing; }
+  /* A photo is clickable, so say so — but a drag still reads as a drag. */
+  [data-gallery-track] [data-photo] { cursor: zoom-in; }
+  [data-gallery-track]:active [data-photo] { cursor: grabbing; }
+  [data-gallery-track] [data-photo]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  [data-lightbox] { animation: lb-in 160ms ease-out; }
+  @keyframes lb-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-lightbox] { animation: none; }
+  }
   .swipe-hint__l { animation: swipe-hint-l 1.8s ease-in-out infinite; }
   .swipe-hint__r { animation: swipe-hint-r 1.8s ease-in-out infinite; }
   @keyframes swipe-hint-l {

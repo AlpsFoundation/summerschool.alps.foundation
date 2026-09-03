@@ -5,6 +5,12 @@
 // 141 excluded, 75 kept, saved 2026-09-03), together with the per-photo
 // event tag he set there. Re-run that review to change this list.
 //
+// 73, not 75: a dHash sweep over the kept set found two pairs shot seconds
+// apart and effectively identical, so p004 (kept p029, Regis's art workshop)
+// and p070 (kept p071, the farewell hug) were dropped on Matthias's call.
+// Re-run that sweep after any future review — the review tool shows photos
+// grouped by theme, which is exactly where near-duplicates hide.
+//
 // Files: /public/assets/gallery-2026/p<ASS26 number>_<tag>.jpg, 480 px tall,
 // generated from the originals in
 // ALPS Shared/70_Media Library/73_Photos/ALPS Summer School 2026.
@@ -70,7 +76,6 @@ export type Photo = {
 export const photos: Photo[] = [
   { n: '063', tag: 'lecture-audience-mats', event: 'd5-havenith' },
   { n: '034', tag: 'evening-sharing-circle', event: 'd6-openmic' },
-  { n: '004', tag: 'blindfold-ivy-branch', event: 'd4-art-ws' },
   { n: '056', tag: 'dining-room-lake-view', event: 'd1-welcome' },
   { n: '021', tag: 'moonrise-shore-silhouettes', event: 'g-moonrise' },
   { n: '055', tag: 'terrace-view-lake', event: 'd1-welcome' },
@@ -116,7 +121,6 @@ export const photos: Photo[] = [
   { n: '069', tag: 'farewell-group-hug', event: 'd7-departure' },
   { n: '165', tag: 'testimonial-curly-hair-portrait', event: null },
   { n: '179', tag: 'speaker-gesture-lecture', event: 'd6-day' },
-  { n: '070', tag: 'farewell-hug-alt', event: 'd7-departure' },
   { n: '166', tag: 'testimonial-older-man-portrait', event: null },
   { n: '180', tag: 'speaker-alps-banner-gesture', event: 'd6-day' },
   { n: '071', tag: 'farewell-hug-group', event: 'd7-departure' },
@@ -158,10 +162,6 @@ export const eventLabel = (p: Photo) =>
 export const eventSlot = (p: Photo) =>
   p.event ? (events[p.event]?.slot ?? null) : null;
 
-/** The other direction: every photo taken in a given timetable row. */
-export const photosBySlot: Record<string, Photo[]> = {};
-for (const p of photos) {
-  const slot = eventSlot(p);
-  if (!slot) continue;
-  (photosBySlot[slot] ??= []).push(p);
-}
+/** Full-size file for the gallery lightbox (see scripts/gallery-large.py). */
+export const photoLarge = (p: Photo) =>
+  `/assets/gallery-2026/large/p${p.n}_${p.tag}.jpg`;
