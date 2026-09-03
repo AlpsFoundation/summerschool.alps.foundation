@@ -1,57 +1,25 @@
 ---
 // 2026 recap: survey stats + a self-scrolling, infinitely-looping gallery
 // interleaving ASS 2026 photos with quotes from the anonymous post-event
-// feedback survey. Photos live in /public/assets/gallery-2026 (gNN_tag.jpg,
-// 480px tall). Excluded on request: ASS26-121 (dredging barge on the lake).
-const files = [
-  'g01_lecture-hall-audience-wide',
-  'g02_panel-discussion-wide',
-  'g03_workshop-audience-hall',
-  'g04_breathwork-group-candid',
-  'g05_moonrise-over-lake',
-  'g06_sunset-hilltop-gathering',
-  'g07_flower-mandala-art',
-  'g08_catering-food-trays',
-  'g09_kitchen-chef-cooking',
-  'g10_evening-fairy-lights-gathering',
-  'g11_violin-through-leaves',
-  'g12_excursion-group-wide-lake',
-  'g13_group-circle-hillside-wide',
-  'g14_group-circle-under-tree',
-  'g15_farewell-group-hug',
-  'g16_dj-party-night',
-  'g17_blindfold-forest-search',
-  'g18_moonrise-amphitheater-crowd',
-  'g19_lakeview-dining-hall',
-  'g20_outdoor-painting-lakeview',
-  'g21_evening-sharing-circle',
-  'g22_sunset-lake-clouds',
-  'g23_terrace-view-lake',
-  'g24_outdoor-craft-amphitheater',
-  'g25_clay-painting-closeup',
-  'g26_panel-discussion-talk',
-  'g27_lakeview-sunrise-cottages',
-  'g28_lecture-hall-wide-view',
-  'g29_blanket-mandala-relaxation',
-  'g30_circle-group-listening',
-  'g31_outdoor-group-walking',
-  'g32_outdoor-lawn-group-sunlight',
-  'g33_pergola-group-lakeview',
-  'g34_lake-swim-platform',
-  'g35_moonrise-lakeside-gathering',
-  'g36_workshop-audience-hands-raised',
-  'g37_dining-hall-wide-audience',
-  'g38_lecture-hall-wide-shot',
-  'g39_workshop-wide-red-lighting',
-  'g40_workshop-wide-laptops',
-  'g41_flags-sky-scenic',
-  'g42_food-spread-closeup',
-  'g43_tree-canopy-gathering',
-  'g44_action-jump-outdoor',
-];
-const photos = files.map((f) => ({
-  src: `/assets/gallery-2026/${f}.jpg`,
-  alt: `${f.slice(4).replace(/-/g, ' ')} — ALPS Summer School 2026`,
+// feedback survey.
+//
+// Which photos run here, and which session each belongs to, come from
+// src/data/gallery-2026.ts — Matthias's review in the ASS26 Photo Review
+// tool (2026-09-03: 216 reviewed, 141 excluded, 75 kept). Do not add or
+// remove photos by hand here; change the review and regenerate the data.
+import {
+  photos as galleryPhotos,
+  photoSrc,
+  photoAlt,
+  eventLabel,
+  eventSlot,
+} from '../data/gallery-2026';
+
+const photos = galleryPhotos.map((p) => ({
+  src: photoSrc(p),
+  alt: photoAlt(p),
+  event: eventLabel(p),
+  slot: eventSlot(p),
 }));
 
 const quotes = [
@@ -80,20 +48,20 @@ const pillars = [
   {
     title: 'Expert-led lectures',
     body: 'Renowned psychedelic researchers deliver daily talks and guide group discussions on current science.',
-    image: '/assets/gallery-2026/g01_lecture-hall-audience-wide.jpg',
+    image: '/assets/gallery-2026/p084_lecture-hall-audience-wide.jpg',
     alt: 'A lecture in the main hall at the ALPS Summer School 2026',
   },
   {
     title: 'Hands-on workshops',
     body: 'Experienced facilitators lead interactive workshops blending theory with practical skills and reflection.',
-    image: '/assets/gallery-2026/g04_breathwork-group-candid.jpg',
-    alt: 'Participants during the breathwork workshop, 2026',
+    image: '/assets/gallery-2026/p060_outdoor-craft-amphitheater.jpg',
+    alt: 'Hands-on craft session in the outdoor amphitheatre, 2026',
   },
   {
     title: 'Community & nature',
     body: 'Evenings and breaks unfold in forest, under the stars and overlooking Lake Neuchâtel — in a small cohort of 25–30.',
-    image: '/assets/gallery-2026/g13_group-circle-hillside-wide.jpg',
-    alt: 'The 2026 cohort gathered in a circle on the hillside above the lake',
+    image: '/assets/gallery-2026/p119_pergola-group-lakeview.jpg',
+    alt: 'The 2026 cohort in the pergola, overlooking Lake Neuchâtel',
   },
 ];
 
@@ -105,7 +73,13 @@ const stats = [
 
 // Interleave: one quote after every third photo.
 type Slide =
-  | { type: 'photo'; src: string; alt: string }
+  | {
+      type: 'photo';
+      src: string;
+      alt: string;
+      event: string | null;
+      slot: string | null;
+    }
   | { type: 'quote'; text: string };
 const slides: Slide[] = [];
 let q = 0;
@@ -172,7 +146,8 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
         <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
           Photos from the week and quotes from our anonymous participant
           feedback survey. It scrolls by itself &mdash; drag or swipe to
-          explore at your own pace. Looking for last year?
+          explore at your own pace, and tap a photo&rsquo;s caption to jump
+          to that session in the programme. Looking for last year?
           <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
         </p>
       </div>
@@ -224,7 +199,7 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
     {
       slides.map((s) =>
         s.type === 'photo' ? (
-          <figure class="m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
+          <figure class="group relative m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]">
             <img
               src={s.src}
               height="480"
@@ -233,6 +208,25 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
               decoding="async"
               class="h-full w-auto max-w-none object-cover"
             />
+            {
+              s.event && (
+                <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/45 to-transparent px-3 pb-2 pt-8">
+                  {s.slot ? (
+                    <a
+                      href={`#${s.slot}`}
+                      class="slot-jump pointer-events-auto inline-flex max-w-full items-center gap-1.5 text-[0.7rem] leading-tight text-white/85 transition-colors hover:text-white"
+                    >
+                      <span class="truncate">{s.event}</span>
+                      <span aria-hidden="true" class="text-[var(--color-accent)]">&rsaquo;</span>
+                    </a>
+                  ) : (
+                    <span class="block truncate text-[0.7rem] leading-tight text-white/70">
+                      {s.event}
+                    </span>
+                  )}
+                </figcaption>
+              )
+            }
           </figure>
         ) : (
           <figure class="card m-0 flex h-[clamp(280px,36vh,380px)] w-[clamp(250px,64vw,320px)] shrink-0 flex-col justify-between gap-3 overflow-hidden">
