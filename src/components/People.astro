@@ -1,46 +1,93 @@
 ---
-// 2026 cohort — names appear here ONLY with the person's explicit written
-// consent (email replies to summerschool@, tracked in the ALPS Assistant
-// project doc "ass26-post-event-website-grill-ledger-2026-08-27").
-// "First name only" entries are listed by first name, at the person's request.
-// Alphabetical. The 2025 alumni list lives on /recap-2025.
+// The volunteer team behind the Summer School. (The 2026 COHORT is a
+// different list — Alumni2026.astro, under the recap, with its own consent
+// rules. This file is team only.)
+//
+// Alphabetical by last name. Each card links out in a new tab: to the
+// person's profile on the foundation site (alps.foundation/who-we-are/team/
+// <slug>, every slug below verified 200 on 2026-09-03), or, where someone
+// would rather point at their own work, to `url` instead.
+const TEAM_BASE = 'https://alps.foundation/who-we-are/team/';
 
-const team = [
+type Member = {
+  name: string;
+  role: string;
+  image: string;
+  /** Slug on the foundation team page. */
+  slug?: string;
+  /** Overrides the ALPS profile when the person points elsewhere. */
+  url?: string;
+  /** Shown under the role, so people can see where the card goes. */
+  linkLabel?: string;
+};
+
+const team: Member[] = [
   {
     name: 'Andrea Bacconi',
     role: 'Participant experience, workshop and social program',
     image: '/assets/people-andrea.jpg',
+    slug: 'andrea-bacconi',
   },
-  { name: 'Ece Baloglu', role: 'Communication', image: '/assets/people-ece.jpg' },
+  {
+    name: 'Ece Baloglu',
+    role: 'Communication',
+    image: '/assets/people-ece.jpg',
+    slug: 'ece-baloglu',
+  },
   {
     name: 'Ana Mateea Cerchez',
     role: 'Communication, kitchen assistant',
     image: '/assets/people-mateea.jpg',
+    slug: 'ana-mateea-cerchez',
   },
-  { name: 'Lennert van de Kreeke', role: 'Project advisor', image: '/assets/people-lennert.jpg' },
+  {
+    name: 'Lennert van de Kreeke',
+    role: 'Project advisor',
+    image: '/assets/people-lennert.jpg',
+    slug: 'lennert-van-de-kreeke',
+  },
   {
     name: 'Matthias Leitner',
     role: 'Project coordination, venue',
     image: '/assets/people-matthias.jpg',
+    slug: 'matthias-leitner',
   },
   {
     name: 'Morten Lietz',
     role: 'Planning advisor, decoration, kitchen support',
     image: '/assets/people-morten.jpg',
+    slug: 'morten-lietz',
   },
   {
     name: 'Régis Paroz',
     role: 'Decoration, art',
     image: '/assets/people-regis.jpg',
+    slug: 'regis-paroz',
   },
-  { name: 'Raphael Saunier', role: 'Web development', image: '/assets/people-raph.jpg' },
-  { name: 'Alex Wester', role: 'Chef', image: '/assets/people-alex.jpg' },
+  {
+    name: 'Raphael Saunier',
+    role: 'Web development',
+    image: '/assets/people-raph.jpg',
+    slug: 'raphael-saunier',
+  },
+  {
+    name: 'Alex Wester',
+    role: 'Chef',
+    image: '/assets/people-alex.jpg',
+    url: 'https://elementaltable.eu/',
+    linkLabel: 'elementaltable.eu',
+  },
   {
     name: 'Parsa Yousefi',
     role: 'Scientific, workshop and social program',
     image: '/assets/people-parsa.jpg',
+    slug: 'parsa-yousefi',
   },
 ];
+
+const hrefFor = (p: Member) => p.url ?? (p.slug ? `${TEAM_BASE}${p.slug}` : null);
+const labelFor = (p: Member) =>
+  p.linkLabel ?? (p.slug ? 'Profile on alps.foundation' : null);
 ---
 
 <section id="people" class="py-[clamp(4rem,8vw,7rem)]">
@@ -50,32 +97,74 @@ const team = [
       <h2>The team behind the week.</h2>
       <p>
         A small volunteer team plans the programme, runs the days on site and
-        keeps the Summer School affordable. The 2026 cohort itself is listed
+        keeps the Summer School affordable. Open any card to read more about
+        that person. The 2026 cohort itself is listed
         <a href="/#alumni-2026" class="underline decoration-white/30 underline-offset-2 hover:text-white">with the recap above</a>.
       </p>
     </div>
 
     <div>
-      <ul
-        class="m-0 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-2"
-      >
+      <ul class="m-0 grid list-none grid-cols-1 gap-4 p-0 lg:grid-cols-2">
         {
-          team.map((p) => (
-            <li class="card grid h-full grid-cols-[120px_1fr] overflow-hidden !p-0 sm:grid-cols-[150px_1fr]">
-              <img
-                src={p.image}
-                alt={p.name}
-                class="aspect-[3/4] h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div class="flex min-w-0 flex-col justify-center gap-[0.25rem] p-5">
-                <span class="font-medium text-white">{p.name}</span>
-                <span class="text-[0.82rem] text-[var(--color-fg-subtle)]">
-                  {p.role}
-                </span>
-              </div>
-            </li>
-          ))
+          team.map((p) => {
+            const href = hrefFor(p);
+            const label = labelFor(p);
+            return (
+              <li
+                class={`card group relative grid h-full grid-cols-[120px_1fr] overflow-hidden !p-0 sm:grid-cols-[150px_1fr] ${href ? 'transition-colors hover:border-[var(--color-accent)]' : ''}`}
+              >
+                {href && (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="absolute inset-0 z-10 rounded-[inherit] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                    aria-label={`${p.name} — ${label} (opens in a new tab)`}
+                  />
+                )}
+                {href && (
+                  <div
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    style="background: radial-gradient(360px 180px at 110% -20%, rgba(154,0,109,0.16), transparent 60%);"
+                  />
+                )}
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  class="aspect-[3/4] h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div class="flex min-w-0 flex-col justify-center gap-[0.25rem] p-5">
+                  <span class="font-medium text-white">{p.name}</span>
+                  <span class="text-[0.82rem] text-[var(--color-fg-subtle)]">
+                    {p.role}
+                  </span>
+                  {label && (
+                    <span class="mt-[0.35rem] inline-flex items-center gap-1 text-[0.72rem] text-[var(--color-fg-subtle)] transition-colors group-hover:text-white">
+                      <span class="truncate">{label}</span>
+                      <svg
+                        aria-hidden="true"
+                        class="shrink-0 text-[var(--color-accent)]"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="11"
+                        height="11"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M7 17 17 7" />
+                        <path d="M7 7h10v10" />
+                      </svg>
+                    </span>
+                  )}
+                </div>
+              </li>
+            );
+          })
         }
       </ul>
     </div>
