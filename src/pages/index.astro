@@ -1,13 +1,19 @@
 ---
+// Post-event structure (2026-08-30): the hero states the facts, the 2027 card
+// carries the sign-up above the fold, the recap answers "what is this?" with
+// the week itself, the cohort sits directly under it, and the practical /
+// philosophy block closes the page. Speakers live inside Program; the manifesto
+// lives inside About.
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Recap2025 from '../components/Recap2025.astro';
-import About from '../components/About.astro';
+import Gallery2026 from '../components/Gallery2026.astro';
+import Alumni2026 from '../components/Alumni2026.astro';
+import Recap2026 from '../components/Recap2026.astro';
 import Program from '../components/Program.astro';
 import Venue from '../components/Venue.astro';
 import People from '../components/People.astro';
-import Manifesto from '../components/Manifesto.astro';
+import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
 ---
 
@@ -15,12 +21,15 @@ import Footer from '../components/Footer.astro';
   <Nav />
   <main>
     <Hero />
-    <Recap2025 />
-    <About />
+    {/* 2026-09-06: pictures first, then who was there, then the
+        explainer. 2027 is a page of its own, reached from the nav. */}
+    <Gallery2026 />
+    <Alumni2026 />
+    <Recap2026 />
     <Program />
     <Venue />
     <People />
-    <Manifesto />
+    <About />
   </main>
   <Footer />
 </Layout>

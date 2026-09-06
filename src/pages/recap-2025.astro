@@ -1,0 +1,93 @@
+---
+const alumni2025 = [
+  'Aline Frick',
+  'Anita Bober',
+  'Bertram Groinig',
+  'Camila Suarez',
+  'Camille Mariéthoz',
+  'Clara Hadzopoulos',
+  'David Frank',
+  'Emily Ward',
+  'Hector Taylor',
+  'Ilann Rouillé',
+  'Iris Wirthner',
+  'Ivana Sterr',
+  'Jennifer Dell',
+  'Jim Krups',
+  'Jonathan',
+  'Juan Romero',
+  'Julian Zenzmair',
+  'Leon Ramirez Alexander Kimling',
+  'Marc Grüninger',
+  'Margherita Pancotti',
+  'Meta Laubinger',
+  'Sally Chang',
+  'Sean Goldy',
+  'Stefanie Mayer',
+  'Verena Naef',
+];
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Aftermovie from '../components/Aftermovie.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <section id="recap-2025" class="pt-[clamp(3rem,6vw,5rem)]">
+      <div class="container-x">
+        <div class="flex max-w-[820px] flex-col gap-4">
+          <span class="eyebrow self-start">Summer school 2025</span>
+          <h1 class="m-0 text-[clamp(1.8rem,4vw,2.8rem)] font-medium tracking-[-0.02em]">
+            Relive the 2025 week at Le Camp.
+          </h1>
+          <p class="m-0 text-white/85">
+            The first edition of the ALPS Summer School &mdash; the
+            aftermovie, photo gallery and quotes from ASS 2025.
+            For this year&rsquo;s edition, head
+            <a href="/#recap-2026" class="underline decoration-white/30 underline-offset-2 hover:text-white">back to the main page</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+    <Aftermovie />
+    <Testimonials />
+    <section id="alumni-2025" class="pb-[clamp(4rem,8vw,7rem)]">
+      <div class="container-x">
+        <div
+          class="mb-6 flex items-baseline justify-between gap-4 border-b border-[var(--color-border)] pb-4"
+        >
+          <h2 class="m-0 text-[1.1rem] font-medium tracking-[0.02em]">
+            Alumni 2025
+          </h2>
+          <span
+            class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]"
+          >
+            {alumni2025.length} participants
+          </span>
+        </div>
+        <ul
+          class="m-0 grid list-none gap-2 p-0"
+          style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"
+        >
+          {alumni2025.map((name) => (
+            <li
+              class="group flex items-center gap-[0.9rem] rounded-full border border-[var(--color-border)] bg-white/[0.025] px-4 py-3 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:bg-[rgba(154,0,109,0.1)]"
+            >
+              <span
+                aria-hidden="true"
+                class="grad-primary h-[7px] w-[7px] flex-shrink-0 rounded-full"
+              />
+              <span class="text-[0.9rem] font-normal text-white/90">
+                {name}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

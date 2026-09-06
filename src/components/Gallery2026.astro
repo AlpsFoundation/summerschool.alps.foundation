@@ -1,0 +1,459 @@
+---
+// The 2026 photo strip, directly under the hero (moved there 2026-09-06).
+// Photos and the survey quotes are interleaved into one self-scrolling,
+// infinitely-looping track; clicking a photo opens it full size.
+//
+// Keeps the id `recap-2026` deliberately: the nav entry and any inbound
+// link already point at it, and the pictures are what people mean by the
+// recap. The intro copy and pillar cards live on in Recap2026.astro; the
+// survey ratings moved up into the Hero.
+//
+// Which photos run here, and which session each belongs to, come from
+// src/data/gallery-2026.ts — Matthias's review in the ASS26 Photo Review
+// tool (216 reviewed, 141 excluded, 75 kept, then 2 duplicate pairs
+// collapsed -> 73). Do not add or remove photos by hand here.
+import {
+  photos as galleryPhotos,
+  photoSrc,
+  photoLarge,
+  photoAlt,
+  eventLabel,
+  eventSlot,
+} from '../data/gallery-2026';
+
+const photos = galleryPhotos.map((p) => ({
+  src: photoSrc(p),
+  large: photoLarge(p),
+  alt: photoAlt(p),
+  event: eventLabel(p),
+  slot: eventSlot(p),
+}));
+
+// Quote cards are a fixed size, but the quotes run from 18 to 186 characters.
+// One font size for all of them leaves the short ones marooned in white space
+// and pushes the long ones into the attribution line, so each card picks a
+// size from its own length. Steps, not a continuous fit: a handful of sizes
+// reads as typography, an arbitrary per-card value reads as a bug.
+// The vw term in each clamp is what keeps a long quote inside a small card:
+// the card itself is sized off vw/vh, so the text has to shrink with it or a
+// 186-character quote overruns the attribution on a phone. In practice the
+// clamp resolves to the minimum on mobile and the maximum from ~700px up.
+const quoteScale: { max: number; size: string; leading: string }[] = [
+  { max: 25, size: 'clamp(2.7rem, 9vw, 3.4rem)', leading: '1.05' },
+  { max: 45, size: 'clamp(2rem, 6.5vw, 2.5rem)', leading: '1.1' },
+  { max: 70, size: 'clamp(1.5rem, 4.8vw, 1.85rem)', leading: '1.15' },
+  { max: 100, size: 'clamp(1.2rem, 3.9vw, 1.5rem)', leading: '1.25' },
+  { max: 140, size: 'clamp(1rem, 3.2vw, 1.25rem)', leading: '1.35' },
+  { max: 200, size: 'clamp(0.9rem, 2.9vw, 1.1rem)', leading: '1.4' },
+];
+const quoteStyle = (text: string) => {
+  const step =
+    quoteScale.find((s) => text.length <= s.max) ??
+    { size: 'clamp(0.82rem, 2.6vw, 1rem)', leading: '1.45' };
+  return `font-size:${step.size};line-height:${step.leading};overflow-wrap:break-word`;
+};
+
+const quotes = [
+  'A place to feel kindly accepted while mentally stimulated.',
+  'Top edge academic value combined with practical insight and networking.',
+  'Finding oneself through community.',
+  'Community, visionary, scientific, integrative, humanitarian.',
+  'Exploring the field of psychedelics from diverse, carefully curated perspectives through high-quality content and speakers, in a highly organized, professional and welcoming environment.',
+  'The ALPS Summer School is an immersive learning experience, where you get to be part of a movement that is striving to change the world in a better, more humane way.',
+  'Food for the soul.',
+  'It was so precious to witness the progressive relaxing, letting go and healing of the students during the week.',
+  'Thank you for such an intensive, inspiring, communal, heart-warming and motivating week.',
+  'Thank you so much for making me feel visible again.',
+  'It’s hard to see any room for improvement after such an amazing week.',
+  'The most special moment? All of us, together, in this container.',
+  'The dedication of the team to track wishes and possible problems during the week, and their motivation to immediately take action.',
+  'We are ants, and this was an ant-ropological study.',
+];
+
+// Interleave: one quote after every third photo.
+type Slide =
+  | {
+      type: 'photo';
+      src: string;
+      large: string;
+      alt: string;
+      event: string | null;
+      slot: string | null;
+    }
+  | { type: 'quote'; text: string };
+const slides: Slide[] = [];
+let q = 0;
+photos.forEach((p, i) => {
+  slides.push({ type: 'photo', ...p });
+  if ((i + 1) % 3 === 0 && q < quotes.length) {
+    slides.push({ type: 'quote', text: quotes[q++] });
+  }
+});
+while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
+---
+
+<section id="recap-2026" class="pt-[clamp(1.5rem,3vw,2.5rem)] pb-[clamp(2rem,4vw,3rem)]">
+  <div class="container-x">
+    <div
+      class="mb-[clamp(1.5rem,3vw,2.5rem)] flex flex-wrap items-end justify-between gap-4"
+    >
+      <div class="flex max-w-[680px] flex-col gap-3">
+        <span class="eyebrow self-start">Moments &amp; voices from 2026</span>
+        <h2 class="text-[clamp(1.5rem,3vw,2.25rem)]">
+          A glimpse of this year&rsquo;s week, in pictures and words.
+        </h2>
+        <p class="m-0 text-[0.92rem] text-[var(--color-fg-subtle)]">
+          Photos from the week and quotes from our anonymous participant
+          feedback survey. It scrolls by itself &mdash; drag or swipe to
+          explore at your own pace. Tap any photo to see it full size, or its caption to jump
+          to that session in the programme. Looking for last year?
+          <a href="/recap-2025" class="underline decoration-white/30 underline-offset-2 hover:text-white">Relive 2025 here</a>.
+        </p>
+      </div>
+
+      <div class="hidden items-center gap-2 md:flex">
+        <button
+          type="button"
+          data-gallery-prev
+          aria-label="Previous"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button
+          type="button"
+          data-gallery-next
+          aria-label="Next"
+          class="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border-strong)] bg-white/[0.03] text-white transition-colors hover:bg-[rgba(154,0,109,0.18)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    data-gallery-track
+    class="mt-[clamp(1.5rem,3vw,2.5rem)] flex gap-3 overflow-x-auto px-[max(1rem,calc((100%-1200px)/2+1rem))] pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    style="-webkit-overflow-scrolling: touch;"
+  >
+    {
+      slides.map((s) =>
+        s.type === 'photo' ? (
+          <figure
+            class="gallery-photo group relative m-0 h-[clamp(280px,36vh,380px)] shrink-0 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elev)]"
+            data-photo
+            data-large={s.large}
+            data-event={s.event ?? ''}
+            data-slot={s.slot ?? ''}
+            role="button"
+            tabindex="0"
+            aria-label={`View this photo full size: ${s.alt}`}
+          >
+            <img
+              src={s.src}
+              height="480"
+              alt={s.alt}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-auto max-w-none object-cover"
+            />
+            {
+              s.event && (
+                <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/45 to-transparent px-3 pb-2 pt-8">
+                  {s.slot ? (
+                    <a
+                      href={`#${s.slot}`}
+                      class="slot-jump pointer-events-auto inline-flex max-w-full items-center gap-1.5 text-[0.7rem] leading-tight text-white/85 transition-colors hover:text-white"
+                    >
+                      <span class="truncate">{s.event}</span>
+                      <span aria-hidden="true" class="text-[var(--color-accent)]">&rsaquo;</span>
+                    </a>
+                  ) : (
+                    <span class="block truncate text-[0.7rem] leading-tight text-white/70">
+                      {s.event}
+                    </span>
+                  )}
+                </figcaption>
+              )
+            }
+          </figure>
+        ) : (
+          <figure class="card m-0 flex h-[clamp(280px,36vh,380px)] w-[clamp(250px,64vw,320px)] shrink-0 flex-col gap-3 overflow-hidden">
+            <blockquote class="m-0 flex min-h-0 flex-1 flex-col justify-center overflow-hidden">
+              <span aria-hidden="true" class="grad-text mb-1 block text-[1.8rem] font-semibold leading-none">
+                &ldquo;
+              </span>
+              <p class="m-0 text-balance text-white/90" style={quoteStyle(s.text)}>
+                {s.text}
+              </p>
+            </blockquote>
+            <figcaption class="flex shrink-0 items-center gap-[0.6rem] text-[0.68rem] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+              <span aria-hidden="true" class="grad-primary h-[6px] w-[6px] flex-shrink-0 rounded-full" />
+              2026 participant
+            </figcaption>
+          </figure>
+        )
+      )
+    }
+  </div>
+
+  <div class="container-x mt-4">
+    <p
+      class="swipe-hint m-0 flex items-center justify-center gap-2 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)] md:hidden"
+      aria-hidden="true"
+    >
+      <svg class="swipe-hint__l" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Swipe to explore
+      <svg class="swipe-hint__r" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </p>
+  </div>
+
+  {/* Full-size viewer for a clicked photo. One instance, filled in from the
+      clicked figure's data attributes — the track is cloned twice for the
+      infinite loop, so per-slide markup would triple. */}
+  <div
+    data-lightbox
+    hidden
+    class="fixed inset-0 z-[80] grid place-items-center bg-black/88 p-4 backdrop-blur-sm sm:p-8"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo from the ALPS Summer School 2026"
+  >
+    <button
+      type="button"
+      data-lightbox-close
+      class="absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border-strong)] bg-black/50 text-white transition-colors hover:bg-[rgba(154,0,109,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:right-6 sm:top-6"
+      aria-label="Close photo"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+
+    <figure class="pointer-events-none m-0 flex max-h-full flex-col items-center gap-3">
+      <img
+        data-lightbox-img
+        src=""
+        alt=""
+        decoding="async"
+        class="pointer-events-auto max-h-[76vh] w-auto max-w-full rounded-[var(--radius-lg)] border border-[var(--color-border)] object-contain shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
+      />
+      <figcaption
+        data-lightbox-cap
+        class="pointer-events-auto min-h-[1.2rem] text-center text-[0.8rem] text-white/75"
+      />
+    </figure>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector<HTMLElement>('[data-gallery-track]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-gallery-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-gallery-next]');
+
+  if (track) {
+    // Seamless loop: originals as the middle copy, one identical copy each side.
+    const originals = Array.from(track.children);
+    const N = originals.length;
+    for (let c = 0; c < 2; c++) {
+      originals.forEach((node) => {
+        const clone = node.cloneNode(true) as HTMLElement;
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('img').forEach((img) => img.setAttribute('loading', 'lazy'));
+        // A clone is decoration: it must not be reachable by keyboard, or the
+        // same 73 photos would appear three times in the tab order. Mouse
+        // clicks still work — opening is delegated on the track, and a link
+        // with tabindex="-1" is still clickable.
+        clone.removeAttribute('role');
+        clone.removeAttribute('tabindex');
+        clone.removeAttribute('aria-label');
+        clone.querySelectorAll('a').forEach((a) => a.setAttribute('tabindex', '-1'));
+        track.appendChild(clone);
+      });
+    }
+
+    let setWidth = 0;
+    const measure = () => {
+      const a = track.children[0] as HTMLElement;
+      const b = track.children[N] as HTMLElement;
+      setWidth = b.offsetLeft - a.offsetLeft;
+    };
+    const recenter = () => {
+      if (setWidth > 0) track.scrollLeft = setWidth;
+    };
+    measure();
+    recenter();
+    window.addEventListener('load', () => {
+      const x = track.scrollLeft;
+      measure();
+      if (Math.abs(x - setWidth) < 4) recenter();
+    });
+
+    let raf = 0;
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (raf || setWidth <= 0) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const x = track.scrollLeft;
+          if (x < setWidth * 0.5) track.scrollLeft = x + setWidth;
+          else if (x > setWidth * 1.5) track.scrollLeft = x - setWidth;
+        });
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', () => measure());
+
+    const step = () => Math.round(track.clientWidth * 0.8);
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+    // Drag-to-scroll for pointer devices.
+    let down = false, startX = 0, startScroll = 0, moved = false;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return;
+      down = true; moved = false;
+      startX = e.clientX; startScroll = track.scrollLeft;
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startScroll - dx;
+    });
+    const end = () => { down = false; };
+    track.addEventListener('pointerup', end);
+    track.addEventListener('pointerleave', end);
+    track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+    track.querySelectorAll('img').forEach((img) =>
+      img.addEventListener('dragstart', (e) => e.preventDefault())
+    );
+
+    // Full-size viewer. Delegated on the track so the two clone copies work
+    // without their own listeners.
+    const lb = document.querySelector<HTMLElement>('[data-lightbox]');
+    const lbImg = lb?.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const lbCap = lb?.querySelector<HTMLElement>('[data-lightbox-cap]');
+    const lbClose = lb?.querySelector<HTMLButtonElement>('[data-lightbox-close]');
+    let lastFocus: HTMLElement | null = null;
+
+    const openPhoto = (fig: HTMLElement) => {
+      if (!lb || !lbImg || !lbCap) return;
+      const large = fig.dataset.large ?? '';
+      const img = fig.querySelector('img');
+      if (!large) return;
+      lbImg.src = large;
+      lbImg.alt = img?.alt ?? '';
+      const event = fig.dataset.event ?? '';
+      const slot = fig.dataset.slot ?? '';
+      lbCap.textContent = '';
+      if (event && slot) {
+        const a = document.createElement('a');
+        a.href = `#${slot}`;
+        a.className = 'underline decoration-white/30 underline-offset-2 hover:text-white';
+        a.textContent = `${event} — see it in the programme`;
+        // Jumping to the programme means leaving the photo behind.
+        a.addEventListener('click', () => closePhoto());
+        lbCap.appendChild(a);
+      } else if (event) {
+        lbCap.textContent = event;
+      }
+      lastFocus = document.activeElement as HTMLElement | null;
+      lb.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      lbClose?.focus();
+    };
+
+    const closePhoto = () => {
+      if (!lb || lb.hidden) return;
+      lb.hidden = true;
+      document.documentElement.style.overflow = '';
+      if (lbImg) lbImg.src = '';
+      lastFocus?.focus();
+    };
+
+    track.addEventListener('click', (e) => {
+      // A drag that ends on a photo is a drag, not a click on it.
+      if (moved) return;
+      const target = e.target as HTMLElement;
+      // The caption link is its own action — let it navigate.
+      if (target.closest('a')) return;
+      const fig = target.closest<HTMLElement>('[data-photo]');
+      if (fig) openPhoto(fig);
+    });
+    track.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const fig = (e.target as HTMLElement).closest<HTMLElement>('[data-photo]');
+      if (!fig) return;
+      e.preventDefault();
+      openPhoto(fig);
+    });
+    lbClose?.addEventListener('click', closePhoto);
+    lb?.addEventListener('click', (e) => {
+      // Click the backdrop, not the photo itself.
+      if (e.target === lb) closePhoto();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePhoto();
+    });
+
+    // Autoplay: slow, continuous, and deliberately NOT paused by hovering —
+    // it stops only while you are dragging the strip, while a photo is open,
+    // and when the tab is hidden. Respects prefers-reduced-motion.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced) {
+      let dragging = false;
+      const holdOn = () => { dragging = true; };
+      const holdOff = () => { dragging = false; };
+      track.addEventListener('pointerdown', holdOn);
+      window.addEventListener('pointerup', holdOff);
+      window.addEventListener('pointercancel', holdOff);
+      track.addEventListener('touchstart', holdOn, { passive: true });
+      window.addEventListener('touchend', holdOff);
+      let carry = 0;
+      const tick = () => {
+        const open = lb ? !lb.hidden : false;
+        if (!dragging && !open && !document.hidden && setWidth > 0) {
+          carry += 0.6;
+          const px = Math.floor(carry);
+          if (px > 0) { track.scrollLeft += px; carry -= px; }
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  }
+</script>
+
+<style>
+  [data-gallery-track] { cursor: grab; }
+  [data-gallery-track]:active { cursor: grabbing; }
+  /* A photo is clickable, so say so — but a drag still reads as a drag. */
+  [data-gallery-track] [data-photo] { cursor: zoom-in; }
+  [data-gallery-track]:active [data-photo] { cursor: grabbing; }
+  [data-gallery-track] [data-photo]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  [data-lightbox] { animation: lb-in 160ms ease-out; }
+  @keyframes lb-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-lightbox] { animation: none; }
+  }
+  .swipe-hint__l { animation: swipe-hint-l 1.8s ease-in-out infinite; }
+  .swipe-hint__r { animation: swipe-hint-r 1.8s ease-in-out infinite; }
+  @keyframes swipe-hint-l {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50% { transform: translateX(-3px); opacity: 1; }
+  }
+  @keyframes swipe-hint-r {
+    0%, 100% { transform: translateX(0); opacity: 0.55; }
+    50% { transform: translateX(3px); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .swipe-hint__l, .swipe-hint__r { animation: none; }
+  }
+</style>

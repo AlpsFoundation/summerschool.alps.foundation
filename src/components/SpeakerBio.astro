@@ -1,0 +1,85 @@
+---
+// One speaker's photo + bio, rendered inline inside a programme session row.
+// Extracted from the former standalone Speakers section (merged into the
+// programme 2026-08-30) so a bio can appear under every session it belongs to.
+type Speaker = {
+  id: string;
+  name: string;
+  title?: string;
+  affiliations?: string[];
+  scholar?: string;
+  image: string;
+  bio: string[];
+};
+
+interface Props {
+  speaker: Speaker;
+  affiliationUrl: Record<string, string>;
+}
+
+const { speaker, affiliationUrl } = Astro.props;
+const affCls =
+  'inline-flex items-center rounded-full border border-[var(--color-border-strong)] px-[0.55rem] py-[0.2rem] text-[0.68rem] uppercase tracking-[0.14em] text-[var(--color-fg-muted)]';
+---
+
+<article id={speaker.id} class="card scroll-mt-24 overflow-hidden !p-0">
+  <div class="grid gap-0 sm:grid-cols-[minmax(150px,26%)_1fr]">
+    <img
+      src={speaker.image}
+      alt={speaker.name}
+      class="aspect-[4/5] h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="flex flex-col gap-3 p-4 sm:p-5">
+      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
+        <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+          <h4 class="m-0 text-[1.15rem] font-medium text-white">{speaker.name}</h4>
+          {speaker.title && (
+            <span class="text-[0.9rem] text-[var(--color-fg-subtle)]">{speaker.title}</span>
+          )}
+          {speaker.scholar && (
+            <a
+              href={speaker.scholar}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${speaker.name} on Google Scholar`}
+              title="Google Scholar"
+              class="inline-flex translate-y-[2px] items-center text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-accent)]"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-[1rem] w-[1rem]" aria-hidden="true">
+                <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+              </svg>
+            </a>
+          )}
+        </div>
+        {speaker.affiliations && speaker.affiliations.length > 0 && (
+          <div class="flex flex-wrap gap-2 md:flex-shrink-0 md:justify-end">
+            {speaker.affiliations.map((aff) => {
+              const href = affiliationUrl[aff];
+              return href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`${affCls} no-underline transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]`}
+                >
+                  {aff}
+                </a>
+              ) : (
+                <span class={affCls}>{aff}</span>
+              );
+            })}
+          </div>
+        )}
+      </div>
+      <div class="flex flex-col gap-2.5">
+        {speaker.bio.map((paragraph) => (
+          <p
+            class="speaker-bio m-0 text-[0.9rem] leading-[1.6] text-[var(--color-fg-muted)]"
+            set:html={paragraph}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</article>

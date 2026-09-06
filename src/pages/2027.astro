@@ -1,0 +1,57 @@
+---
+// The 2027 interest page. Moved off the front page 2026-09-06: the home page
+// is a record of the week that happened, and 2027 is a separate ask reached
+// from the nav button.
+//
+// Interest2027.astro carries the form and posts to /api/interest -> D1
+// "ass27-interest". Nothing about that endpoint changed with the move.
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Interest2027 from '../components/Interest2027.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Summer School 2027 — ALPS"
+  description="Join the interest list for the third ALPS Summer School, provisionally 8–13 August 2027 at Le Camp, Vaumarcus. You will hear when applications open, before we announce publicly."
+>
+  <Nav />
+  <main>
+    <section class="container-x pt-[clamp(2.5rem,6vw,4.5rem)]">
+      <div class="flex max-w-[760px] flex-col gap-4">
+        <span class="eyebrow self-start !text-[#ffb066]">Summer School 2027</span>
+        <h1 class="m-0 text-[clamp(2rem,5vw,3.25rem)] font-medium leading-[1.1] tracking-[-0.02em]">
+          Be first to know when
+          <span class="grad-text-2027">applications open</span>.
+        </h1>
+        <p class="m-0 text-[clamp(1.05rem,1.6vw,1.25rem)] text-white/85">
+          The third edition is provisionally <strong>8&ndash;13 August 2027</strong>
+          at Le Camp, Vaumarcus. Leave your name and we will write to you before
+          we announce anything publicly &mdash; no newsletter, no forwarding your
+          details on.
+        </p>
+        <p class="m-0 text-[0.82rem] text-[var(--color-fg-subtle)]">
+          * Dates are provisional until the venue contract is signed.
+        </p>
+      </div>
+    </section>
+
+    <Interest2027 />
+
+    <section class="container-x pb-[clamp(4rem,8vw,7rem)]">
+      <p class="m-0 max-w-[760px] text-[0.9rem] text-[var(--color-fg-subtle)]">
+        The 2026 week &mdash; its programme, its photos and what the cohort
+        said about it &mdash; is on the
+        <a
+          href="/"
+          class="underline decoration-white/30 underline-offset-2 hover:text-white"
+        >home page</a>. Questions in the meantime? Write to
+        <a
+          href="mailto:summerschool@alps.foundation"
+          class="underline decoration-white/30 underline-offset-2 hover:text-white"
+        >summerschool@alps.foundation</a>.
+      </p>
+    </section>
+  </main>
+  <Footer />
+</Layout>

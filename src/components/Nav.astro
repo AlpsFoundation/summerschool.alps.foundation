@@ -1,11 +1,15 @@
 ---
+// Rebuilt 2026-08-30 for the merged sections: speakers now live inside the
+// programme, the manifesto inside Philosophy & practical details.
+// 2026-09-06: the 2027 entry left this array — it is a page now, not a
+// section, and it is reached from the button on the right. `recap-2026` still
+// resolves: the id moved with the photo strip when it went under the hero.
 const links = [
-  { id: 'about', label: 'About' },
-  { id: 'program', label: 'Program' },
-  { id: 'speakers', label: 'Speakers' },
+  { id: 'recap-2026', label: '2026 recap' },
+  { id: 'program', label: 'Programme' },
   { id: 'venue', label: 'Venue' },
-  { id: 'people', label: 'People' },
-  { id: 'manifesto', label: 'Manifesto' },
+  { id: 'people', label: 'Team' },
+  { id: 'info', label: 'Practical' },
 ];
 
 const isParticipantsPage =
@@ -70,11 +74,15 @@ const isParticipantsPage =
             Helper
           </a>
         ) : (
+          /* Was "Participant space" until 2026-09-06. The one button in the
+             header now points at the only thing we want from a visitor, and
+             the participant-space link lives in Practical, where returning
+             participants look for it. Blue/orange, like everything 2027. */
           <a
-            href="/participants"
-            class="btn btn--registration text-[0.88rem] !px-4 !py-[0.55rem]"
+            href="/2027"
+            class="btn btn--2027 text-[0.88rem] !px-4 !py-[0.55rem]"
           >
-            Participant space
+            Join 2027 list
           </a>
         )
       }

@@ -1,0 +1,11 @@
+# Cloudflare Pages configuration — read by Pages at build time.
+# Binds the ASS27 interest-list D1 database to the runtime env as ASS27_DB
+# (used by src/pages/api/interest.ts).
+name = "summerschool-alps-foundation"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-08-01"
+
+[[d1_databases]]
+binding = "ASS27_DB"
+database_name = "ass27-interest"
+database_id = "ee2e3695-4bbc-4f89-95f8-abb35f691555"

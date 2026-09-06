@@ -15,6 +15,17 @@
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+	// The ASS27 interest list. This site deploys as a WORKER, so wrangler reads
+	// this file — the same block in wrangler.toml is Pages config and is never
+	// applied. Without this, src/pages/api/interest.ts finds no ASS27_DB and
+	// every sign-up gets the 503 "email us instead" fallback.
+	"d1_databases": [
+		{
+			"binding": "ASS27_DB",
+			"database_name": "ass27-interest",
+			"database_id": "ee2e3695-4bbc-4f89-95f8-abb35f691555"
+		}
+	],
 	"observability": {
 		"enabled": true
 	}
