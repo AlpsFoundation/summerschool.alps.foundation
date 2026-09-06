@@ -8,6 +8,7 @@
 // 73, not 75: a dHash sweep over the kept set found two pairs shot seconds
 // apart and effectively identical, so p004 (kept p029, Regis's art workshop)
 // and p070 (kept p071, the farewell hug) were dropped on Matthias's call.
+// p167 (an interview still) was pulled on request 2026-09-06 -> 72.
 // Re-run that sweep after any future review — the review tool shows photos
 // grouped by theme, which is exactly where near-duplicates hide.
 //
@@ -124,7 +125,6 @@ export const photos: Photo[] = [
   { n: '166', tag: 'testimonial-older-man-portrait', event: null },
   { n: '180', tag: 'speaker-alps-banner-gesture', event: 'd6-day' },
   { n: '071', tag: 'farewell-hug-group', event: 'd7-departure' },
-  { n: '167', tag: 'testimonial-blonde-man-portrait', event: null },
   { n: '189', tag: 'workshop-wide-red-lighting', event: 'd6-aicher' },
   { n: '126', tag: 'evening-fairy-lights-gathering', event: 'd5-storytelling' },
   { n: '169', tag: 'testimonial-woman-portrait', event: null },
