@@ -9,22 +9,6 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Interest2027 from '../components/Interest2027.astro';
 import Footer from '../components/Footer.astro';
-
-// What someone who lands here from a shared link needs before deciding.
-const expect = [
-  {
-    title: 'Six days, residential',
-    body: 'You arrive on the Sunday and leave the Saturday. Everyone stays on site at Le Camp, above Lake Neuchâtel — lectures, workshops, meals and evenings all in one place.',
-  },
-  {
-    title: 'Researchers, not a lecture series',
-    body: 'Three morning talks a day from people doing the work, an afternoon workshop, and enough unstructured time that the conversations continue over dinner.',
-  },
-  {
-    title: 'A cohort of 25–30',
-    body: 'Small on purpose. Students, clinicians and researchers at different stages, and by the Wednesday it stops feeling like a conference.',
-  },
-];
 ---
 
 <Layout
@@ -55,25 +39,7 @@ const expect = [
     <Interest2027 />
 
     <section class="container-x pb-[clamp(4rem,8vw,7rem)]">
-      <div class="mb-[clamp(1.5rem,3vw,2.5rem)] flex max-w-[760px] flex-col gap-3">
-        <span class="eyebrow self-start">What to expect</span>
-        <h2 class="m-0 text-[clamp(1.4rem,2.8vw,2rem)]">
-          What the week is actually like.
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {
-          expect.map((e) => (
-            <article class="card flex flex-col gap-3">
-              <h3 class="m-0 text-[1.05rem] font-medium text-white">{e.title}</h3>
-              <p class="m-0 text-[0.92rem] text-[var(--color-fg-muted)]">{e.body}</p>
-            </article>
-          ))
-        }
-      </div>
-
-      <p class="mt-[clamp(1.5rem,3vw,2.5rem)] text-[0.9rem] text-[var(--color-fg-subtle)]">
+      <p class="m-0 max-w-[760px] text-[0.9rem] text-[var(--color-fg-subtle)]">
         The 2026 week &mdash; its programme, its photos and what the cohort
         said about it &mdash; is on the
         <a
