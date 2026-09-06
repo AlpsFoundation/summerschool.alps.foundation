@@ -103,7 +103,9 @@ export const photos: Photo[] = [
   { n: '102', tag: 'breathwork-cuddle-puddle', event: null },
   { n: '042', tag: 'dj-party-night', event: 'd6-afterparty' },
   { n: '204', tag: 'food-spread-closeup', event: 'g-meals' },
-  { n: '027', tag: 'guitar-night-lights', event: 'd6-afterparty' },
+  // Retagged 2026-09-06: Matthias corrected this one — it is the open mic,
+  // not the afterparty.
+  { n: '027', tag: 'guitar-night-lights', event: 'd6-openmic' },
   { n: '124', tag: 'swimmer-lake-candid', event: 'g-lake' },
   { n: '096', tag: 'candid-conversation-window', event: null },
   { n: '148', tag: 'dining-hall-wide-audience', event: 'g-meals' },
