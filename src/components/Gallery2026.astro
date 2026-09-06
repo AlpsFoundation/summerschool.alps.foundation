@@ -1,16 +1,17 @@
 ---
-// 2026 recap: survey stats + a self-scrolling, infinitely-looping gallery
-// interleaving ASS 2026 photos with quotes from the anonymous post-event
-// feedback survey.
+// The 2026 photo strip, directly under the hero (moved there 2026-09-06).
+// Photos and the survey quotes are interleaved into one self-scrolling,
+// infinitely-looping track; clicking a photo opens it full size.
+//
+// Keeps the id `recap-2026` deliberately: the nav entry and any inbound
+// link already point at it, and the pictures are what people mean by the
+// recap. The intro copy and pillar cards live on in Recap2026.astro; the
+// survey ratings moved up into the Hero.
 //
 // Which photos run here, and which session each belongs to, come from
 // src/data/gallery-2026.ts — Matthias's review in the ASS26 Photo Review
-// tool (2026-09-03: 216 reviewed, 141 excluded, 75 kept, then 2 duplicate
-// pairs collapsed -> 73). Do not add or
-// remove photos by hand here; change the review and regenerate the data.
-// The strip never stops moving (Matthias, 2026-09-03) — it pauses only while
-// you are actually dragging it or have a photo open. Clicking a photo opens it
-// full-size in the middle of the screen.
+// tool (216 reviewed, 141 excluded, 75 kept, then 2 duplicate pairs
+// collapsed -> 73). Do not add or remove photos by hand here.
 import {
   photos as galleryPhotos,
   photoSrc,
@@ -69,41 +70,6 @@ const quotes = [
   'We are ants, and this was an ant-ropological study.',
 ];
 
-// Survey stat tiles. Source: anonymous ASS26 feedback form, 13 responses;
-// the first form version used 5-point answers — scaled x2 to the 10-point
-// scale before averaging. Recompute when new responses arrive.
-// "What is the Summer School?" was merged into this recap on 2026-08-30 —
-// the week itself now answers the question, illustrated with 2026 photos.
-const pillars = [
-  {
-    title: 'Expert-led lectures',
-    body: 'Renowned psychedelic researchers deliver daily talks and guide group discussions on current science.',
-    image: '/assets/gallery-2026/p084_lecture-hall-audience-wide.jpg',
-    alt: 'A lecture in the main hall at the ALPS Summer School 2026',
-  },
-  {
-    title: 'Hands-on workshops',
-    body: 'Experienced facilitators lead interactive workshops blending theory with practical skills and reflection.',
-    // Régis Paroz's art workshop with Fullblindness (slot-d4-5). The only
-    // photo in the reviewed set tagged to that session — the clay-session
-    // photo that sat here before was from an unfacilitated evening slot.
-    image: '/assets/gallery-2026/p029_blindfold-nature-exercise.jpg',
-    alt: 'A blindfolded participant exploring an ivy branch by touch during Régis Paroz’s art workshop with Fullblindness, 2026',
-  },
-  {
-    title: 'Community & nature',
-    body: 'Evenings and breaks unfold in forest, under the stars and overlooking Lake Neuchâtel — in a small cohort of 25–30.',
-    image: '/assets/gallery-2026/p119_pergola-group-lakeview.jpg',
-    alt: 'The 2026 cohort in the pergola, overlooking Lake Neuchâtel',
-  },
-];
-
-const stats = [
-  { value: '9.5 / 10', label: 'Average experience rating' },
-  { value: '9.7 / 10', label: 'Would recommend to a friend' },
-  { value: '100%', label: 'Rated the week 8 or higher' },
-];
-
 // Interleave: one quote after every third photo.
 type Slide =
   | {
@@ -126,49 +92,8 @@ photos.forEach((p, i) => {
 while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
 ---
 
-<section id="recap-2026" class="py-[clamp(3rem,6vw,5rem)]">
+<section id="recap-2026" class="pt-[clamp(1.5rem,3vw,2.5rem)] pb-[clamp(2rem,4vw,3rem)]">
   <div class="container-x">
-    <div class="mb-[clamp(2rem,4vw,3rem)] flex max-w-[820px] flex-col gap-4">
-      <span class="eyebrow self-start">What is the Summer School?</span>
-      <h2>
-        An immersive week of{' '}
-        <span class="grad-text">psychedelic science</span>, therapy
-        and personal growth.
-      </h2>
-      <p>
-        The ALPS Summer School is an educational program focused on
-        <strong> psychedelic science</strong> &mdash; offering a holistic
-        opportunity for both <strong>professional and personal development</strong>.
-        Renowned researchers deliver lectures and lead discussions; experienced
-        facilitators guide <strong>interactive workshops</strong>; engaging social
-        events complement the experience &mdash; all in close proximity to nature.
-      </p>
-      <p>
-        The second edition ran from 26 July to 1 August 2026 at Le Camp. Here is
-        what that week looked like, in the words and pictures of the people who
-        were there.
-      </p>
-    </div>
-
-    <div class="mb-[clamp(2.5rem,5vw,4rem)] grid grid-cols-1 gap-4 md:grid-cols-3">
-      {
-        pillars.map((c) => (
-          <article class="card flex flex-col overflow-hidden !p-0">
-            <img
-              src={c.image}
-              alt={c.alt}
-              loading="lazy"
-              class="aspect-[4/3] w-full shrink-0 object-cover"
-            />
-            <div class="flex flex-col gap-3 p-[clamp(1.25rem,2.5vw,2rem)]">
-              <h3>{c.title}</h3>
-              <p>{c.body}</p>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-
     <div
       class="mb-[clamp(1.5rem,3vw,2.5rem)] flex flex-wrap items-end justify-between gap-4"
     >
@@ -205,24 +130,6 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
         </button>
       </div>
     </div>
-
-    <dl class="mb-[clamp(1.5rem,3vw,2.5rem)] grid max-w-[720px] grid-cols-1 gap-px sm:grid-cols-3 gradient-border">
-      {
-        stats.map((s) => (
-          <div class="flex flex-col gap-1 bg-[#08030c] px-[1.2rem] py-[1.1rem]">
-            <dd class="m-0 order-1 text-[1.5rem] font-semibold tracking-[-0.02em] grad-text">
-              {s.value}
-            </dd>
-            <dt class="order-2 text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">
-              {s.label}
-            </dt>
-          </div>
-        ))
-      }
-    </dl>
-    <p class="mb-0 -mt-[clamp(1rem,2vw,1.8rem)] text-[0.72rem] text-[var(--color-fg-subtle)]">
-      Anonymous post-event survey, 13 responses. Five-point answers scaled to ten.
-    </p>
   </div>
 
   <div

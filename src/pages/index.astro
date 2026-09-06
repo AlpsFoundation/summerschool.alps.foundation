@@ -7,9 +7,9 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Interest2027 from '../components/Interest2027.astro';
-import Testimonials2026 from '../components/Testimonials2026.astro';
+import Gallery2026 from '../components/Gallery2026.astro';
 import Alumni2026 from '../components/Alumni2026.astro';
+import Recap2026 from '../components/Recap2026.astro';
 import Program from '../components/Program.astro';
 import Venue from '../components/Venue.astro';
 import People from '../components/People.astro';
@@ -21,9 +21,11 @@ import Footer from '../components/Footer.astro';
   <Nav />
   <main>
     <Hero />
-    <Interest2027 />
-    <Testimonials2026 />
+    {/* 2026-09-06: pictures first, then who was there, then the
+        explainer. 2027 is a page of its own, reached from the nav. */}
+    <Gallery2026 />
     <Alumni2026 />
+    <Recap2026 />
     <Program />
     <Venue />
     <People />

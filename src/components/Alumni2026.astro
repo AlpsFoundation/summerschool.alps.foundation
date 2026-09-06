@@ -1,11 +1,25 @@
 ---
-// The 2026 cohort, shown directly under the recap (moved out of People
-// 2026-08-30). Names appear ONLY with the person's explicit written consent —
-// email replies collected via summerschool@, tracked in the ALPS Assistant
-// project doc "ass26-post-event-website-grill-ledger-2026-08-27".
-// "First name only" entries are listed by first name, at the person's request.
-// Opt-in by design: a participant who has not replied is not listed.
-const alumni2026 = [
+// The 2026 cohort, directly under the photo strip.
+//
+// TWENTY-ONE slots, one per participant, so the real size of the week is
+// visible. What each slot shows depends only on what that person agreed to
+// (Matthias, 2026-09-06 — "publish the ones who replied the way they desired,
+// and the others we keep foggy"):
+//
+//   * the 10 who replied to the 2026-08-27 email appear exactly as they asked
+//     — full name, or first name only where that was the request;
+//   * the other 11 never replied, and that email promised "no reply means no
+//     listing", so their slots carry nothing at all. They are rendered fogged:
+//     a blurred placeholder that is not derived from anyone's name.
+//
+// The fog is decorative, not redacted text — there is no name in the DOM to
+// recover. Do not "improve" this by blurring real names with CSS: a filter is
+// a paint effect, the text would still sit in the markup for anyone who reads
+// the source, and initials in a cohort of 21 are often resolvable to a person.
+//
+// Consent record: ALPS Assistant project doc
+// "ass26-post-event-website-grill-ledger-2026-08-27".
+const consented = [
   'Anne Ala-Pöntiö',
   'Claire Prudent',
   'Elie',
@@ -17,6 +31,13 @@ const alumni2026 = [
   'Sofía López',
   'Swapnamoy Roy',
 ];
+
+const COHORT = 21;
+const withheld = COHORT - consented.length;
+
+// Varied widths so the fogged slots read as different people rather than a
+// repeated tile. Deterministic, and deliberately not tied to any real name.
+const fogWidths = ['58%', '72%', '46%', '65%', '80%', '52%', '69%', '43%', '75%', '61%', '55%'];
 ---
 
 <section id="alumni-2026" class="pb-[clamp(2rem,4vw,3rem)]">
@@ -31,7 +52,7 @@ const alumni2026 = [
         </h2>
       </div>
       <span class="text-[0.8rem] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]">
-        {alumni2026.length} listed
+        {COHORT} participants &middot; {consented.length} named
       </span>
     </div>
 
@@ -40,7 +61,7 @@ const alumni2026 = [
       style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));"
     >
       {
-        alumni2026.map((name) => (
+        consented.map((name) => (
           <li class="flex items-center gap-[0.9rem] rounded-full border border-[var(--color-border)] bg-white/[0.025] px-4 py-3 transition-all duration-200 hover:border-[var(--color-border-strong)] hover:bg-[rgba(154,0,109,0.1)]">
             <span
               aria-hidden="true"
@@ -50,12 +71,24 @@ const alumni2026 = [
           </li>
         ))
       }
+      {
+        Array.from({ length: withheld }).map((_, i) => (
+          <li class="flex items-center gap-[0.9rem] rounded-full border border-dashed border-[var(--color-border)] bg-white/[0.012] px-4 py-3">
+            <span
+              aria-hidden="true"
+              class="h-[7px] w-[7px] flex-shrink-0 rounded-full bg-white/20"
+            />
+            <span class="fog" aria-hidden="true" style={`width:${fogWidths[i % fogWidths.length]}`} />
+            <span class="sr-only">Participant who has not asked to be named</span>
+          </li>
+        ))
+      }
     </ul>
 
     <p class="mt-4 text-[0.8rem] text-[var(--color-fg-subtle)]">
-      Every name is listed with that person&rsquo;s permission, and more appear
-      as replies come in. Were you there in 2026 and would like to be added, or
-      taken off? Write to
+      Twenty-one people shared the week. A name appears here only where that
+      person has asked for it &mdash; the rest stay deliberately unreadable.
+      Were you there in 2026 and would like to be named, or taken off? Write to
       <a
         href="mailto:summerschool@alps.foundation"
         class="underline decoration-white/30 underline-offset-2 hover:text-white"
@@ -67,3 +100,22 @@ const alumni2026 = [
     </p>
   </div>
 </section>
+
+<style>
+  /* A blurred smear standing in for a name nobody has agreed to publish.
+     Pure paint: a soft gradient bar, blurred — there is no text underneath,
+     so there is nothing to read out of the markup or un-blur. */
+  #alumni-2026 .fog {
+    display: block;
+    height: 0.62rem;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.14) 38%,
+      rgba(255, 79, 181, 0.26) 62%,
+      rgba(255, 255, 255, 0.22) 100%
+    );
+    filter: blur(3.5px);
+  }
+</style>

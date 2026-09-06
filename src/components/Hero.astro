@@ -1,9 +1,16 @@
 ---
-const facts = [
-  { label: 'Edition', value: '2nd · 2026' },
-  { label: 'Dates', value: '26 Jul – 01 Aug 2026' },
-  { label: 'Location', value: 'Vaumarcus, Switzerland' },
-  { label: 'Next edition', value: '8 – 13 Aug 2027*', accent2027: true },
+// What the 2026 cohort said, in place of the edition/dates/location row
+// (Matthias, 2026-09-06). The week is over, so how it landed is the more
+// useful opening fact; the dates and the venue are still stated in the
+// paragraph above and in the Venue section.
+//
+// Source: the anonymous post-event feedback form, 13 responses. The first
+// version of the form used a five-point scale, so those answers are doubled
+// onto the ten-point scale before averaging. Recompute if replies come in.
+const ratings = [
+  { value: '9.5 / 10', label: 'Average experience rating' },
+  { value: '9.7 / 10', label: 'Would recommend to a friend' },
+  { value: '100%', label: 'Rated the week 8 or higher' },
 ];
 ---
 
@@ -52,25 +59,31 @@ const facts = [
       what it was.
     </p>
 
-    {/* CTA buttons removed 2026-08-30: the hero states the facts, the 2027
-        card below carries the sign-up, and the participant-space link now
-        lives in Philosophy & practical details. */}
+    {/* CTA buttons removed 2026-08-30: the participant-space link lives in
+        Philosophy & practical details, and 2027 is now its own page reached
+        from the nav rather than a card on this one. */}
 
-    <dl class="gradient-border grid max-w-[720px] grid-cols-2 gap-px sm:grid-cols-4">
+    {/* Value above label: the number is what the eye should land on, so it
+        comes first visually and `order` puts the <dt> back underneath without
+        breaking the definition-list semantics. */}
+    <dl class="gradient-border grid max-w-[720px] grid-cols-1 gap-px sm:grid-cols-3">
       {
-        facts.map((f) => (
+        ratings.map((r) => (
           <div class="flex flex-col gap-1 bg-[#08030c] px-[1.2rem] py-[1.1rem]">
-            <dt
-              class="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
-            >
-              {f.label}
-            </dt>
-            <dd class={`m-0 text-[0.98rem] font-medium ${(f as any).accent2027 ? 'grad-text-2027' : 'text-white'}`}>
-              {f.value}
+            <dd class="grad-text order-1 m-0 text-[1.5rem] font-semibold tracking-[-0.02em]">
+              {r.value}
             </dd>
+            <dt
+              class="order-2 text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+            >
+              {r.label}
+            </dt>
           </div>
         ))
       }
     </dl>
+    <p class="m-0 mt-3 text-[0.72rem] text-[var(--color-fg-subtle)]">
+      Anonymous post-event survey, 13 responses. Five-point answers scaled to ten.
+    </p>
   </div>
 </section>
