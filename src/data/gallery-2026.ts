@@ -73,7 +73,12 @@ export type Photo = {
   event: string | null;
 };
 
-/** Curated carousel order: categories interleaved so the strip stays varied. */
+/**
+ * Curated carousel order: categories interleaved so the strip stays varied.
+ * One deliberate exception — p029 (the blindfolded art workshop) sits at 63
+ * of 72, inside the last quarter, at Matthias's request 2026-09-06. Keep it
+ * there if this list is regenerated.
+ */
 export const photos: Photo[] = [
   { n: '063', tag: 'lecture-audience-mats', event: 'd5-havenith' },
   { n: '034', tag: 'evening-sharing-circle', event: 'd6-openmic' },
@@ -90,7 +95,6 @@ export const photos: Photo[] = [
   { n: '089', tag: 'candid-two-women-talking', event: null },
   { n: '084', tag: 'lecture-hall-audience-wide', event: 'd5-havenith' },
   { n: '065', tag: 'lakeside-circle-nightfall', event: 'd5-storytelling' },
-  { n: '029', tag: 'blindfold-nature-exercise', event: 'd4-art-ws' },
   { n: '106', tag: 'catering-food-trays', event: 'g-meals' },
   { n: '023', tag: 'moonrise-facilitator-talk', event: 'g-moonrise' },
   { n: '123', tag: 'lake-swim-platform', event: 'g-lake' },
@@ -138,6 +142,7 @@ export const photos: Photo[] = [
   { n: '184', tag: 'hand-gesture-detail', event: null },
   { n: '134', tag: 'candlelit-close-moment', event: 'd5-storytelling' },
   { n: '224', tag: 'candid-portrait-woman-outdoor', event: null },
+  { n: '029', tag: 'blindfold-nature-exercise', event: 'd4-art-ws' },
   { n: '135', tag: 'purple-lighting-atmosphere', event: 'd5-storytelling' },
   { n: '225', tag: 'candid-man-cap-portrait', event: null },
   { n: '136', tag: 'moonrise-over-lake', event: 'g-moonrise' },
