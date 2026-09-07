@@ -33,25 +33,56 @@ const socials = [
 
   <div class="container-x relative z-10 pt-[clamp(2.5rem,5vw,4rem)] pb-8">
     <div class="mb-12 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-      <div class="flex items-center gap-4">
+      {/* 2026-09-07: the whole identity block — logo, name and subtitle — is
+          one link to the Foundation site, so a visitor who recognises the mark
+          can get there from it. The underline on hover is what tells them it
+          is a link at all. */}
+      <a
+        href="https://alps.foundation"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-4 text-white hover:text-white"
+        aria-label="ALPS Foundation — Awareness Lectures on Psychedelics in Switzerland (opens alps.foundation)"
+      >
         <div
-          class="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white/[0.04] p-1"
+          class="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white/[0.04] p-1 transition-colors duration-200 group-hover:border-[rgba(255,255,255,0.28)]"
         >
           <img src="/assets/logo.png" alt="" width="44" height="44" />
         </div>
         <div>
-          <p class="m-0 text-[1.05rem] font-semibold text-white">
+          <p
+            class="m-0 text-[1.05rem] font-semibold text-white underline decoration-transparent decoration-1 underline-offset-[0.25em] transition-colors duration-200 group-hover:decoration-[rgba(255,255,255,0.5)]"
+          >
             ALPS Foundation
           </p>
-          <p class="m-0 text-[0.88rem] text-[var(--color-fg-subtle)]">
+          <p
+            class="m-0 text-[0.88rem] text-[var(--color-fg-subtle)] underline decoration-transparent decoration-1 underline-offset-[0.25em] transition-colors duration-200 group-hover:decoration-[rgba(255,255,255,0.28)] group-hover:text-[var(--color-fg-muted)]"
+          >
             Awareness Lectures on Psychedelics in Switzerland
           </p>
         </div>
-      </div>
+      </a>
 
       <div class="flex flex-wrap gap-3">
         <a href="mailto:summerschool@alps.foundation" class="btn btn--ghost">
           Contact the team
+        </a>
+        {/* 2026-09-07: second footer button. The label names the destination
+            outright and the arrow marks it as leaving this site — a visitor
+            should never have to hover to find out where it goes. */}
+        <a
+          href="https://alps.foundation"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--ghost group"
+        >
+          More from us on alps.foundation
+          <span
+            aria-hidden="true"
+            class="text-[var(--color-fg-subtle)] transition-transform duration-200 group-hover:translate-x-[3px]"
+          >
+            →
+          </span>
         </a>
       </div>
     </div>
