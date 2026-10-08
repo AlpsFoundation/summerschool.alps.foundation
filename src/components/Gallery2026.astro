@@ -397,9 +397,13 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
       if (e.key === 'Escape') closePhoto();
     });
 
-    // Autoplay: slow, continuous, and deliberately NOT paused by hovering —
+    // Autoplay: steady, continuous, and deliberately NOT paused by hovering —
     // it stops only while you are dragging the strip, while a photo is open,
     // and when the tab is hidden. Respects prefers-reduced-motion.
+    // Speed is time-based (px per second), so a 120 Hz screen runs it at the
+    // same pace as a 60 Hz one; the old per-frame step ran twice as fast in
+    // Chrome on a ProMotion Mac. 90 px/s set by Matthias, 2026-10-08.
+    const AUTOPLAY_PX_PER_SEC = 90;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduced) {
       let dragging = false;
@@ -411,10 +415,15 @@ while (q < quotes.length) slides.push({ type: 'quote', text: quotes[q++] });
       track.addEventListener('touchstart', holdOn, { passive: true });
       window.addEventListener('touchend', holdOff);
       let carry = 0;
-      const tick = () => {
+      let last = 0;
+      const tick = (now: number) => {
+        // Cap the frame gap so a tab coming back from the background does
+        // not jump the strip forward by everything it missed.
+        const dt = last ? Math.min(now - last, 100) : 0;
+        last = now;
         const open = lb ? !lb.hidden : false;
         if (!dragging && !open && !document.hidden && setWidth > 0) {
-          carry += 0.6;
+          carry += (AUTOPLAY_PX_PER_SEC * dt) / 1000;
           const px = Math.floor(carry);
           if (px > 0) { track.scrollLeft += px; carry -= px; }
         }
